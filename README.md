@@ -5,7 +5,7 @@
 
 # 0 - Introduction 
 
-<span style="color: red;">text</span>
+<span style="color: green"> Some green text </span>
 
 
 The **CANVAS** model is a novel Multiple-Resolution approach which allows one to model at an atomistic resolution only the precise subset
