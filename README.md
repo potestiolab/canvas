@@ -5,6 +5,9 @@
 
 # 0 - Introduction 
 
+<span style="color: red;">text</span>
+
+
 The **CANVAS** model is a novel Multiple-Resolution approach which allows one to model at an atomistic resolution only the precise subset
 of degrees really  necesssary for the study of a given phenomenon, even when this leads to a boundary between resolutions which falls 
 within a bio-molecule. 
@@ -123,9 +126,9 @@ _`atomistic/medium-grained/coarse grained`_ subdivision that would like to obtai
 * **{-choice1-}**: One or more central atomistic residues that require an atomistic description is/are known. 
                Since the high-resolution region is not completely defined, an atomistic sphere with radius _R_, 
                defined by the user, is traced (around the central residue(s)). Then, the latter, is sourrounded by 
-               a 3D-annulus of width _D_ that defines a transition/hybrid region where only the backbone atoms ($`N`$, 
-               $`C_\alpha`$, $`C`$, $`O`$) are retained. The remainder, is modelled coarse-grained, where only 
-               the $`C_\alpha`$ atoms are kept. A schematic represention is shown hereafter: 
+               a 3D-annulus of width _D_ that defines a transition/hybrid region where only the backbone atoms ($N$\, 
+               $C_\alpha$, $C$, $O$) are retained. The remainder, is modelled coarse-grained, where only 
+               the $C_\alpha$ atoms are kept. A schematic represention is shown hereafter: 
 
 <div align="center">
 
