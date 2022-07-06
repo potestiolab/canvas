@@ -98,10 +98,10 @@ Directory folders are shown in light blue; files are shown in light yellow, whil
 The typical usage of the program consists in a call to _`block.py`_ and _`CANVAS.py`_ in succession 
 by using Python3. Afterwards, it is possible to simulate the BioMolecule through Gromacs or Lammps, as proposed in **Sec. 7**. 
 
-* **{-block.py-}**: has the purpose to write a file containing the list of survived atoms, that must be used 
+* **`block.py`**: has the purpose to write a file containing the list of survived atoms, that must be used 
                 in _CANVAS.py_ as mandatory argument as explained in **Sec. 4.1**. 
                 
-* **{-CANVAS.py-}** has the purpose to write the input files needed for simulating a solvated system in 
+* **`CANVAS.py`** has the purpose to write the input files needed for simulating a solvated system in 
                 Multiple Resolution in GROMACS or LAMMPS and analyzing it. 
 
                 
@@ -135,7 +135,7 @@ _`atomistic/medium-grained/coarse grained`_ subdivision that would like to obtai
 
 * **{-choice2-}**: All residues that require an atomistic description are known; therefore the higher resolution region
                    is completely defined. Around, an hybrid region of width _D_ will be traced where only the backbone 
-                   atoms ($`N`$, $`C_\alpha`$, $`C`$, $`O`$) are retained. Note that in *choice1* the atomistic region 
+                   atoms ($N$, $C_\alpha$, $C$, $O$) are retained. Note that in *choice1* the atomistic region 
                    is not completely defined a priori, but it will be described  by a radius _R_ starting from the 
                    knowledge of one or more central residues.  
 
@@ -147,7 +147,7 @@ _`atomistic/medium-grained/coarse grained`_ subdivision that would like to obtai
 <br /><br />
 
 * **{-choice3-}**: All residues that require an atomistic and hybrid description(where only the backbone atoms 
-                   are retained i.e. $`N`$, $`C_\alpha`$, $`C`$, $`O`$) are known. Consequently, the residues that 
+                   are retained i.e. $N$, $C_\alpha$, $C$, $O$) are known. Consequently, the residues that 
                    will be modelled as corse grained (where only $`C_\alpha`$ atoms are kept) are also automatically 
                    enstablished. 
 
