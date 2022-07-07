@@ -9,13 +9,12 @@ The **CANVAS** model is a novel Multiple-Resolution approach which allows one to
 of degrees really  necesssary for the study of a given phenomenon, even when this leads to a boundary between resolutions which falls 
 within a bio-molecule. 
 
-CANVAS is the acronym of **{+C+}**{+oarse-grained+} **{+A+}**{+nisotropic+} **{+N+}**{+etwork model for+} **{+VA+}**{+riable resolution+} **{+S+}**{+imulation+}. 
+CANVAS is the acronym of **C**oarse-grained **A**nisotropic **N**etwork model for **VA**riable resolution **S**imulation. 
 
 This model enables one to set the level of resolution of the coarse-grained subdomain(s) in a quasi-continuous range, spanning 
 from the all-atom level to a degree o coaresening higher than one bead per amino acid. We emphasize that this is the novelty of the method: 
 in paricular, one has an extremely high freedom in the choice of the level of coarse-graining. Moreover, the parametrization of interactions 
-on the basis of the model chosen has an automatic construction: they do not require reference simulations, but rather than only the all-atom stucture
-of bio-molecule. 
+on the basis of the model chosen has an automatic construction: they do not require reference simulations, but rather than only the all-atom stucture of bio-molecule. 
 
 The system under examination is the present work for validating the CANVAS model is the **pembrolizumab** antibody and **Adenylate Kinase** 
 protein in acqueous solution.   
@@ -28,24 +27,24 @@ All the details of the work can be found in [REF: Fiorentini, Tarenzi, Potestio]
 
 The only requirements are the following: 
 
-* **{-GROMACS-}**: it is a versatile package to perform molecular dynamics. The installation guide is reported 
+* **`GROMACS`**: it is a versatile package to perform molecular dynamics. The installation guide is reported 
   on [this link](https://manual.gromacs.org/documentation/2018-current/install-guide/index.html). 
   Please, note that we tested our code with GROMACS-2018, but nothing should change using another (older or newer) 
   version of this simulating package.
 
-* **{-Python3-}**: it is an interpreted, object-oriented, high-level programming language with dynamic semantics. 
+* **`Python3`**: it is an interpreted, object-oriented, high-level programming language with dynamic semantics. 
   The installation guide is provided [Here](https://docs.python-guide.org/starting/installation/). 
   If you are working on _Linux_ or _MacOs_ system, Python3 should be already installed. 
   On the other hand, if you are using Windows operating system, it is not certain for its presence.
   Please, be care of working with Python3 (3.7 or 3.9 is the best choice) as the code would return an error if using Python2.
     
-* **{-VMD-}**: it is a molecular visualization program for displaying, animating, and analyzing large biomolecular systems
+* **`VMD`**: it is a molecular visualization program for displaying, animating, and analyzing large biomolecular systems
   using 3-D graphics and built-in scripting. 
   [Here](https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD) it is possible to find the last 
   version of VMD, while the installation guide can be found on [this link](https://www.ks.uiuc.edu/Research/vmd/current/ig/node6.html). The biomolecule visualization and some analyses are based on its use, therefore **we strongly 
   recommend its installation**, even tough it is not mandatory. 
 
-* **{-LAMMPS-}**:  it is a versatile package to perform molecular dynamics. The installation guide is reported 
+* **`LAMMPS`**:  it is a versatile package to perform molecular dynamics. The installation guide is reported 
   on [this link](https://docs.lammps.org/Install.html). Its installation is mandatory only in case of canvas 
   simulation of BioMolecule in Lammps (instead of GROMACS).  
 <br />
@@ -99,10 +98,10 @@ Directory folders are shown in light blue; files are shown in light yellow, whil
 The typical usage of the program consists in a call to _`block.py`_ and _`CANVAS.py`_ in succession 
 by using Python3. Afterwards, it is possible to simulate the BioMolecule through Gromacs or Lammps, as proposed in **Sec. 7**. 
 
-* **{-block.py-}**: has the purpose to write a file containing the list of survived atoms, that must be used 
+* **`block.py`**: has the purpose to write a file containing the list of survived atoms, that must be used 
                 in _CANVAS.py_ as mandatory argument as explained in **Sec. 4.1**. 
                 
-* **{-CANVAS.py-}** has the purpose to write the input files needed for simulating a solvated system in 
+* **`CANVAS.py`** has the purpose to write the input files needed for simulating a solvated system in 
                 Multiple Resolution in GROMACS or LAMMPS and analyzing it. 
 
                 
@@ -123,9 +122,9 @@ _`atomistic/medium-grained/coarse grained`_ subdivision that would like to obtai
 * **{-choice1-}**: One or more central atomistic residues that require an atomistic description is/are known. 
                Since the high-resolution region is not completely defined, an atomistic sphere with radius _R_, 
                defined by the user, is traced (around the central residue(s)). Then, the latter, is sourrounded by 
-               a 3D-annulus of width _D_ that defines a transition/hybrid region where only the backbone atoms ($`N`$, 
-               $`C_\alpha`$, $`C`$, $`O`$) are retained. The remainder, is modelled coarse-grained, where only 
-               the $`C_\alpha`$ atoms are kept. A schematic represention is shown hereafter: 
+               a 3D-annulus of width _D_ that defines a transition/hybrid region where only the backbone atoms ($N$\, 
+               $C_\alpha$, $C$, $O$) are retained. The remainder, is modelled coarse-grained, where only 
+               the $C_\alpha$ atoms are kept. A schematic represention is shown hereafter: 
 
 <div align="center">
 
@@ -136,7 +135,7 @@ _`atomistic/medium-grained/coarse grained`_ subdivision that would like to obtai
 
 * **{-choice2-}**: All residues that require an atomistic description are known; therefore the higher resolution region
                    is completely defined. Around, an hybrid region of width _D_ will be traced where only the backbone 
-                   atoms ($`N`$, $`C_\alpha`$, $`C`$, $`O`$) are retained. Note that in *choice1* the atomistic region 
+                   atoms ($N$, $C_\alpha$, $C$, $O$) are retained. Note that in *choice1* the atomistic region 
                    is not completely defined a priori, but it will be described  by a radius _R_ starting from the 
                    knowledge of one or more central residues.  
 
@@ -148,7 +147,7 @@ _`atomistic/medium-grained/coarse grained`_ subdivision that would like to obtai
 <br /><br />
 
 * **{-choice3-}**: All residues that require an atomistic and hybrid description(where only the backbone atoms 
-                   are retained i.e. $`N`$, $`C_\alpha`$, $`C`$, $`O`$) are known. Consequently, the residues that 
+                   are retained i.e. $N$, $C_\alpha$, $C$, $O$) are known. Consequently, the residues that 
                    will be modelled as corse grained (where only $`C_\alpha`$ atoms are kept) are also automatically 
                    enstablished. 
 
