@@ -297,15 +297,21 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
     
     f_lmp.write("\nBonds\n\n")
     
+    #count = 1
+    #for i in bonds_mult_res_prot:
+    #    if(count <= 99999):
+    #        f_lmp.write("{:6d} {:7d}   {} {}\n".format(count, i[8], i[0], i[1]))
+    #        count = count + 1
+    #
+    #    else:
+    #        f_lmp.write("{:6d} {:7d}   {} {}\n".format(count, i[8], i[0]+count, i[1]+count))   # This condition because otherwise count begins again from 0
+    #        count = count + 1                                                                  
+
+
     count = 1
     for i in bonds_mult_res_prot:
-        if(count <= 99999):
-            f_lmp.write("{:6d} {:7d}   {} {}\n".format(count, i[8], i[0], i[1]))
-            count = count + 1
-    
-        else:
-            f_lmp.write("{:6d} {:7d}   {} {}\n".format(count, i[8], i[0]+count, i[1]+count))   # This condition because otherwise count begins again from 0
-            count = count + 1                                                                  
+        f_lmp.write("{:6d} {:7d}   {} {}\n".format(count, i[8], i[0], i[1]))
+        count = count + 1
     
     
     ## L- ANGLES: Writing the Angles (in terms of indexes) like to [ angles ] section of Gromacs. 
@@ -319,16 +325,21 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
              
     f_lmp.write("\nAngles\n\n")
     
+    #count = 1
+    #for i in angles_mult_res_prot:
+    #    if(count <= 99999):
+    #        f_lmp.write("{:6d} {:7d}   {} {} {}\n".format(count, i[-1], i[0], i[1], i[2]))
+    #        count = count +1
+    # 
+    #    else:
+    #        f_lmp.write("{:6d} {:7d}   {} {} {}\n".format(count, i[-1], i[0]+count, i[1]+count, i[2]+count))
+    #        count = count +1
+
     count = 1
     for i in angles_mult_res_prot:
-        if(count <= 99999):
-            f_lmp.write("{:6d} {:7d}   {} {} {}\n".format(count, i[-1], i[0], i[1], i[2]))
-            count = count +1
-    
-        else:
-            f_lmp.write("{:6d} {:7d}   {} {} {}\n".format(count, i[-1], i[0]+count, i[1]+count, i[2]+count))
-            count = count +1
-    
+        f_lmp.write("{:6d} {:7d}   {} {} {}\n".format(count, i[-1], i[0], i[1], i[2]))
+        count = count +1
+ 
     
     ## M- DIHEDRALS: Writing the Dihedrals (in terms of indexes) like to [ dihedrals ] section of Gromacs.
     ##               This section is organized in 6 columns: 
@@ -343,17 +354,23 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
     if(number_dihedral_types != 0):
         f_lmp.write("\nDihedrals\n\n")
     
+        #count = 1    
+        #for i in dihedrals_mult_res_prot:
+        #    if(i[4]==9 or i[4]==4):
+        #        if(count <= 99999):
+        #            f_lmp.write("{:6d} {:7d}   {} {} {} {}\n".format(count, i[-1], i[0], i[1], i[2], i[3]))
+        #            count = count + 1
+        #        else:
+        #            f_lmp.write("{:6d} {:7d}   {} {} {} {}\n".format(count, i[-1], i[0]+count, i[1]+count, i[2]+count, i[3]+count))
+        #            count = count + 1
+
+
         count = 1
-    
         for i in dihedrals_mult_res_prot:
             if(i[4]==9 or i[4]==4):
-                if(count <= 99999):
-                    f_lmp.write("{:6d} {:7d}   {} {} {} {}\n".format(count, i[-1], i[0], i[1], i[2], i[3]))
-                    count = count + 1
-                else:
-                    f_lmp.write("{:6d} {:7d}   {} {} {} {}\n".format(count, i[-1], i[0]+count, i[1]+count, i[2]+count, i[3]+count))
-                    count = count + 1
-    
+                f_lmp.write("{:6d} {:7d}   {} {} {} {}\n".format(count, i[-1], i[0], i[1], i[2], i[3]))
+                count = count + 1
+
     
     ## N- IMPROPERS: Writing the Impropers (in terms of indexes) like to [ dihedrals ] section of Gromacs. 
     ##               Recall that impropers in Lammps correspond to dihedrals with funct=2 in Gromacs. 
@@ -369,16 +386,22 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
     if(number_improper_types != 0):
         f_lmp.write("\nImpropers\n\n")
     
+        #count = 1    
+        #for i in dihedrals_mult_res_prot:
+        #    if(i[4]==2):
+        #        if(count <= 99999):
+        #            f_lmp.write("{:6d} {:7d}   {} {} {} {}\n".format(count, i[-1], i[0], i[1], i[2], i[3]))
+        #            count = count + 1
+        #        else:
+        #            f_lmp.write("{:6d} {:7d}   {} {} {} {}\n".format(count, i[-1], i[0]+count, i[1]+count, i[2]+count, i[3]+count))
+        #            count = count + 1
+
+
         count = 1
-    
         for i in dihedrals_mult_res_prot:
             if(i[4]==2):
-                if(count <= 99999):
-                    f_lmp.write("{:6d} {:7d}   {} {} {} {}\n".format(count, i[-1], i[0], i[1], i[2], i[3]))
-                    count = count + 1
-                else:
-                    f_lmp.write("{:6d} {:7d}   {} {} {} {}\n".format(count, i[-1], i[0]+count, i[1]+count, i[2]+count, i[3]+count))
-                    count = count + 1
+                f_lmp.write("{:6d} {:7d}   {} {} {} {}\n".format(count, i[-1], i[0], i[1], i[2], i[3]))
+                count = count + 1
 
 
 def write_input_lammps_file(f_input, dihedrals_mult_res_prot, Flag_cmaps, number_of_bonds, number_of_angles, number_of_dihedrals, \
