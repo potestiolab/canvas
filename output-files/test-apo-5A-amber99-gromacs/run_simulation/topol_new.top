@@ -1,0 +1,42 @@
+;
+;       File 'topol_new.top' was generated
+;       By user: USERNAME
+;       On host: hpc-head-n1.unitn.it
+;       At date: Thu 07 July 2022 - 17:37:03
+;
+;       This is the topology file for Multiple resolution protein
+;
+
+; Include forcefield parameters
+#include "/apps/gromacs-2018/share/gromacs/top/amber99sb-ildn.ff/forcefield.itp"
+#include "ffnonbonded_new.itp"
+#include "ffbonded_new.itp"
+#include "mult.itp"
+
+; Include Position restraint file
+#ifdef POSRES
+#include "posre_mul_res.itp"
+#endif
+
+; Include water topology
+#include "/apps/gromacs-2018/share/gromacs/top/amber99sb-ildn.ff/tip3p.itp"
+
+#ifdef POSRES_WATER
+; Position restraint for each water oxygen
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1       1000       1000       1000
+#endif
+
+; Include topology for ions
+#include "/apps/gromacs-2018/share/gromacs/top/amber99sb-ildn.ff/ions.itp"
+
+[ system ]
+; Name
+Multiple resolution protein in fully-at water
+
+[ molecules ]
+; Compound        #mols
+Mult_Res_Prot         1
+SOL         179189
+CL               3
