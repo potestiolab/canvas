@@ -429,7 +429,6 @@ list_other_atoms    = [ i for i in atom if i not in list_survived_atoms]
 list_survived_atoms = [ i + [v] for k,v in dict_survived.items() for i in list_survived_atoms if k==i[3]]
 list_other_atoms    = [ i + ["ns"] for i in list_other_atoms]
 
-print("The time for executing the code(8) is: ", (end-start).total_seconds())
 
                     #################################################################
 ####################### (9) UPDATE ATOM LIST with AT_TYPE of each survived atom    #############################################
@@ -1606,8 +1605,6 @@ for i in angles_prot_fully_at:
 #C.4- Reconverting the original index (of fullyAT representation) in the new index after decimated the most of atoms in CANVAS model
 #     and substitute the original value (1st, 2nd, and 3rd columns) 
 
-start = datetime.now()
-
 for i in list_survived_atoms:
     for j in angles_prot_fully_at:
         if(i[3] == j[0]):
@@ -1625,7 +1622,6 @@ for i in list_survived_atoms:
 
 #C.5- Adding the CG/AT-type for each bead and atoms. 
 
-start = datetime.now() 
 
 angles_prot_fully_at = [j + [i[7]] for j in angles_prot_fully_at for i in list_survived_atoms if(i[9] == j[0])]
 angles_prot_fully_at = [j + [i[7]] for j in angles_prot_fully_at for i in list_survived_atoms if(i[9] == j[1])]
@@ -1683,7 +1679,6 @@ print("\nlist of angles updated... 55% completed\n")
 #     (original_dihedrals_protein_fully_at = toop[3]), we first split dihedrals according with he functional form, 
 #     i.e. 4, 9, torsion, or 2. 
 
-start = datetime.now()
 
 original_dihedrals_protein_fully_at_dih4 = []
 original_dihedrals_protein_fully_at_dih9 = []
@@ -1705,8 +1700,6 @@ for i in original_dihedrals_protein_fully_at:
         if(i[4]==2):						   # i.e. lenght = 5 and funct = 2 
             original_dihedrals_protein_fully_at_dih2.append(i)     
 
-end = datetime.now()
-print("The time for executing the code(D.1) is: ", (end-start).total_seconds())
 
 #D.2- Checking if four survived atoms keep one the three previous properties and create three new lists: 
 #     dihedrals_prot_fully_at_dih4, dihedrals_prot_fully_at_dih9, dihedrals_prot_fully_at_tors,  dihedrals_prot_fully_at_dih2
@@ -3122,7 +3115,6 @@ if(FlagLammps == True):
         
         
         ## L5.j- Appending the atomic number (H = 1, C =6) for Water and Ions (i[15])
-        start = datetime.now()
         for k,v in dict_atnum.items():
             for i in list_survived_atoms:
                 if(len(i) == 15 and i[8]==k):   			         # If the at_type (i[8]) is the same 
@@ -3243,10 +3235,6 @@ if(FlagLammps == True):
     else: 
         number_bond_types = count - 1
 
-    end = datetime.now()
-    print("The time for executing the code(L.7) is: ", (end-start).total_seconds())    
-
-   
  
     # L8- Number of Angletypes: Updating the part relative to the angles for water (HW1-OW-HW1), 
     #     appending the result in "angles_mult_res_prot"
