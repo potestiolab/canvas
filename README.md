@@ -119,7 +119,7 @@ printed on screen.
 _`block.py`_ is inside the `PYTHON-SCRIPT/` directory and it allows the user to select one of three possible options, depending on the type of 
 _`atomistic/medium-grained/coarse grained`_ subdivision that would like to obtain: 
 
-* **{-choice1-}**: One or more central atomistic residues that require an atomistic description is/are known. 
+* **`choice1`**: One or more central atomistic residues that require an atomistic description is/are known. 
                Since the high-resolution region is not completely defined, an atomistic sphere with radius _R_, 
                defined by the user, is traced (around the central residue(s)). Then, the latter, is sourrounded by 
                a 3D-annulus of width _D_ that defines a transition/hybrid region where only the backbone atoms ($N$\, 
@@ -133,7 +133,7 @@ _`atomistic/medium-grained/coarse grained`_ subdivision that would like to obtai
 
 <br /><br />
 
-* **{-choice2-}**: All residues that require an atomistic description are known; therefore the higher resolution region
+* **`choice2`**: All residues that require an atomistic description are known; therefore the higher resolution region
                    is completely defined. Around, an hybrid region of width _D_ will be traced where only the backbone 
                    atoms ($N$, $C_\alpha$, $C$, $O$) are retained. Note that in *choice1* the atomistic region 
                    is not completely defined a priori, but it will be described  by a radius _R_ starting from the 
@@ -146,9 +146,9 @@ _`atomistic/medium-grained/coarse grained`_ subdivision that would like to obtai
 
 <br /><br />
 
-* **{-choice3-}**: All residues that require an atomistic and hybrid description(where only the backbone atoms 
+* **`choice3`**: All residues that require an atomistic and hybrid description(where only the backbone atoms 
                    are retained i.e. $N$, $C_\alpha$, $C$, $O$) are known. Consequently, the residues that 
-                   will be modelled as corse grained (where only $`C_\alpha`$ atoms are kept) are also automatically 
+                   will be modelled as corse grained (where only $C_\alpha$ atoms are kept) are also automatically 
                    enstablished. 
 
 <div align="center">
@@ -165,8 +165,8 @@ Each task can require different input files, provided to the program in the form
 ### 4.1.1 - choice1 
 ---------
 
-**{-Choice1-}** option requires two mandatory files, i.e. the _{+coordinate FILE+}_, and the _{+list AT-bb-CG FILE+}_ 
-and one optional argument that is the _{+diameter of hybrid region+}_ in the CANVAS model. The arguments are described in **Sec. 4.2**
+**`Choice1`** option requires two mandatory files, i.e. the _`coordinate FILE`_, and the _`list AT-bb-CG FILE`_ 
+and one optional argument that is the _`diameter of hybrid region`_ in the CANVAS model. The arguments are described in **Sec. 4.2**
 
 In order to launch the **choice1** task the command-line is the following:
 
@@ -185,8 +185,8 @@ The output of the program is the list of survived atoms. For further information
 ### 4.1.2 - choice2 
 ---------
 
-**{-Choice2-}** option requires two mandatory files, i.e. the _{+coordinate FILE+}_, and the _{+list AT-bb-CG FILE+}_ 
-and one optional argument that is the _{+diameter of hybrid region+}_ in the CANVAS model. The arguments are described in **Sec. 4.2**. 
+**`Choice2`** option requires two mandatory files, i.e. the _`coordinate FILE`_, and the _`list AT-bb-CG FILE`_ 
+and one optional argument that is the _`diameter of hybrid region`_ in the CANVAS model. The arguments are described in **Sec. 4.2**. 
 
 In order to launch the **choice2** task the command-line is the following:
 
@@ -205,7 +205,7 @@ The output of the program is the list of survived atoms. For further information
 ### 4.1.3 - choice3 
 ---------
 
-**{-Choice3-}** option requires two mandatory files, i.e. the _{+coordinate FILE+}_, and the _{+list AT-bb-CG FILE+}_. The arguments are described in **Sec. 4.2**
+**`Choice3`** option requires two mandatory files, i.e. the _`coordinate FILE`_, and the _`list AT-bb-CG FILE`_. The arguments are described in **Sec. 4.2**
 
 In order to lunch the **choice3** task the command-line is the following:
 
@@ -231,9 +231,9 @@ Please note that the _list AT-bb-CG FILE_ is organized in different way accordin
 
 A short explaination of files and of the diameter value is the following:
 
-* **{-Coordinate FILE-}**: File of atom Coordinates in .gro format 
+* **`Coordinate FILE`**: File of atom Coordinates in .gro format 
 
-* **{-List At-bb-CG FILE (for choice1)-}**: File with a list of central atomistic(s) residue(s)
+* **`List At-bb-CG FILE (for choice1)`**: File with a list of central atomistic(s) residue(s)
                                     and corresponding atomistic(s) radius(ii) organized in two columns:
 ```                                                           
 |-----------------|-----------------------|                                        
@@ -244,7 +244,7 @@ A short explaination of files and of the diameter value is the following:
 |-----------------|-----------------------|                                     
 ```                                    
                                     
-* **{-List AT-bb-CG FILE (for choice2)-}**: File organized in only one column that contains 
+* **`List AT-bb-CG FILE (for choice2)`**: File organized in only one column that contains 
                                     the list of atomistic residues:
 ```
 |----------------|  
@@ -255,7 +255,7 @@ A short explaination of files and of the diameter value is the following:
 |----------------| 
 ```                                        
                                         
-* **{-List At-bb-CG FILE (for choice3)-}**: File organized in two columns that contains the list of atomistic residues
+* **`List At-bb-CG FILE (for choice3)`**: File organized in two columns that contains the list of atomistic residues
                                     and the list of residues that require an hybrid resolution:
 ```
 |-----------------|-----------------|  
@@ -268,7 +268,7 @@ A short explaination of files and of the diameter value is the following:
 |-----------------|-----------------|  
 ```
 
-* **{-Diameter hybrid region-}**: Value (in nm) of diameter of the hybrid region. Default value: 1.0 nm
+* **`Diameter hybrid region`**: Value (in nm) of diameter of the hybrid region. Default value: 1.0 nm
                                          
 
 In **Appendix**  we focus on each argument discussed breafly before.
@@ -278,8 +278,8 @@ In **Appendix**  we focus on each argument discussed breafly before.
 # 5 - _CANVAS.py_
 
 _CANVAS.py_ does not have _tasks_ in the sense explained in **Sec. 4.1**. Indeed, this script
-requires three mandatory files: _{+coordinate FILE+}_, _{+list survived atoms FILE+}_, and the _{+topology FILE+}_, 
-and three optional argument, namely the _{+Domains FILE+}_, the flag _{+-c/--code lammps+}_ and the flag _{+-r/--resc14 Y+}_ . The arguments are described in **Sec. 5.1**
+requires three mandatory files: _`coordinate FILE`_, _`list survived atoms FILE`_, and the _`topology FILE`_, 
+and three optional argument, namely the _`Domains FILE`_, the flag _`-c/--code lammps`_ and the flag _`-r/--resc14 Y`_ . The arguments are described in **Sec. 5.1**
 
 In order to launch the **CANVAS.py** script, the command-line is the following:
 
@@ -309,9 +309,9 @@ As shown in **Sec. 5** the coordinate file, the file containing the list of surv
 
 A short explaination of the above mentioned files is the following:
 
-* **{-Coordinate FILE-}**: File of atom Coordinates in .gro format
+* **`Coordinate FILE`**: File of atom Coordinates in .gro format
 
-* **{-List survived atoms FILE-}**: File containing the list of survived atoms organized in two columns:
+* **`List survived atoms FILE`**: File containing the list of survived atoms organized in two columns:
                                 It is the output file of block.py if correctly executed. 
 ```                                
 |----------------|--------------------------| 
@@ -324,9 +324,9 @@ A short explaination of the above mentioned files is the following:
 |----------------|--------------------------|  
 ```
 
-* **{-Topology FILE-}**: File containing the topology of fullyAT representation
+* **`Topology FILE`**: File containing the topology of fullyAT representation
 
-* **{-Domain Division FILE-}**: Optional - but strongly recommended - File with the list of atoms divided in domains.
+* **`Domain Division FILE`**: Optional - but strongly recommended - File with the list of atoms divided in domains.
                             The number of columns is equal to the number of domains
                             Each row contains the at_numbers of the atoms that belong
                             to the same block separated by spaces:
@@ -337,7 +337,7 @@ A short explaination of the above mentioned files is the following:
 | .....      .....      .....      .....  .....     |
 |---------------------------------------------------| 
 ```
-* **{-rescaled14-}**: String containing the word `Y` or `y`. Other strings
+* **`rescaled14`**: String containing the word `Y` or `y`. Other strings
                   are not allowed. If `-r/--resc14 Y` is set, than all pairs
                   where ONLY one CG bead is kept if in the corresponding
                   all-atom representation that pair is present (by default 
@@ -345,7 +345,7 @@ A short explaination of the above mentioned files is the following:
                   Keep attention, as it might create artifacts in MD simulation. 
                   If using charmm.ff this command is ignored. 
 
-* **{-codestring-}**: String containing `lammps` word. Other strings are not
+* **`codestring`**: String containing `lammps` word. Other strings are not
                       allowed. If `-c/--code lammps` is set, then this program
                       produces the input files needed for simulating the CANVAS
                       model in lammps. If `-c/--code gromacs` is set, or in case
@@ -403,11 +403,11 @@ The output files of each test can be also found in `canvas/output-files/` direct
 
 After executing in sequence _block.py_ and _CANVAS.py_, three subfolders are created:
 
-1. **{-other-files-}**: it contains a lot of intermediate files created by CANVAS.py: they are not useful per running simulation and for analyzing data. Thus, they can be ignored. 
+1. **`other-files`**: it contains a lot of intermediate files created by CANVAS.py: they are not useful per running simulation and for analyzing data. Thus, they can be ignored. 
 
-2. **{-run-simulation-}**: it contains all the ingredients needed for simulating a BioMolecule in Multiple Resolution through the CANVAS model. 
+2. **`run-simulation`**: it contains all the ingredients needed for simulating a BioMolecule in Multiple Resolution through the CANVAS model. 
 
-3. **{-analysis-}**: it contains .tcl script and text files for analyzing and visualizing the biomolecule in VMD
+3. **`analysis`**: it contains .tcl script and text files for analyzing and visualizing the biomolecule in VMD
 
 <br />
 
@@ -443,13 +443,13 @@ After this change, the standard simulating protocol can be followed without erro
 
 ## 7.2 - Analysing Data & Visualizing Trajectory 
 
-VMD installation is not mandatory; however it is useful for visualing trajectory and for making preliminary analysis, such as the Root Mean Square Fluctuation (RMSF) of only $`C_\alpha`$ carbon (atomistic, medium-grained and 
+VMD installation is not mandatory; however it is useful for visualing trajectory and for making preliminary analysis, such as the Root Mean Square Fluctuation (RMSF) of only $C_\alpha$ carbon (atomistic, medium-grained and 
 coarse-grained). This folder contains the following files: 
 
-* **{-CA_list.txt-}**: list of the $`C_\alpha`$ atoms indexes separated by one white space, in one line. 
+* **`CA_list.txt`**: list of the $C_\alpha$ atoms indexes separated by one white space, in one line. 
 
-* **{-radius_charge-allatom.txt-}**: this file is divided in four columns containing the index, the atom-name, 
-  the radius (in Angstrom units) obtained by the value of $`\sigma/2`$, and the corresponding charge. This file 
+* **`radius_charge-allatom.txt`**: this file is divided in four columns containing the index, the atom-name, 
+  the radius (in Angstrom units) obtained by the value of $\sigma/2$, and the corresponding charge. This file 
   is then read by the tkl script, described hereafter. 
 ```        
 |-------|----------------|-----------------|-----------------|  
@@ -464,7 +464,7 @@ coarse-grained). This folder contains the following files:
 |-------|----------------|-----------------|-----------------|  
 ```
 
-* **{-radius_charge-allatom.tcl-}**: this script has the purpose of reading the _radius_charge-allatom.txt_ file. 
+* **`radius_charge-allatom.tcl`**: this script has the purpose of reading the _radius_charge-allatom.txt_ file. 
   In order to execute the script by means of VMD, please launch the command `source radius_charge-allatom.tcl` in
   TkConsole. Then, in order to visualize the radius size of each CG bead with a different coloration given by 
   the charge value, go on `Graphics/Representation/Create Rep` and create the following representation:
@@ -472,7 +472,7 @@ coarse-grained). This folder contains the following files:
   ```bash 
   Select Atoms = resname MUL, Drawing method = VDW, Coloring Method = beta
   ```
-  In this way, each bead will have a different radius according the value of $`\sigma/2`$, and a color given by the 
+  In this way, each bead will have a different radius according the value of $\sigma/2$, and a color given by the 
   Beta Coloring Method: in particular, blue shades are indicative of positive charges, red shades are indicative of
   negative charges, while the white color corresponds to a neutral charge. The figure below displays the apo-0 (4A) form 
   of Pembrolizumab in terms of this new representation just mentioned.  
@@ -526,8 +526,8 @@ Note that the charmm36m.ff present in `input-files` directory is modified accord
 
 As already seen in **Sec. 7.1**, another issue can be encountered when using the last version (july 2021) of Charmm36m is due to a different denomination of ions. In every force-field sodium and chloride ions are indicated with NA and CL, respectively. However, in charmm36m 
 they are named SOD and CLA. A solution for fixing the issue is modifying manually the `topol_new.itp` and `solvated_ions.gro` files, substituing: 
-  *  **{-NA-}** with **{+SOD+}**  
-  *  **{-CL-}** with **{+CLA+}** 
+  *  **`NA`** with **`SOD`**  
+  *  **`CL`** with **`CLA`** 
 
 <br />
 
@@ -625,7 +625,7 @@ At the end, if everything went fine, the topology file (topol.top) will be creat
 _list AT-bb-CG_ is a mandatory file when launching _block.py_. As already explained in **Sec. 4.2**, this file  
 is organized in different way according the task chosen: 
 
-* **{-List At-bb-CG FILE (for choice1)-}**: File with a list of central atomistic(s) residue(s)
+* **`List At-bb-CG FILE (for choice1)`**: File with a list of central atomistic(s) residue(s)
                                         and corresponding atomistic(s) radius(ii) organized in two columns. 
                                         The left column must present only integer numbers; the right one 
                                         must show only integer or float number. No strings, or special characters 
@@ -639,7 +639,7 @@ is organized in different way according the task chosen:
 |-----------------|-----------------------|                                     
 ```                                   
                                     
-* **{-List AT-bb-CG FILE (for choice2)-}**: File organized in only one column that contains 
+* **`List AT-bb-CG FILE (for choice2)`**: File organized in only one column that contains 
                                         the list of atomistic residues. Only integer numbers are, 
                                         thus, permitted. No strings, or special characters are feasible. 
                                         An error message is printed on screen if some condition is not fulfilled. 
@@ -652,7 +652,7 @@ is organized in different way according the task chosen:
 |----------------| 
 ```                                        
                                         
-* **{-List At-bb-CG FILE (for choice3)-}**: File organized in two columns that contains the list of atomistic residues
+* **`List At-bb-CG FILE (for choice3)`**: File organized in two columns that contains the list of atomistic residues
                                         and the list of residues that require an hybrid resolution. Thus, both columns 
                                         must present only integer numbers. No strings, or special characters are 
                                         feasible. 
@@ -692,16 +692,16 @@ Hereafter, we report an example of list:
 
 This file is organized in two columns: 
 
-* The {+1st column+} corresponds to the atom number of the atoms that survive from the fullyAT 
+* The `1st column` corresponds to the atom number of the atoms that survive from the fullyAT 
   reference 
   
-* The {+2nd column+} corresponds to the label of each atom that survives: 
+* The `2nd column` corresponds to the label of each atom that survives: 
      * **`at`** stands for **atomistic**: it means that the the atom token in account conserves it own properties. 
   
      * **`cg`** stands for **coarse-grained or hybrid**: it means that the atom token in account will be treated 
        as CG bead and it will have average properties of the atoms (decimated) that it represents. This label should be 
-       used for both the coarse-grained part (only $`C_\alpha`$ atoms are retained) and hybrid part (backbone atoms 
-       are kept: $`N`$, $`C_\alpha`$, $`C`$, $`O`$)
+       used for both the coarse-grained part (only $C_\alpha$ atoms are retained) and hybrid part (backbone atoms 
+       are kept: $N$, $C_\alpha$, $C$, $O$)
 
 For the sake of completeness, please note that it is possible to write by yourself a text file 
 containing the list of the atoms, each one labelled with the caption (`at` or `cg`) if you know 
@@ -754,7 +754,7 @@ domX=$(for i in {M1..Mn}; do echo -n $i ""; done)
 echo $domX >> dom.txt
 ```
 
-where in place of $`A_1, A_2, B_1, B_2, M_1, M_2`$ you should write the atomistic numbers. Please, note  that the script works good if each domain 
+where in place of $A_1, A_2, B_1, B_2, M_1, M_2$ you should write the atomistic numbers. Please, note  that the script works good if each domain 
 is constituted by consecutive at_numbers.
 
 <br />
