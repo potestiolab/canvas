@@ -5,19 +5,22 @@
 
 # 0 - Introduction 
 
-The **CANVAS** model is a novel Multiple-Resolution approach which allows one to model at an atomistic resolution only the precise subset
-of degrees really  necesssary for the study of a given phenomenon, even when this leads to a boundary between resolutions which falls 
-within a bio-molecule. 
+The **CANVAS** model is a novel Multiple-Resolution approach which allows one to model at an atomistic resolution only the precise subset of degrees really  necesssary for the study of a given phenomenon, even when this leads to a boundary between resolutions which falls within a bio-molecule. 
 
 CANVAS is the acronym of **C**oarse-grained **A**nisotropic **N**etwork model for **VA**riable resolution **S**imulation. 
 
-This model enables one to set the level of resolution of the coarse-grained subdomain(s) in a quasi-continuous range, spanning 
-from the all-atom level to a degree o coaresening higher than one bead per amino acid. We emphasize that this is the novelty of the method: 
-in paricular, one has an extremely high freedom in the choice of the level of coarse-graining. Moreover, the parametrization of interactions 
-on the basis of the model chosen has an automatic construction: they do not require reference simulations, but rather than only the all-atom stucture of bio-molecule. 
+The CANVAS strategy leverages the blurred and approximate nature of coarse-grained models to identify effective sites based on a user-provided input, and determines the interactions among them based on the molecule’s structure and all-atom force field, making it unnecessary to run reference simulations. This strategy makes the parametrisation of the model practically instantaneous, and allows the modulation of the system’s resolution in a quasi-continuous manner across the structure, from all-atom to (very) coarse-grained. Most notably, the interaction between regions of the system at different resolution (including the solvent) is accounted for and straightforward to set up, allowing the seamless implementation in standard MD software packages (e.g. GROMACS or LAMMPS).
 
-The system under examination is the present work for validating the CANVAS model is the **pembrolizumab** antibody and **Adenylate Kinase** 
-protein in acqueous solution.   
+In the current implementation, we performed the choice of employing three levels of resolution:
+
+* **`all-atom (AT)`**: the highest level of detail, where all the atoms of a given amino acid
+are retained;
+
+* **`medium-grained (MG)`**: intermediate level of detail, where only the backbone atoms of an amino acid are retained, i.e. the carbon alpha $CA_{mg}$, the nitrogen $N_{mg}$ of the amino group, the oxygen $O_{mg}$ and the carbon $C_{mg}$ of the carboxyl group.
+
+* **`coarse-grained (CG)`**: the lowest level of resolution. In the applications presented here, only the $C_\alpha$ atoms of each CG residue are kept, dubbed $CA_{cg}$
+
+The method is presented and validated on two case studies, the enzyme **Adenylate Kinase** and the therapeutic anti- body **Pembrolizumab** in acqueous solution, by comparing results obtained with the CANVAS model against fully atomistic simulations. 
 
 All the details of the work can be found in [REF: Fiorentini, Tarenzi, Potestio]
 
@@ -68,6 +71,8 @@ flowchart LR
     style id7 fill:#fef5cc
     style id8 fill:#fef5cc
     style id9 fill:#fef5cc
+    style id10 fill:#fef5cc
+    style id11 fill:#fef5cc
 
     id1-->id3[/images/];
     id1-->id4[/input-files/];
@@ -76,7 +81,9 @@ flowchart LR
     id1-->id7([README.md]);
 
     id2-->id8([CANVAS.py]); 
+    id2-->id10([CANVAS-MPI4.py])
     id2-->id9([block.py])
+    id2-->id11([block-MPI.py])
 
     id3-.->idI[images for README.md]
     
@@ -95,29 +102,26 @@ Directory folders are shown in light blue; files are shown in light yellow, whil
 
 # 3 - Usage 
 
-The typical usage of the program consists in a call to _`block.py`_ and _`CANVAS.py`_ in succession 
-by using Python3. Afterwards, it is possible to simulate the BioMolecule through Gromacs or Lammps, as proposed in **Sec. 7**. 
+The typical usage of the program consists in a call to _`block.py/block-MPI.py`_ and _`CANVAS.py/CANVAS-MPI4.py`_ in succession by using Python3. In particular, the MPI version of the previous two codes makes use of _multiprocessing_ module with the purpose of creating the CANVAS model exploiting multiple processors at one time. Generally, the latter module increases the script's efficiency when the number of atoms consists of more than 100 thousand. All details can be found is Sec. XXX. 
 
-* **`block.py`**: has the purpose to write a file containing the list of survived atoms, that must be used 
-                in _CANVAS.py_ as mandatory argument as explained in **Sec. 4.1**. 
+Afterwards, it is possible to simulate the BioMolecule through Gromacs or Lammps, as proposed in **Sec. 7**. 
+
+* **`block.py`** or **`block-MPI.py`:** has the purpose to write a file containing the list of survived atoms, that must be used in _CANVAS.py/CANVAS-MPI4.py_ as mandatory argument as explained in **Sec. 4.1**. 
                 
-* **`CANVAS.py`** has the purpose to write the input files needed for simulating a solvated system in 
-                Multiple Resolution in GROMACS or LAMMPS and analyzing it. 
+* **`CANVAS.py` or `CANVAS-MPI4`:** has the purpose to write the input files needed for simulating a solvated system in Multiple Resolution in GROMACS or LAMMPS and analyzing it. 
 
                 
-
 Before running the python scripts, read carefully the next section that provides a detailed explaination of each task 
 and argument. Moreover, take care to not moving them outside the main folder (`canvas/`) otherwise a fatal error is 
 printed on screen.
 
 <br />
 
-# 4 - _block.py_
+# 4 - _block.py_ & _block-MPI.py_
 
 ## 4.1 - Tasks 
 
-_`block.py`_ is inside the `PYTHON-SCRIPT/` directory and it allows the user to select one of three possible options, depending on the type of 
-_`atomistic/medium-grained/coarse grained`_ subdivision that would like to obtain: 
+_`block.py`_ and its MPI version (_`block-MPI.py`_) are inside the `PYTHON-SCRIPT/` directory. This code has the purpose to write a file containing the list of survived atoms. Before lauching the code, te user is asking to select one of three possible options, depending on the type of _`atomistic/medium-grained/coarse grained`_ subdivision that would like to obtain: 
 
 * **`choice1`**: One or more central atomistic residues that require an atomistic description is/are known. 
                Since the high-resolution region is not completely defined, an atomistic sphere with radius _R_, 
@@ -158,7 +162,7 @@ _`atomistic/medium-grained/coarse grained`_ subdivision that would like to obtai
 
 <br /><br />
 
-Each task can require different input files, provided to the program in the form of command-line options. A short explaination of tasks and arguments is given by launching the command `python3 block.py -h` or `python3 block.py --help`. Alternatively, for printing a short usage message, please type: `python3 block.py` or `python3 block.py -u`
+Each task can require different input files, provided to the program in the form of command-line options. A short explaination of tasks and arguments is given by launching the command `python3 block.py -h` or `python3 block.py --help`. Alternatively, for printing a short usage message, please type: `python3 block.py` or `python3 block.py -u`. Equally, the same flags are available also for `block-MPI.py` 
 
 <br />
 
@@ -168,7 +172,7 @@ Each task can require different input files, provided to the program in the form
 **`Choice1`** option requires two mandatory files, i.e. the _`coordinate FILE`_, and the _`list AT-bb-CG FILE`_ 
 and one optional argument that is the _`diameter of hybrid region`_ in the CANVAS model. The arguments are described in **Sec. 4.2**
 
-In order to launch the **choice1** task the command-line is the following:
+In order to launch the **choice1** task the command-line is the following: 
 
 ```bash
 python3 block.py choice1 -g <Coordinate FILE> -l <list AT-bb-CG FILE> [-D <diameter hybrid region>] 
@@ -178,7 +182,9 @@ or
 python3 block.py choice1 --gro  <Coordinate FILE> --list <list AT-bb-CG FILE> [--diameter <diameter hybrid region>] 
 ```
 
-The output of the program is the list of survived atoms. For further information, please type on terminal `python3 choice1`.
+> NOTE: For simplicity, the previous commands are referred to `block.py`, but nothing changes for `block-MPI.py`
+
+The output of the program is the list of survived atoms. For further information, please type on terminal `python3 block.py choice1` (`python3 block-MPI.py choice1`).
 
 <br />
 
