@@ -102,13 +102,13 @@ Directory folders are shown in light blue; files are shown in light yellow, whil
 
 # 3 - Usage 
 
-The typical usage of the program consists in a call to _`block.py/block-MPI.py`_ and _`CANVAS.py/CANVAS-MPI4.py`_ in succession by using Python3. In particular, the MPI version of the previous two codes makes use of _multiprocessing_ module with the purpose of creating the CANVAS model exploiting multiple processors at one time. Generally, the latter module increases the script's efficiency when the number of atoms consists of more than 100 thousand. All details can be found is Sec. XXX. 
+The typical usage of the program consists in a call to _`block.py`_ and _`CANVAS.py`_ in succession by using Python3. The MPI version of the two previous codes, _`block-MPI.py`_ and _`CANVAS-MPI4.py`_,  is also possible: it makes use of _multiprocessing_ module with the purpose of creating the CANVAS model exploiting multiple processors at one time. Generally, the MPI version is recommended when your system consists of more than 100 thousand atoms. All details about the performance and efficiency can be found is Sec. XXX. 
 
 Afterwards, it is possible to simulate the BioMolecule through Gromacs or Lammps, as proposed in **Sec. 7**. 
 
 * **`block.py`** or **`block-MPI.py`:** has the purpose to write a file containing the list of survived atoms, that must be used in _CANVAS.py/CANVAS-MPI4.py_ as mandatory argument as explained in **Sec. 4.1**. 
                 
-* **`CANVAS.py` or `CANVAS-MPI4`:** has the purpose to write the input files needed for simulating a solvated system in Multiple Resolution in GROMACS or LAMMPS and analyzing it. 
+* **`CANVAS.py**` or **`CANVAS-MPI4`:** has the purpose to write the input files needed for simulating a solvated system in Multiple Resolution in GROMACS or LAMMPS and analyzing it. 
 
                 
 Before running the python scripts, read carefully the next section that provides a detailed explaination of each task 
@@ -121,7 +121,7 @@ printed on screen.
 
 ## 4.1 - Tasks 
 
-_`block.py`_ and its MPI version (_`block-MPI.py`_) are inside the `PYTHON-SCRIPT/` directory. This code has the purpose to write a file containing the list of survived atoms. Before lauching the code, te user is asking to select one of three possible options, depending on the type of _`atomistic/medium-grained/coarse grained`_ subdivision that would like to obtain: 
+_`block.py`_ and its MPI version (_`block-MPI.py`_) are inside the `PYTHON-SCRIPT/` directory. This code has the purpose to write a file containing the list of survived atoms. Before lauching the code, te user is required to select one of three possible options, depending on the type of _`atomistic/medium-grained/coarse grained`_ subdivision that would like to obtain: 
 
 * **`choice1`**: One or more central atomistic residues that require an atomistic description is/are known. 
                Since the high-resolution region is not completely defined, an atomistic sphere with radius _R_, 
@@ -169,8 +169,7 @@ Each task can require different input files, provided to the program in the form
 ### 4.1.1 - choice1 
 ---------
 
-**`Choice1`** option requires two mandatory files, i.e. the _`coordinate FILE`_, and the _`list AT-bb-CG FILE`_ 
-and one optional argument that is the _`diameter of hybrid region`_ in the CANVAS model. The arguments are described in **Sec. 4.2**
+**`Choice1`** option requires two mandatory files, i.e. the all-atom structure of the biomolecule (_`protein.gro_), and the list of central residues that require an atomistic description (_`list_AT_res.dat`_). On the other hand, the diameter value of medium-grained region of CANVAS model (_`diameter_MG_region`_) is an optional argument, that can also be changed (the default value is 1.0 nm). The above mentioned arguments are described in **Sec. 4.2**
 
 In order to launch the **choice1** task the command-line is the following: 
 
