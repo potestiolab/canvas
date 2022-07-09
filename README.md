@@ -108,7 +108,7 @@ Afterwards, it is possible to simulate the BioMolecule through Gromacs or Lammps
 
 * **`block.py`** or **`block-MPI.py`:** has the purpose to write a file containing the list of survived atoms, that must be used in _CANVAS.py/CANVAS-MPI4.py_ as mandatory argument as explained in **Sec. 4.1**. 
                 
-* **`CANVAS.py**` or **`CANVAS-MPI4`:** has the purpose to write the input files needed for simulating a solvated system in Multiple Resolution in GROMACS or LAMMPS and analyzing it. 
+* **`CANVAS.py`** or **`CANVAS-MPI4`:** has the purpose to write the input files needed for simulating a solvated system in Multiple Resolution in GROMACS or LAMMPS and analyzing it. 
 
                 
 Before running the python scripts, read carefully the next section that provides a detailed explaination of each task 
@@ -169,7 +169,7 @@ Each task can require different input files, provided to the program in the form
 ### 4.1.1 - choice1 
 ---------
 
-**`Choice1`** option requires two mandatory files, i.e. the all-atom structure of the biomolecule (_`protein.gro_), and the list of central residues that require an atomistic description (_`list_AT_res.dat`_). On the other hand, the diameter value of medium-grained region of CANVAS model (_`diameter_MG_region`_) is an optional argument, that can also be changed (the default value is 1.0 nm). The above mentioned arguments are described in **Sec. 4.2**
+**`Choice1`** option requires two mandatory files, i.e. the all-atom structure of the biomolecule (_`protein.gro`_), and the list of central residues that require an atomistic description (_`list_AT_res.dat`_). On the other hand, the diameter value of medium-grained region of CANVAS model (_`diameter_MG_region`_) is an optional argument, that can also be changed (the default value is 1.0 nm). The above mentioned arguments are described in **Sec. 4.2**
 
 In order to launch the **choice1** task the command-line is the following: 
 
