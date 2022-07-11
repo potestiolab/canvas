@@ -243,7 +243,7 @@ of diameter or the medium-grained region (1.0 nm is the default one)[^1]
 
 A short explaination of files and of the diameter value is the following:
 
-* **`protein.gro`**: File containing the all-atom structure of the biomolecule in .gro format. 
+* **`protein.gro`**: File containing the coordinates of all-atom structure of the biomolecule in .gro format. 
 
 * **`list_AT_res.dat (for choice1)`**: File with a list of central atomistic(s) residue(s) and corresponding atomistic(s) radius(ii) organized in two columns. In particular, given the all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of this file, while the radius _R_ (in nm) defines an atomistic sphere around the central residue(s): 
 
@@ -289,7 +289,7 @@ In **Appendix**  we focus on each argument discussed breafly before.
 
 # 5 - _CANVAS.py_ & _CANVAS-MPI4.py_
 
-_CANVAS.py_ does not have _tasks_ in the sense explained in **Sec. 4.1**. Indeed, this script requires three mandatory files: the all-atom structure of the biomolecule (_`protein.gro`_), the list of the atoms that survive (_`list_survived_atoms.dat`_) and the topology file of the all-atom configuration (_`topol.top`_). On the other hand, four arguments are optional: the list of atoms in the Fully-AT structures splitted in different domains (_`dom.txt`_), and the flags `-c/--code lammps`_,  _`-r/--resc14 Y`, _-s/--solvate n`_. The arguments are described in **Sec. 5.1**
+_CANVAS.py_ does not have _tasks_ in the sense explained in **Sec. 4.1**. Indeed, this script requires three mandatory files: the coordinate file of all-atom structure of the biomolecule (_`protein.gro`_), the list of the atoms that survive (_`list_survived_atoms.dat`_) and the topology file of the all-atom configuration (_`topol.top`_). On the other hand, four arguments are optional: the list of atoms in the Fully-AT structures splitted in different domains (_`dom.txt`_), and the flags _`-c/--code lammps`_,  _`-r/--resc14 Y`_, _-s/--solvate n`_. The arguments are described in **Sec. 5.1**
 
 In order to launch the **CANVAS.py** script, the command-line is the following:
 
@@ -300,9 +300,9 @@ python3 CANVAS.py [-h] -i <protein.gro> -l <list_survived_atoms.dat> -t <topol.t
    
 python3 CANVAS.py [--help] --in <protein.gro> --list <list_survived_atoms.dat> --top <topol.top> [--dom <dom.txt>] [--resc14 Y] [--code lammps] [--solvate n]
 ```
-> NOTE: **Please, take in account that _list survived atoms FILE_ is the output file obtained after launching _block.py_.** 
+> **NOTE: Please, take in account that _list_survived_atoms.dat_ is the output file obtained after launching _block.py_.** 
 
-A short explaination of arguments is provided by launching the command `python3 CANVAS.py -h` or `python3 CANVAS.py --help`. Alternatively, for printing a short usage message, please type: `python3 CANVAS.py` or `python3 CANVAS.py -u`
+A short explaination of arguments is provided by launching the command `python3 CANVAS.py -h` or `python3 CANVAS.py --help`. Alternatively, for printing a short usage message, please type: `python3 CANVAS.py` or `python3 CANVAS.py -u`[^1]
 
 The output of the program consists of three directories, detailled described in **Sec. 7**, with the purpose of simulating with Gromacs or Lammps a Biomolecule with the CANVAS model, and analyze the resulting data: 
  
@@ -314,15 +314,14 @@ The output of the program consists of three directories, detailled described in 
 
 ## 5.1 - Arguments 
 
-As shown in **Sec. 5** the coordinate file, the file containing the list of survived atoms, and the topology one are always, mandatory. On the other hand, the domain division file is strongly recommended, even though is optional, the rescaled non-bonded 1-4 interactions flag 
-(`-r/--resc14 Y`) and the string that indicates if LAMMPS or GROMACS input-files are created (`-c/--code lammps`) are optional. In the latter case, if not specified, gromacs input-files are returned.  
+As shown in **Sec. 5** the coordinate file  of all-atom structure of the biomolecule (_protein.gro_), the file containing the list of survived atoms (_list_survived_atoms.dat_), and the topology file (_topol.top_) one are always, mandatory. On the other hand, the file containing the list of atoms splitted in different domain (_dom.txt_) is strongly recommended, even though is optional, the rescaled non-bonded 1-4 interactions between CG-beads flag (`-r/--resc14 Y`) and the string that indicates if LAMMPS or GROMACS input-files are created (`-c/--code lammps`) are optional. In the latter case, if not specified, gromacs input-files are returned.  
 
 A short explaination of the above mentioned files is the following:
 
-* **`Coordinate FILE`**: File of atom Coordinates in .gro format
+* **`protein.gro`**: File containing the coordinates of all-atom structure of the biomolecule in .gro format. 
 
-* **`List survived atoms FILE`**: File containing the list of survived atoms organized in two columns:
-                                It is the output file of block.py if correctly executed. 
+* **`list_survived_atoms.dat`**: File containing the list of survived atoms organized in two columns. In particular, given the all-atom structure of the biomolecule, protein.gro, the _atom number_ is the fourth column of this file. The second column, is the label of the corresponding survived atom, that is _`at`_ in case the latter conserves its own properties, or _`cg`_ in case of medium-grained or coarse-grained resolution. Please, take in account that the file is the output file of block.py if correctly executed.  
+
 ```                                
 |----------------|--------------------------| 
 | at_num 1 (int) | caption 1 ('at' or 'cg') |
@@ -334,12 +333,14 @@ A short explaination of the above mentioned files is the following:
 |----------------|--------------------------|  
 ```
 
-* **`Topology FILE`**: File containing the topology of fullyAT representation
+* **`topol.top`**: File containing the topology of all-atom representation
 
-* **`Domain Division FILE`**: Optional - but strongly recommended - File with the list of atoms divided in domains.
-                            The number of columns is equal to the number of domains
+* **`dom.txt`**: Optional - but strongly recommended - File with the list of atoms divided in domains.
                             Each row contains the at_numbers of the atoms that belong
-                            to the same block separated by spaces:
+                            to the same block separated by spaces.  Therefore, the number of columns is equal to the number of domains.
+                            This file is very useful especially for biomolecules that present different domains: indeed, it prevents bonds 
+                            between CG beads that belongs to different domains, for guarantee system flexibility. 
+                            
 ```
 |---------------------------------------------------|
 | AT_Num-1   AT_Num-2   AT_Num-3   .....  AT_Num-N  |
@@ -347,6 +348,7 @@ A short explaination of the above mentioned files is the following:
 | .....      .....      .....      .....  .....     |
 |---------------------------------------------------| 
 ```
+
 * **`rescaled14`**: String containing the word `Y` or `y`. Other strings
                   are not allowed. If `-r/--resc14 Y` is set, than all pairs
                   where ONLY one CG bead is kept if in the corresponding
