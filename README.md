@@ -121,7 +121,7 @@ printed on screen.
 
 ## 4.1 - Tasks 
 
-_`block.py`_ and its MPI version (_`block-MPI.py`_) are inside the `PYTHON-SCRIPT/` directory. This code has the purpose to write a file containing the list of survived atoms. Before lauching the code, te user is required to select one of three possible options, depending on the type of _`atomistic/medium-grained/coarse grained`_ subdivision that would like to obtain: 
+_`block.py`_ and its MPI version (_`block-MPI.py`_) are inside the `PYTHON-SCRIPT/` directory. This code has the purpose to write a file containing the list of survived atoms. Before lauching the code, te user is required to select one of three possible options, depending on the type of _`atomistic`_/_`medium-grained`_/_`coarse-grained`_ subdivision that would like to obtain: 
 
 * **`choice1`**: One or more central atomistic residues that require an atomistic description is/are known. 
                Since the high-resolution region is not completely defined, an atomistic sphere with radius _R_, 
@@ -169,88 +169,99 @@ Each task can require different input files, provided to the program in the form
 ### 4.1.1 - choice1 
 ---------
 
-**`Choice1`** option requires two mandatory files, i.e. the all-atom structure of the biomolecule (_`protein.gro`_), and the list of central residues that require an atomistic description (_`list_AT_res.dat`_). On the other hand, the diameter value of medium-grained region of CANVAS model (_`diameter_MG_region`_) is an optional argument, that can also be changed (the default value is 1.0 nm). The above mentioned arguments are described in **Sec. 4.2**
+**`Choice1`** option requires two mandatory files, i.e. the all-atom structure of the biomolecule (_`protein.gro`_) and the list of central residues that require an atomistic description (_`list_AT_res.dat`_). On the other hand, the diameter value of medium-grained region of CANVAS model (_`diameter_MG_region`_) is an optional argument, that can also be changed (the default value is 1.0 nm). The above mentioned arguments are described in **Sec. 4.2**
 
 In order to launch the **choice1** task the command-line is the following: 
 
 ```bash
-python3 block.py choice1 -g <Coordinate FILE> -l <list AT-bb-CG FILE> [-D <diameter hybrid region>] 
+python3 block.py choice1 -g <protein.gro> -l <list_AT_res.dat> [-D <diameter_MG_region>] 
 
 or 
 
-python3 block.py choice1 --gro  <Coordinate FILE> --list <list AT-bb-CG FILE> [--diameter <diameter hybrid region>] 
+python3 block.py choice1 --gro  <protein.gro> --list <list_AT_res.dat> [--diameter <diameter_MG_region>] 
 ```
 
-> NOTE: For simplicity, the previous commands are referred to `block.py`, but nothing changes for `block-MPI.py`
+The output of the program is the list of survived atoms. For further information, please type on terminal `python3 block.py choice1`.
 
-The output of the program is the list of survived atoms. For further information, please type on terminal `python3 block.py choice1` (`python3 block-MPI.py choice1`).
+> NOTE: For simplicity, the previous commands are referred to `block.py`, but nothing changes for `block-MPI.py`
 
 <br />
 
 ### 4.1.2 - choice2 
 ---------
 
-**`Choice2`** option requires two mandatory files, i.e. the _`coordinate FILE`_, and the _`list AT-bb-CG FILE`_ 
-and one optional argument that is the _`diameter of hybrid region`_ in the CANVAS model. The arguments are described in **Sec. 4.2**. 
+**`Choice2`** option requires two mandatory files, i.e. the all-atom structure of the biomolecule (_`protein.gro`_) and the list of **all** residues that require an atomistic description (_`list_all_AT_res.dat`_).  On the other hand, the diameter value of medium-grained region of CANVAS model (_`diameter_MG_region`_) is an optional argument, that can also be changed (the default value is 1.0 nm). The above mentioned arguments are described in **Sec. 4.2**  
 
 In order to launch the **choice2** task the command-line is the following:
 
 ```bash
-python3 block.py choice2 -g <Coordinate FILE> -l <list AT-bb-CG FILE> [-D <diameter hybrid region>] 
+python3 block.py choice2 -g <protein.gro> -l <list_all_AT_res.dat> [-D <diameter_MG_region>] 
 
 or 
 
-python3 block.py choice2 --gro  <Coordinate FILE> --list <list AT-bb-CG FILE> [--diameter <diameter hybrid region>] 
+python3 block.py choice2 --gro  <protein.gro> --list <list_all_AT_res.dat> [--diameter <diameter_MG_region>] 
 ```
 
 The output of the program is the list of survived atoms. For further information, please type on terminal `python3 choice2`.
+
+> NOTE: For simplicity, the previous commands are referred to `block.py`, but nothing changes for `block-MPI.py`
 
 <br />
 
 ### 4.1.3 - choice3 
 ---------
 
-**`Choice3`** option requires two mandatory files, i.e. the _`coordinate FILE`_, and the _`list AT-bb-CG FILE`_. The arguments are described in **Sec. 4.2**
+**`Choice3`** option requires two mandatory files, i.e. the all-atom structure of the biomolecule (_`protein.gro`_) and the list of **all** residues that require an atomistic and medium-grained description (_`list_all_AT_MG_res.dat`_). The arguments are described in **Sec. 4.2**
 
 In order to lunch the **choice3** task the command-line is the following:
 
 ```bash
-python3 block.py choice2 -g <Coordinate FILE> -l <list AT-bb-CG FILE> 
+python3 block.py choice2 -g <protein.gro> -l <list_all_AT_MG_res.dat> 
 
 or 
 
-python3 block.py choice2 --gro  <Coordinate FILE> --list <list AT-bb-CG FILE> 
+python3 block.py choice2 --gro  <protein.gro> --list <list_all_AT_MG_res.dat> 
 ```
 
 The output of the program is the list of survived atoms. For further information, please type on terminal `python3 choice3`.
+
+> NOTE: For simplicity, the previous commands are referred to `block.py`, but nothing changes for `block-MPI.py`
 
 <br />
 
 ## 4.2 - Arguments 
 
-As shown in Section 4.1 the _coordinate FILE_ and list _AT-bb-CG FILE_ are always mandatory whatever the task chosen. 
-On the other hand, if the option taken is **choice1** or **choice2**, the user has to opportunity to change the default value 
-of diameter or the hydrid region (1.0 nm is the default one). 
+As shown in Section 4.1, the all-atom structure of the biomolecule (_`protein.gro`_) is always mandatory. Likewise, according with the 
+task selected, three different files are mandatory; in particular:
 
-Please note that the _list AT-bb-CG FILE_ is organized in different way according the task chosen.
+$\circ$ If **choice1** option is selected, the list of central residues that require an atomistic description (_`list_AT_res.dat`_) is needed; 
+
+$\circ$ If **choice2** option is selected, the list of all residues that require an atomistic description (_`list_all_AT_res.dat`_) is requested; 
+
+$\circ$ If **choice3** option is selected, the list of all residues that require an atomistic and medium-grained description (_`list_all_AT_MG_res.dat`_) is expected. 
+
+On the other hand, if the option taken is **choice1** or **choice2**, the user has to opportunity to change the default value 
+of diameter or the medium-grained region (1.0 nm is the default one)[^1]
+
+[^1]: **choice3** the diameter of medium-grained region cannot be set, as the user knows in advance all residues that require an a medium-grained resolution. 
 
 A short explaination of files and of the diameter value is the following:
 
-* **`Coordinate FILE`**: File of atom Coordinates in .gro format 
+* **`protein.gro`**: File containing the all-atom structure of the biomolecule in .gro format. 
 
-* **`List At-bb-CG FILE (for choice1)`**: File with a list of central atomistic(s) residue(s)
-                                    and corresponding atomistic(s) radius(ii) organized in two columns:
+* **`list_AT_res.dat (for choice1)`**: File with a list of central atomistic(s) residue(s) and corresponding atomistic(s) radius(ii) organized in two columns. In particular, given the all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of this file, while the radius _R_ (in nm) defines an atomistic sphere around the central residue(s): 
+
 ```                                                           
-|-----------------|-----------------------|                                        
-| residue1 (int)  |   radius1 (int/float) |  
-| residue2        |   radius2             | 
-| ........        |   ........            |
-| residueN        |   radiusN             |  
-|-----------------|-----------------------|                                     
-```                                    
-                                    
-* **`List AT-bb-CG FILE (for choice2)`**: File organized in only one column that contains 
-                                    the list of atomistic residues:
+|-----------------|----------------------------|                                        
+| residue1 (int)  |   radius1 [nm] (int/float) |  
+| residue2        |   radius2                  | 
+| ........        |   ........                 |
+| residueN        |   radiusN                  |  
+|-----------------|----------------------------|                                     
+```
+                                   
+* **`list_all_AT_res.dat (for choice2)`**: File organized in only one column that contains 
+                                           the list of atomistic residues:
 ```
 |----------------|  
 | residue1 (int) |  
