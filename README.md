@@ -234,16 +234,16 @@ The output of the program is the list of survived atoms. For further information
 As shown in Section 4.1, the all-atom structure of the biomolecule (_`protein.gro`_) is always mandatory. Likewise, according with the 
 task selected, three different files are mandatory; in particular:
 
-$\circ$ If **choice1** option is selected, the list of central residues that require an atomistic description (_`list_AT_res.dat`_) is needed; 
+&ensp; $\circ$  If **choice1** option is selected, the list of central residues that require an atomistic description (_`list_AT_res.dat`_) is needed; 
 
-$\circ$ If **choice2** option is selected, the list of all residues that require an atomistic description (_`list_all_AT_res.dat`_) is requested; 
+&ensp; $\circ$ If **choice2** option is selected, the list of all residues that require an atomistic description (_`list_all_AT_res.dat`_) is requested; 
 
-$\circ$ If **choice3** option is selected, the list of all residues that require an atomistic and medium-grained description (_`list_all_AT_MG_res.dat`_) is expected. 
+&ensp; $\circ$ If **choice3** option is selected, the list of all residues that require an atomistic and medium-grained description (_`list_all_AT_MG_res.dat`_) is expected. 
 
 On the other hand, if the option taken is **choice1** or **choice2**, the user has to opportunity to change the default value 
 of diameter or the medium-grained region (1.0 nm is the default one)[^1]
 
-[^1]: **choice3** the diameter of medium-grained region cannot be set, as the user knows in advance all residues that require an a medium-grained resolution. 
+[^1]: In **choice3** the diameter of medium-grained region cannot be set, as the user knows in advance all residues that require an a medium-grained resolution. 
 
 A short explaination of files and of the diameter value is the following:
 
@@ -260,8 +260,8 @@ A short explaination of files and of the diameter value is the following:
 |-----------------|----------------------------|                                     
 ```
                                    
-* **`list_all_AT_res.dat (for choice2)`**: File organized in only one column that contains 
-                                           the list of atomistic residues:
+* **`list_all_AT_res.dat (for choice2)`**: File organized in only one column that contains the list of _all_ residues that require an atomistic description. In particular, given the all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of this file
+
 ```
 |----------------|  
 | residue1 (int) |  
@@ -271,8 +271,8 @@ A short explaination of files and of the diameter value is the following:
 |----------------| 
 ```                                        
                                         
-* **`List At-bb-CG FILE (for choice3)`**: File organized in two columns that contains the list of atomistic residues
-                                    and the list of residues that require an hybrid resolution:
+* **`List At-bb-CG FILE (for choice3)`**: File organized in two columns that contains the list of _all_ residues that require an atomistic (first column) and medium-grained (second column) description. In particular, given the all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of this file
+
 ```
 |-----------------|-----------------|  
 | res1_AT (int)   |  res1_hy (int)  |  
@@ -284,14 +284,14 @@ A short explaination of files and of the diameter value is the following:
 |-----------------|-----------------|  
 ```
 
-* **`Diameter hybrid region`**: Value (in nm) of diameter of the hybrid region. Default value: 1.0 nm
+* **`Diameter hybrid region`**: Diameter value (in nm) of the medium-grained region. Default value: 1.0 nm
                                          
 
 In **Appendix**  we focus on each argument discussed breafly before.
 
 <br />
 
-# 5 - _CANVAS.py_
+# 5 - _CANVAS.py_ & _CANVAS-MPI4.py_
 
 _CANVAS.py_ does not have _tasks_ in the sense explained in **Sec. 4.1**. Indeed, this script
 requires three mandatory files: _`coordinate FILE`_, _`list survived atoms FILE`_, and the _`topology FILE`_, 
