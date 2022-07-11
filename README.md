@@ -181,9 +181,9 @@ or
 python3 block.py choice1 --gro  <protein.gro> --list <list_AT_res.dat> [--diameter <diameter_MG_region>] 
 ```
 
-The output of the program is the list of survived atoms. For further information, please type on terminal `python3 block.py choice1`.
+The output of the program is the list of survived atoms. For further information, please type on terminal `python3 block.py choice1`.[^1]
 
-> NOTE: For simplicity, the previous commands are referred to `block.py`, but nothing changes for `block-MPI.py`
+[^1]: For simplicity, the previous commands are referred to `block.py`, but nothing changes for `block-MPI.py`
 
 <br />
 
@@ -202,9 +202,7 @@ or
 python3 block.py choice2 --gro  <protein.gro> --list <list_all_AT_res.dat> [--diameter <diameter_MG_region>] 
 ```
 
-The output of the program is the list of survived atoms. For further information, please type on terminal `python3 choice2`.
-
-> NOTE: For simplicity, the previous commands are referred to `block.py`, but nothing changes for `block-MPI.py`
+The output of the program is the list of survived atoms. For further information, please type on terminal `python3 choice2`.[^1]
 
 <br />
 
@@ -223,9 +221,7 @@ or
 python3 block.py choice2 --gro  <protein.gro> --list <list_all_AT_MG_res.dat> 
 ```
 
-The output of the program is the list of survived atoms. For further information, please type on terminal `python3 choice3`.
-
-> NOTE: For simplicity, the previous commands are referred to `block.py`, but nothing changes for `block-MPI.py`
+The output of the program is the list of survived atoms. For further information, please type on terminal `python3 choice3`.[^1]
 
 <br />
 
@@ -293,20 +289,18 @@ In **Appendix**  we focus on each argument discussed breafly before.
 
 # 5 - _CANVAS.py_ & _CANVAS-MPI4.py_
 
-_CANVAS.py_ does not have _tasks_ in the sense explained in **Sec. 4.1**. Indeed, this script
-requires three mandatory files: _`coordinate FILE`_, _`list survived atoms FILE`_, and the _`topology FILE`_, 
-and three optional argument, namely the _`Domains FILE`_, the flag _`-c/--code lammps`_ and the flag _`-r/--resc14 Y`_ . The arguments are described in **Sec. 5.1**
+_CANVAS.py_ does not have _tasks_ in the sense explained in **Sec. 4.1**. Indeed, this script requires three mandatory files: the all-atom structure of the biomolecule (_`protein.gro`_), the list of the atoms that survive (_`list_survived_atoms.dat`_) and the topology file of the all-atom configuration (_`topol.top`_). On the other hand, four arguments are optional: the list of atoms in the Fully-AT structures splitted in different domains (_`dom.txt`_), and the flags `-c/--code lammps`_,  _`-r/--resc14 Y`, _-s/--solvate n`_. The arguments are described in **Sec. 5.1**
 
 In order to launch the **CANVAS.py** script, the command-line is the following:
 
 ```bash 
-python3 CANVAS.py [-h] -i <Coordinate FILE> -l <List survived atoms FILE> -t <Topology FILE> [-d <Domains FILE>] [-r Y] [-c lammps]
+python3 CANVAS.py [-h] -i <protein.gro> -l <list_survived_atoms.dat> -t <topol.top> [-d <dom.txt>] [-r Y] [-c lammps] [-s n]
 
    or: 
    
-python3 CANVAS.py [--help] --in <Coordinate FILE> --list <List survived atoms FILE> --top <Topology FILE> [--dom <Domains FILE>] [--resc14 Y] [--code lammps]
+python3 CANVAS.py [--help] --in <protein.gro> --list <list_survived_atoms.dat> --top <topol.top> [--dom <dom.txt>] [--resc14 Y] [--code lammps] [--solvate n]
 ```
-Please, take in account that _list survived atoms FILE_ is the output file obtained after launching _block.py_. 
+> NOTE: **Please, take in account that _list survived atoms FILE_ is the output file obtained after launching _block.py_.** 
 
 A short explaination of arguments is provided by launching the command `python3 CANVAS.py -h` or `python3 CANVAS.py --help`. Alternatively, for printing a short usage message, please type: `python3 CANVAS.py` or `python3 CANVAS.py -u`
 
