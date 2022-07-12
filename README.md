@@ -365,12 +365,14 @@ the rescaled non-bonded 1-4 interactions between CG-beads flag (`-r/--resc14 Y`)
 ```
 
 * **`rescaled14`**: String containing the word `Y` or `y`. Other strings
-                  are not allowed. If `-r/--resc14 Y` is set, than all pairs
-                  where ONLY one CG bead is kept if in the corresponding
-                  all-atom representation that pair is present (by default 
-                  only fully-atomistic rescaled non-bonded 1-4 interaction are mantained).
-                  Keep attention, as it might create artifacts in MD simulation. 
-                  If using charmm.ff this command is ignored. 
+                  are not allowed. In this model, by default, rescaled non-bonded 1-4 interactions are introduced only in the fully-atomistic region.
+                  However, if `-r/--resc14 Y` is set, the latter are also mainteined in the interface AT-CG. Indeed, if in all-atom representation a 
+                  rescaled non-bonded interaction is present between two atoms whose rapresentation in the CANVAS model 
+                  is AT-CG, the latter is kept in the multi-resolution model.[^4] 
+                  Keep attention, as it might create artifacts in MD simulation. If using charmm forcefield this command is ignored.
+               
+[^4]: In case of CG-CG pairs, no rescaled non-bonded 1-4 interaction is applied, even if `-r/--resc14 Y` is set since it might create artifacts because each bead has espilon and sigma values far away from the all-atom reference. 
+                  
 
 * **`codestring`**: String containing `lammps` word. Other strings are not
                       allowed. If `-c/--code lammps` is set, then this program
