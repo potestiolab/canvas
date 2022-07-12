@@ -22,7 +22,10 @@ are retained;
 
 The method is presented and validated on two case studies, the enzyme **Adenylate Kinase** and the therapeutic anti- body **Pembrolizumab** in acqueous solution, by comparing results obtained with the CANVAS model against fully atomistic simulations. 
 
-All the details of the work can be found in [REF: Fiorentini, Tarenzi, Potestio]
+All the details of the work can be found in:
+
+**Fast, accurate, and system-specific variable-resolution modelling of proteins**, R. Fiorentini, T. Tarenzi, R. Potestio, 
+https://doi.org/10.48550/arXiv.2207.03187
 
 <br />
 
