@@ -18,9 +18,17 @@ are retained;
 
 * **`medium-grained (MG)`**: intermediate level of detail, where only the backbone atoms of an amino acid are retained, i.e. the carbon alpha $CA_{mg}$, the nitrogen $N_{mg}$ of the amino group, the oxygen $O_{mg}$ and the carbon $C_{mg}$ of the carboxyl group.
 
-* **`coarse-grained (CG)`**: the lowest level of resolution. In the applications presented here, only the $C_\alpha$ atoms of each CG residue are kept, dubbed $CA_{cg}$
+* **`coarse-grained (CG)`**: the lowest level of resolution. In the applications presented here, only the $C_\alpha$ atoms of each CG residue are kept, dubbed $CA_{cg}$.
 
-The method is presented and validated on two case studies, the enzyme **Adenylate Kinase** and the therapeutic anti- body **Pembrolizumab** in acqueous solution, by comparing results obtained with the CANVAS model against fully atomistic simulations. 
+
+<div align="center">
+
+<img src="images/Table-AT-MG-CG.jpg" alt="Scheme" width="500">
+</div>
+
+<br><br>
+
+The method is presented and validated on two case studies, the enzyme **Adenylate Kinase** and the therapeutic antibody **Pembrolizumab** in acqueous solution, by comparing results obtained with the CANVAS model against fully atomistic simulations. 
 
 All the details of the work can be found in:
 
@@ -240,15 +248,15 @@ task selected, three different files are mandatory; in particular:
 &ensp; $\circ$ If **choice3** option is selected, the list of all residues that require an atomistic and medium-grained description (_`list_all_AT_MG_res.dat`_) is expected. 
 
 On the other hand, if the option taken is **choice1** or **choice2**, the user has to opportunity to change the default value 
-of diameter or the medium-grained region (1.0 nm is the default one)[^1]
+of diameter or the medium-grained region (1.0 nm is the default one)[^2]
 
-[^1]: In **choice3** the diameter of medium-grained region cannot be set, as the user knows in advance all residues that require an a medium-grained resolution. 
+[^2]: In **choice3** the diameter of medium-grained region cannot be set, as the user knows in advance all residues that require an a medium-grained resolution. 
 
 A short explaination of files and of the diameter value is the following:
 
 * **`protein.gro`**: File containing the coordinates of all-atom structure of the biomolecule in .gro format. 
 
-* **`list_AT_res.dat (for choice1)`**: File with a list of central atomistic(s) residue(s) and corresponding atomistic(s) radius(ii) organized in two columns. In particular, given the all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of this file, while the radius _R_ (in nm) defines an atomistic sphere around the central residue(s): 
+* **`list_AT_res.dat (for choice1)`**: File with a list of central atomistic(s) residue(s) and corresponding atomistic(s) radius(ii) organized in two columns. In particular, given the coordinate file of all-atom structure of the system, protein.gro, the _residue number_ is the first column of this file, while the radius _R_ (in nm) defines an atomistic sphere around the central residue(s): 
 
 ```                                                           
 |-----------------|----------------------------|                                        
@@ -259,7 +267,7 @@ A short explaination of files and of the diameter value is the following:
 |-----------------|----------------------------|                                     
 ```
                                    
-* **`list_all_AT_res.dat (for choice2)`**: File organized in only one column that contains the list of _all_ residues that require an atomistic description. In particular, given the all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of this file
+* **`list_all_AT_res.dat (for choice2)`**: File organized in only one column that contains the list of _all_ residues that require an atomistic description. In particular, given the all-atom coordinate file of all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of this file
 
 ```
 |----------------|  
