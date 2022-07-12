@@ -327,11 +327,6 @@ The output of the program consists of three directories, detailed described in *
 
 As shown in **Sec. 5** the coordinates file  of all-atom structure of the biomolecule (_protein.gro_), the file containing the list of survived atoms (_list_survived_atoms.dat_), and the topology file (_topol.top_) are always, mandatory. Moreover, the file containing the list of atoms splitted in different domain (_dom.txt_) is strongly recommended, even though is optional. On the other hand, the usage of the flags `-r/--resc14 Y, `-c/--code lammps`, and `-s/--solvate n` are optional. A short explaination of the above mentioned files is the following:
 
-
-the rescaled non-bonded 1-4 interactions between CG-beads flag (`-r/--resc14 Y`) and the string that indicates if LAMMPS or GROMACS input-files are created (`-c/--code lammps`) are optional. In the latter case, if not specified, gromacs input-files are returned.  
-
-
-
 * **`protein.gro`**: File containing the coordinates of all-atom structure of the biomolecule in .gro format. 
 
 * **`list_survived_atoms.dat`**: File containing the list of survived atoms organized in two columns. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _atom number_ is the fourth column of this file. The second column, is the label of the corresponding survived atom, that is _`at`_ in case the latter conserves its own atomistic properties, or _`cg`_ in case of medium-grained or coarse-grained resolution. Please, take in account that the file is the output file of block.py if correctly executed.  
@@ -349,7 +344,7 @@ the rescaled non-bonded 1-4 interactions between CG-beads flag (`-r/--resc14 Y`)
 
 * **`topol.top`**: File containing the topology of all-atom representation; 
 
-* **`dom.txt`**: Optional - **but strongly recommended** - In principle a BioMolecule presents more domains. Thus, it could be a good pratice writing a file containing the list of atoms separated in domains. Indeed, this file is very useful for preventing bonds between CG beads that belongs to different domains, for guarantee system flexibility when the CANVAS model is constructed [^3]. This file is organized as follows: 
+* **`dom.txt`**: Optional - **but strongly recommended** - In principle a biomolecule presents more domains. Thus, it could be a good pratice writing a file containing the list of atoms separated in domains. Indeed, this file is very useful for preventing bonds between CG beads that belongs to different domains, for guarantee system flexibility when the CANVAS model is constructed. [^3] This file is organized as follows: 
   - Each row contains the _atom number_ of the atoms that belong to the same domain separated by spaces.  
   - The number of columns is equal to the number of domains.
 
@@ -368,13 +363,13 @@ the rescaled non-bonded 1-4 interactions between CG-beads flag (`-r/--resc14 Y`)
                   are not allowed. In this model, by default, rescaled non-bonded 1-4 interactions are introduced only in the fully-atomistic region.
                   However, if `-r/--resc14 Y` is set, the latter are also mainteined in the interface AT-CG. Indeed, if in all-atom representation a 
                   rescaled non-bonded interaction is present between two atoms whose rapresentation in the CANVAS model 
-                  is AT-CG, the latter is kept in the multi-resolution model [^4]. 
+                  is AT-CG, the latter is kept in the multi-resolution model. [^4] 
                   Keep attention, as it might create artifacts in MD simulation. If using charmm forcefield this command is ignored.
                
 [^4]: In case of CG-CG pairs, no rescaled non-bonded 1-4 interaction is applied, even if `-r/--resc14 Y` is set since it might create artifacts because each bead has espilon and sigma values far away from the all-atom reference. 
                   
 
-* **`codestring`**: String containing `lammps` word. Other strings are not
+* **`codestring`**:   String containing `lammps` word. Other strings are not
                       allowed. If `-c/--code lammps` is set, then the program
                       produces the input files needed for simulating the CANVAS
                       model in lammps. If `-c/--code gromacs` is set, or in case
@@ -388,8 +383,8 @@ In the **Appendix** we focus on each argument discussed breafly before.
 
 # 6 - Examples 
 
-Inside the `tests/` directory there is the complete list of example files for the Pembrolizumab, Adelynate Kinase, and 
-Antytripsin biomolecules, allowing the user to try **block.py** and **CANVAS.py**. 
+Inside the `tests/` directory there is the complete list of example files for the _Pembrolizumab_, _Adelynate Kinase_, and 
+_Antitrypsin_ biomolecules, allowing the user to try **block.py** (or **block-MPI.py**) and **CANVAS.py** (or **CANVAS-MPI4.py**). 
 
 Hereafter, for the sake of clarity, only three examples are reported. 
 
