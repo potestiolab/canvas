@@ -313,7 +313,7 @@ python3 CANVAS.py [--help] --in <protein.gro> --list <list_survived_atoms.dat> -
 ```
 > **NOTE: Please, take in account that _list_survived_atoms.dat_ is the output file obtained after launching _block.py_.** 
 
-A short explaination of arguments is provided by launching the command `python3 CANVAS.py -h` or `python3 CANVAS.py --help`. Alternatively, for printing a short usage message, please type: `python3 CANVAS.py` or `python3 CANVAS.py -u`[^1]
+A short explaination of arguments is provided by launching the command `python3 CANVAS.py -h` or `python3 CANVAS.py --help`. Alternatively, for printing a short usage message, please type: `python3 CANVAS.py` or `python3 CANVAS.py -u`[^1]. 
 
 The output of the program consists of three directories, detailed described in **Sec. 7**, with the purpose of simulating with Gromacs or Lammps a Biomolecule with the CANVAS model, and analyze the resulting data: 
  
@@ -368,17 +368,17 @@ the rescaled non-bonded 1-4 interactions between CG-beads flag (`-r/--resc14 Y`)
                   are not allowed. In this model, by default, rescaled non-bonded 1-4 interactions are introduced only in the fully-atomistic region.
                   However, if `-r/--resc14 Y` is set, the latter are also mainteined in the interface AT-CG. Indeed, if in all-atom representation a 
                   rescaled non-bonded interaction is present between two atoms whose rapresentation in the CANVAS model 
-                  is AT-CG, the latter is kept in the multi-resolution model.[^4] 
+                  is AT-CG, the latter is kept in the multi-resolution model [^4]. 
                   Keep attention, as it might create artifacts in MD simulation. If using charmm forcefield this command is ignored.
                
 [^4]: In case of CG-CG pairs, no rescaled non-bonded 1-4 interaction is applied, even if `-r/--resc14 Y` is set since it might create artifacts because each bead has espilon and sigma values far away from the all-atom reference. 
                   
 
 * **`codestring`**: String containing `lammps` word. Other strings are not
-                      allowed. If `-c/--code lammps` is set, then this program
+                      allowed. If `-c/--code lammps` is set, then the program
                       produces the input files needed for simulating the CANVAS
                       model in lammps. If `-c/--code gromacs` is set, or in case
-                      this flag is ignored, this program returns the input files
+                      this flag is ignored, the python script returns the input files
                       for simulating the CANVAS model in gromacs.
 
 
