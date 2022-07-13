@@ -802,7 +802,7 @@ String containing the word `Y` or `y`. Other strings are not allowed. If `-r/--r
 ## H - Codestring 
 
 String containing `lammps` word. Other strings are not allowed. If `-c/--code lammps` is set, then this program produces the input files needed for simulating the CANVAS model in lammps. If `-c/--code gromacs` is set, or in case this flag is ignored, this program returns the input files
-for simulating the CANVAS model in gromacs.
+for simulating the CANVAS model in gromacs
 
 
 
