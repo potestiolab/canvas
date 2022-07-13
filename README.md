@@ -325,7 +325,7 @@ The output of the program consists of three directories, detailed described in *
 
 ## 5.1 - Arguments 
 
-As shown in **Sec. 5** the coordinates file  of all-atom structure of the biomolecule (_protein.gro_), the file containing the list of survived atoms (_list_survived_atoms.dat_), and the topology file (_topol.top_) are always, mandatory. Moreover, the file containing the list of atoms splitted in different domain (_dom.txt_) is strongly recommended, even though is optional. On the other hand, the usage of the flags `-r/--resc14 Y, `-c/--code lammps`, and `-s/--solvate n` are optional. A short explaination of the above mentioned files is the following:
+As shown in **Sec. 5** the coordinates file  of all-atom structure of the biomolecule (_protein.gro_), the file containing the list of survived atoms (_list_survived_atoms.dat_), and the topology file (_topol.top_) are always, mandatory. Moreover, the file containing the list of atoms splitted in different domain (_dom.txt_) is strongly recommended, even though is optional. On the other hand, the usage of the flags `-r/--resc14 Y`, `-c/--code lammps`, and `-s/--solvate n` are optional. A short explaination of the above mentioned files is the following:
 
 * **`protein.gro`**: File containing the coordinates of all-atom structure of the biomolecule in .gro format. 
 
@@ -475,6 +475,7 @@ coarse-grained). This folder contains the following files:
 * **`radius_charge-allatom.txt`**: this file is divided in four columns containing the index, the atom-name, 
   the radius (in Angstrom units) obtained by the value of $\sigma/2$, and the corresponding charge. This file 
   is then read by the tkl script, described hereafter. 
+  
 ```        
 |-------|----------------|-----------------|-----------------|  
 | index |    at-type     | VdW_radius (AA) |    charge       |                            
@@ -514,7 +515,7 @@ coarse-grained). This folder contains the following files:
   rmsf_all_ca 
   ```
   If everything went fine, `rmsf.dat` file is returned in output. The latter contains the fluctuation values of each 
-  $`C_\alpha`$ atom (atomistic, medium-grained, and coarse-grained)
+  $C_\alpha$ atom (atomistic, medium-grained, and coarse-grained)
 
 <br />
 
