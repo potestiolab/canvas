@@ -813,6 +813,7 @@ for i in list_survived_atoms:
     if(i[12] > max_sigma):
         max_sigma = i[12]
 
+print("max sigma = {}\n".format(max_sigma))  
 
                     ################################################################
 ####################### (15) UPDATE ATOM LIST with the EPSILON of each atom       #############################################
@@ -3364,7 +3365,7 @@ if(solvate_Flag == True):
     os.system("{} grompp -f ions.mdp -c newsolvated.gro -p topol_new.top -o ions.tpr > /dev/null 2>&1".format(gmx_command))
   
     if os.path.isfile("ions.tpr"):      
-        os.system("echo SOL | {} genion -s ions.tpr -o solvated_ions.gro -p topol_new.top -pname NA -nname CL -neutral > /dev/null 2>&1".format(gmx_command))
+        os.system("echo SOL | {} genion -s ions.tpr -o solvated_ions.gro -p topol_new.top -pname NA -nname CL -neutral -conc 0.15 > /dev/null 2>&1".format(gmx_command))
 
         print("\nSolvated file with ions completed... 90% completed\n")
  

@@ -175,7 +175,7 @@ if(option == "choice1"):
         count_line = count_line + 1 
 
     print("\no '{}' correctly read... 20% completed\n".format(os.path.basename(listfile)))
-
+ 
     # 6.3 - Creation of a list corresponding at the C-alpha atoms, kept from the list of the atomistic residues (list_AT_residues) 
    
     list_AT_atoms = [j for i in list_AT_res for j in atoms if (j[0] == i)]
@@ -207,13 +207,16 @@ if(option == "choice1"):
     
     print("\no Computing distances... 35% completed\n") 
 
+
     list_AT_residues = []
     list_bb_residues = []
     list_CG_residues = []
 
-    count = 0 
+    count = 0
 
-    def update_6p6(list_other_atoms, count, i):
+
+    # Avoid creating MPI function because the presence of "count" creates issues 
+    for i in list_AT_atoms:
         for j in list_other_atoms:
 
             x   = j[4]-i[4]
@@ -234,28 +237,8 @@ if(option == "choice1"):
         if(i[2] == "O" or i[2] == "OC2"):                             # It means that the next residue has been reached (OC2 in case of terminal res) 
             count = count + 1                                         # then, count can be increased by one 
 
-        return list_AT_residues, list_bb_residues, list_CG_residues 
-  
- 
-    pool = Pool()
-
-    temp    = partial(update_6p6, list_other_atoms,count)
-    upd_6p6 = pool.map(temp, iterable=list_AT_atoms)
-
-    list_AT_residues = [i[0] for i in upd_6p6]
-    list_bb_residues = [i[1] for i in upd_6p6]
-    list_CG_residues = [i[2] for i in upd_6p6]  
-
-    list_AT_residues = list(itertools.chain(*list_AT_residues))  #merge list of lists in a unique list
-    list_bb_residues = list(itertools.chain(*list_bb_residues))
-    list_CG_residues = list(itertools.chain(*list_CG_residues))
-
-    pool.close() 
-    pool.join() 
-
 
     list_AT_residues = list_AT_residues + list_AT_res  # Adding in list_AT_residue the atomistic residues writtein in file.   
-
 
     # 6.5 - Removing repetitions because some atoms have the same residue number and sorting out the three list in ascending order.
 
@@ -266,7 +249,6 @@ if(option == "choice1"):
     list_AT_residues.sort() 
     list_bb_residues.sort() 
     list_CG_residues.sort() 
-
 
     # 6.6 - Summarizing, there are the following list of residues:
     #
@@ -788,8 +770,9 @@ elif(sys.argv[1].strip() == "choice3"):
 
     print("\no '{}' containing the list of survived atoms has been written... 95% completed.\n".format(f_list.name))
 
+
     print("\no No Errors... 100% completed\n")
 
-    REAL_end = datetime.now()
-    print("The time for executing the code(BLOCK) is: ", (REAL_end - REAL_start).total_seconds())
+REAL_end = datetime.now()
+print("The time for executing the code(BLOCK) is: ", (REAL_end - REAL_start).total_seconds())
     
