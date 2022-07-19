@@ -460,7 +460,7 @@ Which version of the python scripts is better to use? Serial or MPI? In order to
 
 The final result is **exactly** the same: the CANVAS model of a generic biomolecule is created. 
 
-According with the previous definition appears clear that the MPI version creates the model faster. However, when the number of atoms of a system is not big, serial and MPI version have comparable speeds. The MPI-version, on the other hand, should be the preferable when the number of atoms consist or more than XXX. The following plot shows the time (in seconds) for creating the CANVAS model, as a function of number of cores (processors) used: in particular, 1 core means that the serial version has been employed. 
+According with the previous definition appears clear that the MPI version creates the model faster. However, when the number of atoms of a system is not big, serial and MPI version have comparable speeds. The MPI-version, on the other hand, should be the preferable when the number of atoms consist or more than XXX. The following plot shows the time (in seconds) for creating the CANVAS model, as a function of number of cores (processors) used for different systems: in particular, 1 core means that the serial version has been employed. 
 
 
 # 8 - Simulating CANVAS model with GROMACS, analyze data, and Visualizing Proteins   
