@@ -450,7 +450,19 @@ The output files of each test can be also found in `canvas/output-files/` direct
 
 <br />
 
-# 7 - Simulating CANVAS model with GROMACS, analyze data, and Visualizing Proteins   
+
+# 7 - Serial or Parellel? 
+
+Which version of the python scripts is better to use? Serial or MPI? In order to ask this question let us start to explain the difference between them. 
+1- block.py and CANVAS.py make use or one processor on a given machine (your laptop or cluster) 
+2- block-MPI.py and CANVAS-MPI4.py make use of `multiprocessing module` that allows the programmer to fully leverage multiple processors on a given machine.
+
+The final result is **exactly** the same: the CANVAS model of a generic biomolecule is created. 
+
+According with the previous definition appears clear that the MPI version creates the model faster. However, when the number of atoms of a system is not big, serial and MPI version have comparable speeds. The MPI-version, on the other hand, should be the preferable when the number of atoms consist or more than XXX. The following plot shows the time (in seconds) for creating the CANVAS model, as a function of number of cores (processors) used: in particular, 1 core means that the serial version has been employed. 
+
+
+# 8 - Simulating CANVAS model with GROMACS, analyze data, and Visualizing Proteins   
 
 After executing in sequence _block.py_ (_block_MPI.py) and _CANVAS.py_ (_CANVAS-MPI4.py_), three subfolders are created:
 
@@ -462,7 +474,7 @@ After executing in sequence _block.py_ (_block_MPI.py) and _CANVAS.py_ (_CANVAS-
 
 <br />
 
-## 7.1 - Launching the Simulation in Gromacs 
+## 8.1 - Launching the Simulation in Gromacs 
 
 In  order to launch the simulation of a biomolecule trhough the CANVAS model, go inside the **`run-simulation/`** directory and follow the standard simulation protocol: minimization, equilibration in nvt (50 ps), equilibration in npt (50 ps), and finally the run production (500 ns). 
 
@@ -491,7 +503,7 @@ After this change, the standard simulating protocol can be followed without erro
 
 <br />
 
-## 7.2 - Analysing Data & Visualizing Trajectory 
+## 8.2 - Analysing Data & Visualizing Trajectory 
 
 VMD installation is not mandatory; however it is useful for visualing trajectory and for making preliminary analysis, such as the Root Mean Square Fluctuation (RMSF) of only $C_\alpha$ carbon (atomistic, medium-grained and 
 coarse-grained). This folder contains the following files: 
@@ -545,13 +557,13 @@ coarse-grained). This folder contains the following files:
 
 <br />
 
-# 8 - Fixing Errors when using Charmm36m forcefield 
+# 9 - Fixing Errors when using Charmm36m forcefield 
 
 This section reports two errors that it is possible to encounter if using charmm36m forcefields, and how to solve them. The first one regards the creation of all-atom topology given the coordinate file(.pdb or .gro). The second problem concernes the addition of ions for neutralizing the charge.  Thus, it is clear that the latter are forcefield dependent, and they are not related to the CANVAS model.
 
 <br />
 
-## 8.1 - Creating topology file 
+## 9.1 - Creating topology file 
 
 When the coordinate (.gro) and the topology file (.top) is created using the Charmm36m forcefield using the command provided in Appendix-A below, a fatal error like this can be encountered: 
 
@@ -573,7 +585,7 @@ Note that the charmm36m.ff present in `input-files` directory is modified accord
 
 <br />
 
-## 8.2 - Simulating CANVAS Model 
+## 9.2 - Simulating CANVAS Model 
 
 As already seen in **Sec. 7.1**, another issue can be encountered when using the last version (july 2021) of Charmm36m is due to a different denomination of ions. In every force-field sodium and chloride ions are indicated with NA and CL, respectively. However, in charmm36m 
 they are named SOD and CLA. A solution for fixing the issue is modifying manually the `topol_new.itp` and `solvated_ions.gro` files, substituing: 
@@ -582,7 +594,7 @@ they are named SOD and CLA. A solution for fixing the issue is modifying manuall
 
 <br />
 
-# 9 - Contacts 
+# 10 - Contacts 
 
 Raffaele Fiorentini: raffaele.fiorentini@unitn.it
 
