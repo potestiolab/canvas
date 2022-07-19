@@ -454,8 +454,9 @@ The output files of each test can be also found in `canvas/output-files/` direct
 # 7 - Serial or Parellel? 
 
 Which version of the python scripts is better to use? Serial or MPI? In order to ask this question let us start to explain the difference between them. 
-1- block.py and CANVAS.py make use or one processor on a given machine (your laptop or cluster) 
-2- block-MPI.py and CANVAS-MPI4.py make use of `multiprocessing module` that allows the programmer to fully leverage multiple processors on a given machine.
+
+1.  block.py and CANVAS.py make use or one processor on a given machine (your laptop or cluster) 
+2.  block-MPI.py and CANVAS-MPI4.py make use of `multiprocessing module` that allows the programmer to fully leverage multiple processors on a given machine.
 
 The final result is **exactly** the same: the CANVAS model of a generic biomolecule is created. 
 
