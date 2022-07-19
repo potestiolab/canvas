@@ -268,7 +268,7 @@ A short explaination of files and of the diameter value is the following:
 
 * **`list_AT_res.dat (for choice1)`**: File with a list of central atomistic(s) residue(s) and corresponding atomistic(s) radius(ii) organized in two columns. In particular, given the coordinates file of all-atom structure of the system, protein.gro, the _residue number_ corresponds at the first column of such file,[^3] while the radius _R_ (in nm) defines the atomistic sphere around the central residue(s): 
 
-[^3]: Look [here](https://manual.gromacs.org/archive/5.0.3/online/gro.html) [go](http://stackoverflow.com){:target="_blank"} for further information about **.gro** file 
+[^3]: Look [here](https://manual.gromacs.org/archive/5.0.3/online/gro.html) for further information about **.gro** file 
 
 ```                                                           
 |-----------------|----------------------------|                                        
@@ -279,7 +279,7 @@ A short explaination of files and of the diameter value is the following:
 |-----------------|----------------------------|                                     
 ```
                                    
-* **`list_all_AT_res.dat (for choice2)`**: File organized in only one column that contains the list of _all_ residues that require an atomistic description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ corresponds at the first column of such file
+* **`list_all_AT_res.dat (for choice2)`**: File organized in only one column that contains the list of _all_ residues that require an atomistic description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ corresponds at the first column of such file.[^3]
 
 ```
 |----------------|  
@@ -290,7 +290,7 @@ A short explaination of files and of the diameter value is the following:
 |----------------| 
 ```                                        
                                         
-* **`List At-bb-CG FILE (for choice3)`**: File organized in two columns that contains the list of _all_ residues that require an atomistic (first column) and medium-grained (second column) description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of such file: 
+* **`List At-bb-CG FILE (for choice3)`**: File organized in two columns that contains the list of _all_ residues that require an atomistic (first column) and medium-grained (second column) description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of such file.[^3]
 
 ```
 |-----------------|-----------------|  
@@ -304,8 +304,7 @@ A short explaination of files and of the diameter value is the following:
 ```
 
 * **`Diameter hybrid region`**: Diameter value (in nm) of the medium-grained region. Default value: 1.0 nm
-                                         
-
+                                        
 In **Appendix**  we focus on each argument discussed breafly before.
 
 <br />
@@ -337,30 +336,34 @@ The output of the program consists of three directories, detailed described in *
 
 ## 5.1 - Arguments 
 
-As shown in **Sec. 5** the coordinates file  of all-atom structure of the biomolecule (_protein.gro_), the file containing the list of survived atoms (_list_survived_atoms.dat_), and the topology file (_topol.top_) are always, mandatory. Moreover, the file containing the list of atoms splitted in different domain (_dom.txt_) is strongly recommended, even though is optional. On the other hand, the usage of the flags `-r/--resc14 Y`, `-c/--code lammps`, and `-s/--solvate n` are optional. A short explaination of the above mentioned files is the following:
+As shown in **Sec. 5** the coordinates file  of all-atom structure of the biomolecule (_protein.gro_), the file containing the list of survived atoms (_list_survived_atoms.dat_), and the topology file (_topol.top_) are always, mandatory. Moreover, the file containing the list of atoms splitted in different domain (_dom.txt_) is strongly recommended, even though is optional. On the other hand, the usage of the flags `-r/--resc14 Y` (_rescaled14_), `-c/--code lammps` (_codestring_), and `-s/--solvate n` (_solvatestring_) are optional. A short explaination of the above mentioned files is the following:
 
 * **`protein.gro`**: File containing the coordinates of all-atom structure of the biomolecule in .gro format. 
 
-* **`list_survived_atoms.dat`**: File containing the list of survived atoms organized in two columns. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _atom number_ is the fourth column of this file. The second column, is the label of the corresponding survived atom, that is _`at`_ in case the latter conserves its own atomistic properties, or _`cg`_ in case of medium-grained or coarse-grained resolution. Please, take in account that the file is the output file of block.py if correctly executed.  
+* **`list_survived_atoms.dat`**: File containing the list of survived atoms, in terms of _atom number_ and its label (_at_ or _cg_). In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _atom number_ is the fourth column of such file.[^3] On the other hand, the label of the corresponding survived atom, can assume only two strings: 
+   * _`at`_ in case the latter conserves its own atomistic properties (highest/atomistic resolution) 
+   * _`cg`_ in case of medium-grained or coarse-grained resolution. 
+   
+&ensp; &ensp; &ensp; <u>Please, take in account that the file is the output file of block.py (or block-MPI.py) if correctly executed.</u>
 
 ```                                
-|----------------|--------------------------| 
-| at_num 1 (int) | caption 1 ('at' or 'cg') |
-| at_num 2       | caption 2                |
-| at_num 3       | caption 3                |
-| at_num 4       | caption 4                |
-| ....           | ....                     |
-| at_num N       | caption N                |
-|----------------|--------------------------|  
+|----------------------|------------------------| 
+| atom number 1 (int)  | label 1 ('at' or 'cg') |
+| atom number 2        | label 2                |
+| atom number 3        | label 3                |
+| atom number 4        | label 4                |
+| ....                 | ....                   |
+| atom number N        | label N                |
+|--------------------- |------------------------|  
 ```
 
 * **`topol.top`**: File containing the topology of all-atom representation; 
 
-* **`dom.txt`**: Optional - **but strongly recommended** - In principle a biomolecule presents more domains. Thus, it could be a good pratice writing a file containing the list of atoms separated in domains. Indeed, this file is very useful for preventing bonds between CG beads that belongs to different domains, for guarantee system flexibility when the CANVAS model is constructed. [^3] This file is organized as follows: 
+* **`dom.txt`**: Optional - **but strongly recommended** - In principle a biomolecule presents more domains. Thus, it could be a good pratice writing a file containing the list of atoms separated in domains. Indeed, this file is very useful for preventing bonds between CG beads that belongs to different domains, for guarantee system flexibility when the CANVAS model is constructed.[^4] This file is organized as follows: 
   - Each row contains the _atom number_ of the atoms that belong to the same domain separated by spaces.  
   - The number of columns is equal to the number of domains.
 
-[^3]: If _dom.txt_ is present, only bonds between CG beads (`mg` or `cg`) that belongs to different are ignored; on the other hands, bonds where at least an atom `at` is involved (AT-AT or CG-AT), cannot be excluded otherwise each domain in CANVAS model remains completely unconnected with the rest of system 
+[^4]: If _dom.txt_ is present, only bonds between CG beads (`mg` or `cg`) that belongs to different are ignored; on the other hands, bonds where at least an atom `at` is involved (AT-AT or CG-AT), cannot be excluded otherwise each domain in CANVAS model remains completely unconnected with the rest of system 
 
                             
 ```
