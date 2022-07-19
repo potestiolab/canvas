@@ -191,7 +191,7 @@ Each task can require different input files, provided to the program in the form
 ### 4.1.1 - choice1 
 ---------
 
-**`Choice1`** option requires two mandatory files, i.e. the all-atom structure of the biomolecule (_`protein.gro`_) and the list of central residues that require an atomistic description (_`list_AT_res.dat`_). On the other hand, the diameter value of medium-grained region of CANVAS model (_`diameter_MG_region`_) is an optional argument, that can also be changed (the default value is 1.0 nm). The above mentioned arguments are described in **Sec. 4.2**
+**`Choice1`** option requires two mandatory files, i.e. the coordinates of all-atom structure of the biomolecule (_`protein.gro`_) and the list of central residues that require an atomistic description (_`list_AT_res.dat`_). On the other hand, the diameter value of medium-grained region of CANVAS model (_`diameter_MG_region`_) is an optional argument, that can also be changed (the default value is 1.0 nm). The above mentioned arguments are described in **Sec. 4.2**
 
 In order to launch the **choice1** task the command-line is the following: 
 
@@ -212,7 +212,7 @@ The output of the program is the list of survived atoms. For further information
 ### 4.1.2 - choice2 
 ---------
 
-**`Choice2`** option requires two mandatory files, i.e. the all-atom structure of the biomolecule (_`protein.gro`_) and the list of **all** residues that require an atomistic description (_`list_all_AT_res.dat`_).  On the other hand, the diameter value of medium-grained region of CANVAS model (_`diameter_MG_region`_) is an optional argument, that can also be changed (the default value is 1.0 nm). The above mentioned arguments are described in **Sec. 4.2**  
+**`Choice2`** option requires two mandatory files, i.e. the coordinates of all-atom structure of the biomolecule (_`protein.gro`_) and the list of **all** residues that require an atomistic description (_`list_all_AT_res.dat`_).  On the other hand, the diameter value of medium-grained region of CANVAS model (_`diameter_MG_region`_) is an optional argument, that can also be changed (the default value is 1.0 nm). The above mentioned arguments are described in **Sec. 4.2**  
 
 In order to launch the **choice2** task the command-line is the following:
 
@@ -231,7 +231,7 @@ The output of the program is the list of survived atoms. For further information
 ### 4.1.3 - choice3 
 ---------
 
-**`Choice3`** option requires two mandatory files, i.e. the all-atom structure of the biomolecule (_`protein.gro`_) and the list of **all** residues that require an atomistic and medium-grained description (_`list_all_AT_MG_res.dat`_). The arguments are described in **Sec. 4.2**
+**`Choice3`** option requires two mandatory files, i.e. the coordinates of all-atom structure of the biomolecule (_`protein.gro`_) and the list of **all** residues that require an atomistic and medium-grained description (_`list_all_AT_MG_res.dat`_). The arguments are described in **Sec. 4.2**
 
 In order to lunch the **choice3** task the command-line is the following:
 
@@ -249,17 +249,16 @@ The output of the program is the list of survived atoms. For further information
 
 ## 4.2 - Arguments 
 
-As shown in Section 4.1, the all-atom structure of the biomolecule (_`protein.gro`_) is always mandatory. Likewise, according with the 
-task selected, three different files are mandatory; in particular:
+As shown in Section 4.1, the file containing the coordinates of all-atom structure of the biomolecule (_`protein.gro`_) is always mandatory. Likewise, according with the task selected, three different files are mandatory; in particular:
 
 &ensp; $\circ$  If **choice1** option is selected, the list of central residues that require an atomistic description (_`list_AT_res.dat`_) is needed; 
 
-&ensp; $\circ$ If **choice2** option is selected, the list of all residues that require an atomistic description (_`list_all_AT_res.dat`_) is requested; 
+&ensp; $\circ$ If **choice2** option is selected, the list of _all_ residues that require an atomistic description (_`list_all_AT_res.dat`_) is requested; 
 
-&ensp; $\circ$ If **choice3** option is selected, the list of all residues that require an atomistic and medium-grained description (_`list_all_AT_MG_res.dat`_) is expected. 
+&ensp; $\circ$ If **choice3** option is selected, the list of _all_ residues that require an atomistic and medium-grained description (_`list_all_AT_MG_res.dat`_) is expected. 
 
 On the other hand, if the option taken is **choice1** or **choice2**, the user has to opportunity to change the default value 
-of diameter or the medium-grained region (1.0 nm is the default one)[^2]
+of diameter or the medium-grained region (1.0 nm is the default one).[^2]
 
 [^2]: In **choice3** the diameter of medium-grained region cannot be set, as the user knows in advance all residues that require an a medium-grained resolution. 
 
@@ -267,7 +266,9 @@ A short explaination of files and of the diameter value is the following:
 
 * **`protein.gro`**: File containing the coordinates of all-atom structure of the biomolecule in .gro format. 
 
-* **`list_AT_res.dat (for choice1)`**: File with a list of central atomistic(s) residue(s) and corresponding atomistic(s) radius(ii) organized in two columns. In particular, given the coordinates file of all-atom structure of the system, protein.gro, the _residue number_ is the first column of this file, while the radius _R_ (in nm) defines an atomistic sphere around the central residue(s): 
+* **`list_AT_res.dat (for choice1)`**: File with a list of central atomistic(s) residue(s) and corresponding atomistic(s) radius(ii) organized in two columns. In particular, given the coordinates file of all-atom structure of the system, protein.gro, the _residue number_ corresponds at the first column of such file,[^3] while the radius _R_ (in nm) defines the atomistic sphere around the central residue(s): 
+
+[^3]: Look [here](https://manual.gromacs.org/archive/5.0.3/online/gro.html) [go](http://stackoverflow.com){:target="_blank"} for further information about **.gro** file 
 
 ```                                                           
 |-----------------|----------------------------|                                        
@@ -278,7 +279,7 @@ A short explaination of files and of the diameter value is the following:
 |-----------------|----------------------------|                                     
 ```
                                    
-* **`list_all_AT_res.dat (for choice2)`**: File organized in only one column that contains the list of _all_ residues that require an atomistic description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of this file
+* **`list_all_AT_res.dat (for choice2)`**: File organized in only one column that contains the list of _all_ residues that require an atomistic description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ corresponds at the first column of such file
 
 ```
 |----------------|  
@@ -289,7 +290,7 @@ A short explaination of files and of the diameter value is the following:
 |----------------| 
 ```                                        
                                         
-* **`List At-bb-CG FILE (for choice3)`**: File organized in two columns that contains the list of _all_ residues that require an atomistic (first column) and medium-grained (second column) description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of this file: 
+* **`List At-bb-CG FILE (for choice3)`**: File organized in two columns that contains the list of _all_ residues that require an atomistic (first column) and medium-grained (second column) description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of such file: 
 
 ```
 |-----------------|-----------------|  
