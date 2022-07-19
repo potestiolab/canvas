@@ -136,21 +136,25 @@ _`block.py`_ and its MPI version (_`block-MPI.py`_) are inside the `PYTHON-SCRIP
 
 * **`choice1`**: One or more central atomistic residues that require an atomistic description is/are known. 
                Since the high-resolution region is not completely defined, an atomistic sphere with radius _R_, 
-               defined by the user, is traced (around the central residue(s)). Then, the latter, is sourrounded by 
-               a 3D-annulus of width _D_ that defines a transition/hybrid region where only the backbone atoms ($N$\, 
-               $C_\alpha$, $C$, $O$) are retained. The remainder, is modelled coarse-grained, where only 
-               the $C_\alpha$ atoms are kept. A schematic represention is shown hereafter: 
+               defined by the user, is traced around the central residue(s) (green circle in **Fig.1**). Then, the latter, is sourrounded by 
+               a 3D-annulus of width _D_ that defines a medium-grained region where only the backbone atoms ($N$\, 
+               $C_\alpha$, $C$, $O$) are retained (orange area of **Fig.1**). The remainder, is modelled coarse-grained, where only 
+               the $C_\alpha$ atoms are kept (blue are of **Fig.1**). A schematic represention is shown hereafter: 
 
 <div align="center">
 
 <img src="images/choice1.jpg" alt="Scheme" width="385">
 </div>
+<div align = "center">
+<b>Fig.1</b> - <i> Pictorial representation atomistic/medium-grained/coarse-grained division for <b>choice1</b> </i> 
+</div>
+
 
 <br /><br />
 
 * **`choice2`**: All residues that require an atomistic description are known; therefore the higher resolution region
-                   is completely defined. Around, an hybrid region of width _D_ will be traced where only the backbone 
-                   atoms ($N$, $C_\alpha$, $C$, $O$) are retained. Note that in *choice1* the atomistic region 
+                   is completely defined (green area in **Fig.2**) Around, a medium-grained region of width _D_ will be traced where only the backbone 
+                   atoms ($N$, $C_\alpha$, $C$, $O$) are retained (orange are in **Fig.2**). Note that in *choice1* the atomistic region 
                    is not completely defined a priori, but it will be described  by a radius _R_ starting from the 
                    knowledge of one or more central residues.  
 
@@ -158,17 +162,24 @@ _`block.py`_ and its MPI version (_`block-MPI.py`_) are inside the `PYTHON-SCRIP
 
 <img src="images/choice2.jpg" alt="Scheme" width="400">
 </div>
+<div align = "center">
+<b>Fig.2</b> - <i> Pictorial representation atomistic/medium-grained/coarse-grained division for <b>choice2</b> </i>
+</div>
 
 <br /><br />
 
-* **`choice3`**: All residues that require an atomistic and hybrid description(where only the backbone atoms 
-                   are retained i.e. $N$, $C_\alpha$, $C$, $O$) are known. Consequently, the residues that 
-                   will be modelled as corse grained (where only $C_\alpha$ atoms are kept) are also automatically 
-                   enstablished. 
+* **`choice3`**: All residues that require an atomistic and medium-grained description(where only the backbone atoms 
+                   are retained i.e. $N$, $C_\alpha$, $C$, $O$) are known (green and orange area in **Fig.3**, respectively). 
+                   Consequently, the residues that will be modelled as corse grained (where only $C_\alpha$ atoms are kept) 
+                   are also automatically enstablished. 
+
 
 <div align="center">
 
 <img src="images/choice3.jpg" alt="Scheme" width="400">
+</div>
+<div align = "center">
+<b>Fig.3</b> - <i> Pictorial representation atomistic/mediium-grained/coarse-grained division for <b>choice3</b> </i>
 </div>
 
 <br /><br />
