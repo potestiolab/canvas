@@ -146,7 +146,7 @@ _`block.py`_ and its MPI version (_`block-MPI.py`_) are inside the `PYTHON-SCRIP
 <img src="images/choice1.jpg" alt="Scheme" width="385">
 </div>
 <div align = "center">
-<b>Fig.1</b> - <i> Pictorial representation atomistic/medium-grained/coarse-grained division for <b>choice1</b> </i> 
+<b>Fig.1</b> - <i> Pictorial representation of atomistic/medium-grained/coarse-grained division for <b>choice1</b> </i> 
 </div>
 
 
@@ -163,7 +163,7 @@ _`block.py`_ and its MPI version (_`block-MPI.py`_) are inside the `PYTHON-SCRIP
 <img src="images/choice2.jpg" alt="Scheme" width="400">
 </div>
 <div align = "center">
-<b>Fig.2</b> - <i> Pictorial representation atomistic/medium-grained/coarse-grained division for <b>choice2</b> </i>
+<b>Fig.2</b> - <i> Pictorial representation of atomistic/medium-grained/coarse-grained division for <b>choice2</b> </i>
 </div>
 
 <br /><br />
@@ -179,7 +179,7 @@ _`block.py`_ and its MPI version (_`block-MPI.py`_) are inside the `PYTHON-SCRIP
 <img src="images/choice3.jpg" alt="Scheme" width="400">
 </div>
 <div align = "center">
-<b>Fig.3</b> - <i> Pictorial representation atomistic/mediium-grained/coarse-grained division for <b>choice3</b> </i>
+<b>Fig.3</b> - <i> Pictorial representation of atomistic/mediium-grained/coarse-grained division for <b>choice3</b> </i>
 </div>
 
 <br /><br />
@@ -266,7 +266,7 @@ A short explaination of files and of the diameter value is the following:
 
 * **`protein.gro`**: File containing the coordinates of all-atom structure of the biomolecule in .gro format. 
 
-* **`list_AT_res.dat (for choice1)`**: File with a list of central atomistic(s) residue(s) and corresponding atomistic(s) radius(ii) organized in two columns. In particular, given the coordinates file of all-atom structure of the system, protein.gro, the _residue number_ corresponds at the first column of such file,[^3] while the radius _R_ (in nm) defines the atomistic sphere around the central residue(s): 
+* **`list_AT_res.dat (for choice1)`**: File having the list of central atomistic(s) residue(s) (first column) and corresponding atomistic(s) radius(ii) (second column). In particular, given the coordinates file of all-atom structure of the system, protein.gro, the _residue number_ corresponds at the first column of such file,[^3] while the radius _R_ (in nm) defines the atomistic sphere around the central residue(s)
 
 [^3]: Look [here](https://manual.gromacs.org/archive/5.0.3/online/gro.html) for further information about **.gro** file 
 
@@ -279,7 +279,7 @@ A short explaination of files and of the diameter value is the following:
 |-----------------|----------------------------|                                     
 ```
                                    
-* **`list_all_AT_res.dat (for choice2)`**: File organized in only one column that contains the list of _all_ residues that require an atomistic description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ corresponds at the first column of such file.[^3]
+* **`list_all_AT_res.dat (for choice2)`**: File containing the list of _all_ residues that require an atomistic description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ corresponds at the first column of such file.[^3]
 
 ```
 |----------------|  
@@ -290,17 +290,17 @@ A short explaination of files and of the diameter value is the following:
 |----------------| 
 ```                                        
                                         
-* **`List At-bb-CG FILE (for choice3)`**: File organized in two columns that contains the list of _all_ residues that require an atomistic (first column) and medium-grained (second column) description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of such file.[^3]
+* **`List At-bb-CG FILE (for choice3)`**: File containing the list of _all_ residues that require an atomistic (first column) and medium-grained (second column) description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of such file.[^3]
 
 ```
-|-----------------|-----------------|  
-| res1_AT (int)   |  res1_hy (int)  |  
-| res2_AT         |  res2_hy        |  
-| res3_AT         |  ........       |  
-| res4_AT         |  resM_hy        |  
-| ........        |                 |  
-| resN_AT         |                 |  
-|-----------------|-----------------|  
+|-------------------|---------------------|  
+| residue1_AT (int) |  residue1_MG (int)  |  
+| residue2_AT       |  residue2_MG        |  
+| residue3_AT       |  ........           |  
+| residue4_AT       |  residueM_MG        |  
+| ........          |                     |  
+| residueN_AT       |                     |  
+|-------------------|---------------------|  
 ```
 
 * **`Diameter hybrid region`**: Diameter value (in nm) of the medium-grained region. Default value: 1.0 nm
@@ -324,7 +324,7 @@ python3 CANVAS.py [--help] --in <protein.gro> --list <list_survived_atoms.dat> -
 ```
 > **NOTE: Please, take in account that _list_survived_atoms.dat_ is the output file obtained after launching _block.py_.** 
 
-A short explaination of arguments is provided by launching the command `python3 CANVAS.py -h` or `python3 CANVAS.py --help`. Alternatively, for printing a short usage message, please type: `python3 CANVAS.py` or `python3 CANVAS.py -u`[^1]. 
+A short explaination of arguments is provided by launching the command `python3 CANVAS.py -h` or `python3 CANVAS.py --help`. Alternatively, for printing a short usage message, please type: `python3 CANVAS.py` or `python3 CANVAS.py -u`.[^1] 
 
 The output of the program consists of three directories, detailed described in **Sec. 7**, with the purpose of simulating with Gromacs or Lammps a Biomolecule with the CANVAS model, and analyze the resulting data: 
  
@@ -340,11 +340,11 @@ As shown in **Sec. 5** the coordinates file  of all-atom structure of the biomol
 
 * **`protein.gro`**: File containing the coordinates of all-atom structure of the biomolecule in .gro format. 
 
-* **`list_survived_atoms.dat`**: File containing the list of survived atoms, in terms of _atom number_ and its label (_at_ or _cg_). In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _atom number_ is the fourth column of such file.[^3] On the other hand, the label of the corresponding survived atom, can assume only two strings: 
-   * _`at`_ in case the latter conserves its own atomistic properties (highest/atomistic resolution) 
+* **`list_survived_atoms.dat`**: File containing the list of survived atoms, in terms of _atom number_ (first column) and its label (second column). In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _atom number_ is the fourth column of such file.[^3] On the other hand, the label of the corresponding survived atom, can assume only two strings: 
+   * _`at`_ in case the latter conserves the highest/atomistic resolution (i.e. its own atomistic properties)  
    * _`cg`_ in case of medium-grained or coarse-grained resolution. 
    
-&ensp; &ensp; &ensp; <u>Please, take in account that the file is the output file of block.py (or block-MPI.py) if correctly executed.</u>
+&ensp; &ensp; &ensp; <ins>Please, take in account that such file is the output file of block.py (or block-MPI.py) if correctly executed.</ins>
 
 ```                                
 |----------------------|------------------------| 
@@ -360,7 +360,7 @@ As shown in **Sec. 5** the coordinates file  of all-atom structure of the biomol
 * **`topol.top`**: File containing the topology of all-atom representation; 
 
 * **`dom.txt`**: Optional - **but strongly recommended** - In principle a biomolecule presents more domains. Thus, it could be a good pratice writing a file containing the list of atoms separated in domains. Indeed, this file is very useful for preventing bonds between CG beads that belongs to different domains, for guarantee system flexibility when the CANVAS model is constructed.[^4] This file is organized as follows: 
-  - Each row contains the _atom number_ of the atoms that belong to the same domain separated by spaces.  
+  - Each row contains the _atom number_ [^3] of the atoms that belong to the same domain separated by spaces.  
   - The number of columns is equal to the number of domains.
 
 [^4]: If _dom.txt_ is present, only bonds between CG beads (`mg` or `cg`) that belongs to different are ignored; on the other hands, bonds where at least an atom `at` is involved (AT-AT or CG-AT), cannot be excluded otherwise each domain in CANVAS model remains completely unconnected with the rest of system 
@@ -374,22 +374,25 @@ As shown in **Sec. 5** the coordinates file  of all-atom structure of the biomol
 |---------------------------------------------------| 
 ```
 
-* **`rescaled14`**: String containing the word `Y` or `y`. Other strings
-                  are not allowed. In this model, by default, rescaled non-bonded 1-4 interactions are introduced only in the fully-atomistic region.
-                  However, if `-r/--resc14 Y` is set, the latter are also mainteined in the interface AT-CG. Indeed, if in all-atom representation a 
-                  rescaled non-bonded interaction is present between two atoms whose rapresentation in the CANVAS model 
-                  is AT-CG, the latter is kept in the multi-resolution model. [^4] 
-                  Keep attention, as it might create artifacts in MD simulation. If using charmm forcefield this command is ignored.
+* **`rescaled14`**: String containing the word `Y` or `y`. Other strings are not allowed. In this model, by default, rescaled non-bonded 1-4 
+                    interactions are introduced only in the fully-atomistic region.
+                    However, if `-r/--resc14 Y` is set, the latter are also mainteined on the interface AT-CG. Indeed, if in all-atom representation a 
+                    rescaled non-bonded interaction is present between two atoms whose rapresentation in the CANVAS model is AT-CG, 
+                    the latter is kept in the multi-resolution model. [^5] 
+                    Keep attention, as it might create artifacts in MD simulation. If using charmm forcefield this command is ignored.
                
-[^4]: In case of CG-CG pairs, no rescaled non-bonded 1-4 interaction is applied, even if `-r/--resc14 Y` is set since it might create artifacts because each bead has espilon and sigma values far away from the all-atom reference. 
+[^5]: In case of CG-CG pairs, no rescaled non-bonded 1-4 interaction is applied, even if `-r/--resc14 Y` is set since it might create artifacts because each bead has espilon and sigma values far away from the all-atom reference. 
                   
 
-* **`codestring`**:   String containing `lammps` word. Other strings are not
-                      allowed. If `-c/--code lammps` is set, then the program
-                      produces the input files needed for simulating the CANVAS
-                      model in lammps. If `-c/--code gromacs` is set, or in case
-                      this flag is ignored, the python script returns the input files
-                      for simulating the CANVAS model in gromacs.
+* **`codestring`**:   String containing `lammps` word. Other strings are not allowed. If `-c/--code lammps` is set, then the program
+                      produces the input files needed for simulating the CANVAS model in lammps. If `-c/--code gromacs` is set, or in case
+                      this flag is ignored, the python script returns the input files for simulating the CANVAS model in gromacs.
+                      
+* **`solvatestring`**: String containing 'n' or 'y' letters. Other string are not allowed. If '-s/--solvate n' is set, then the 
+                       system will be not solvated. Use this flag in case of implicit solvent simulations.
+                       If '-s/--solvate y' is set, or in case the user ignore this flag,
+                       the biomolecule will be solvated and neutralized (with `NA` and `CL` ions) 
+
 
 
 In the **Appendix** we focus on each argument discussed breafly before.
@@ -403,36 +406,45 @@ _Antitrypsin_ biomolecules, allowing the user to try **block.py** (or **block-MP
 
 Hereafter, for the sake of clarity, only three examples are reported. 
 
- 
-```bash 
+
+```perl
+### MPI version, Pembrolizumb 0A, Charmm forcefield, Lammps simulating program  
+
+CHARMM_PATH=../input-files/PEMBROLIZUMAB-ANTIBODY/sim-0A-charmm36m/charmm36-jul2021.ff
+
 PYTHONDIR=../PYTHON-scripts
 
-inputDIR=../input-files/ANTITRYPSIN
+inputDIR=../input-files/PEMBROLIZUMAB-ANTIBODY/sim-0A-charmm36m
 
-python3 $PYTHONDIR/block.py choice3 -g $inputDIR/372_probs_TEMP.gro -l $inputDIR/list-ATres-3rd-choice.txt
+python3 $PYTHONDIR/block-MPI.py choice2 -g $inputDIR/apo-0A.gro -l $inputDIR/list-ATres-2nd-choice.txt
 
-python3 $PYTHONDIR/CANVAS.py -g $inputDIR/372_probs_TEMP.gro -l list-atoms-opt-3.txt -t $inputDIR/topol.top
+echo $CHARMM_PATH | python3 $PYTHONDIR/CANVAS-MPI4.py -g $inputDIR/apo-0A.gro -l list-atoms-opt-2.txt -t $inputDIR/topol.top -d $inputDIR/dom.txt -c lammps
 ```
 
-```bash
+```perl 
+### Serial version, Pembrolizumb 3A, Amber forcefield, Gromacs simulating program 
+
 PYTHONDIR=../PYTHON-scripts
 
-inputDIR=../input-files/ADENYLATE-KINASE/kinase-w-charmm36m
+inputDIR=../input-files/PEMBROLIZUMAB-ANTIBODY/sim-3A-amber99
 
-python3 $PYTHONDIR/block.py choice2 -g $inputDIR/frame_4ake_125ns.gro -l $inputDIR/list-ATres-2nd-choice.txt
+python3 $PYTHONDIR/block.py choice2 -g $inputDIR/apo-3A.gro -l $inputDIR/list-ATres-2nd-choice.txt
 
-python3 $PYTHONDIR/CANVAS.py -g $inputDIR/frame_4ake_125ns.gro -l list-atoms-opt-2.txt -t $inputDIR/topol.top -d $inputDIR/dom.txt
+python3 $PYTHONDIR/CANVAS.py -g $inputDIR/apo-3A.gro -l list-atoms-opt-2.txt -t $inputDIR/topol.top -d $inputDIR/dom.txt
 ```
 
-```bash 
+```perl 
+### MPI version, Adenylate Kinase, Amber forcefield, Lammps simulating program, system not solvated 
+
 PYTHONDIR=../PYTHON-scripts
 
-inputDIR=../input-files/PEMBROLIZUMAB-ANTIBODY/APO-0
+inputDIR=../input-files/ADENYLATE-KINASE/sim-w-amber99
 
-python3 $PYTHONDIR/block.py choice2 -g $inputDIR/apo0.gro -l $inputDIR/list-ATres-2nd-choice.txt
+python3 $PYTHONDIR/block-MPI.py choice2 -g $inputDIR/frame_4ake_125ns.gro -l $inputDIR/list-ATres-2nd-choice.txt
 
-python3 $PYTHONDIR/CANVAS.py -g $inputDIR/apo0.gro -l list-atoms-opt-2.txt -t $inputDIR/topol.top -d $inputDIR/dom.txt
+python3 $PYTHONDIR/CANVAS-MPI4.py -g $inputDIR/frame_4ake_125ns.gro -l list-atoms-opt-2.txt -t $inputDIR/topol.top -d $inputDIR/dom.txt -c lammps -s n
 ```
+
 
 The output files of each test can be also found in `canvas/output-files/` directory.  
 
@@ -440,9 +452,9 @@ The output files of each test can be also found in `canvas/output-files/` direct
 
 # 7 - Simulating CANVAS model with GROMACS, analyze data, and Visualizing Proteins   
 
-After executing in sequence _block.py_ and _CANVAS.py_, three subfolders are created:
+After executing in sequence _block.py_ (_block_MPI.py) and _CANVAS.py_ (_CANVAS-MPI4.py_), three subfolders are created:
 
-1. **`other-files`**: it contains a lot of intermediate files created by CANVAS.py: they are not useful per running simulation and for analyzing data. Thus, they can be ignored. 
+1. **`other-files`**: it contains a lot of intermediate files created by CANVAS.py: they are not useful per running simulation. However, the _initial-frame.gro_ file is helpful as it can be employed as reference frame for trajectory alignment, for Root Mean Square Deviation (RMSD) and  Root Mean Square Fluctuations (RMSF) calculations, and so on.
 
 2. **`run-simulation`**: it contains all the ingredients needed for simulating a BioMolecule in Multiple Resolution through the CANVAS model. 
 
@@ -452,27 +464,26 @@ After executing in sequence _block.py_ and _CANVAS.py_, three subfolders are cre
 
 ## 7.1 - Launching the Simulation in Gromacs 
 
-In  order to launch the simulation of a biomolecule trhough the CANVAS model, go inside the **{+run-simulation/+}** directory and follow the standard simulation protocol: minimization, equilibration in nvt (50 ps), equilibration in npt (50 ps), and finally the run production (500 ns). 
+In  order to launch the simulation of a biomolecule trhough the CANVAS model, go inside the **`run-simulation/`** directory and follow the standard simulation protocol: minimization, equilibration in nvt (50 ps), equilibration in npt (50 ps), and finally the run production (500 ns). 
 
-```bash 
+```perl
 gmx_mpi grompp -f em.mdp -c solvated_ions.gro -p topol_new.top -o em.tpr
 gmx_mpi mdrun -v -deffnm em
 ```
-```bash 
+```perl
 gmx_mpi grompp -f nvt.mdp -c em.gro -r em.gro -p topol_new.top -o nvt.tpr
 gmx_mpi mdrun -v -deffnm nvt
 ```
-```bash 
+```perl 
 gmx_mpi grompp -f npt.mdp -c nvt.gro -r nvt.gro -t nvt.cpt -p topol_new.top -o npt.tpr
 gmx_mpi mdrun -v -deffnm npt
 ```
-```bash 
+```perl 
 gmx_mpi grompp -f run.mdp -c npt.gro -t npt.cpt -p topol_new.top -o run.tpr
 gmx_mpi mdrun -v -deffnm run
 ```
 
-Please, take in account that when using **charmm36-jul2021.ff**, a fatal error when launching the minimization
-is printed on terminal. The latter is due to the fact that sodium and chloride ions in our files are labelled with **NA** and **CL** respectively, as for any other forcefield. Indeed, this version requires that the latter must be marked with **SOD** and **CLA**. 
+Please, take in account that when using **charmm36-jul2021.ff**, a fatal error when launching the minimization occurs and it is printed on terminal. The latter is due to the fact that sodium and chloride ions in our files are labelled with **NA** and **CL** respectively, as for any other forcefield. Indeed, this version requires that ions must be marked with **SOD** and **CLA**. 
 
 Therefore, until this issue is solved in the next version of Charmm36m.ff, it is possible to fix the error, substituting manually **NA** and/or **CL** ions present in `solvated_ions.gro` and in `topol_new.itp` files, with **SOD** and **CLA** respectively. 
 
@@ -487,9 +498,9 @@ coarse-grained). This folder contains the following files:
 
 * **`CA_list.txt`**: list of the $C_\alpha$ atoms indexes separated by one white space, in one line. 
 
-* **`radius_charge-allatom.txt`**: this file is divided in four columns containing the index, the atom-name, 
+* **`radius_charge-allatom.txt`**: file splitted in four columns containing the index, the atom-name, 
   the radius (in Angstrom units) obtained by the value of $\sigma/2$, and the corresponding charge. This file 
-  is then read by the tkl script, described hereafter. 
+  is then read by _radius_charge-allatom.tcl_, described hereafter. 
   
 ```        
 |-------|----------------|-----------------|-----------------|  
@@ -505,16 +516,16 @@ coarse-grained). This folder contains the following files:
 ```
 
 * **`radius_charge-allatom.tcl`**: this script has the purpose of reading the _radius_charge-allatom.txt_ file. 
-  In order to execute the script by means of VMD, please launch the command `source radius_charge-allatom.tcl` in
+  In order to execute it by means of VMD, please launch the command _`source radius_charge-allatom.tcl`_ in
   TkConsole. Then, in order to visualize the radius size of each CG bead with a different coloration given by 
   the charge value, go on `Graphics/Representation/Create Rep` and create the following representation:
 
-  ```bash 
-  Select Atoms = resname MUL, Drawing method = VDW, Coloring Method = beta
+  ```java
+  Select Atoms = resname MUL, Drawing Method = VDW, Coloring Method = beta
   ```
   In this way, each bead will have a different radius according the value of $\sigma/2$, and a color given by the 
   Beta Coloring Method: in particular, blue shades are indicative of positive charges, red shades are indicative of
-  negative charges, while the white color corresponds to a neutral charge. The figure below displays the apo-0 (4A) form 
+  negative charges, while the white color corresponds to a neutral charge. The figure below displays the _4A_ form 
   of Pembrolizumab in terms of this new representation just mentioned.  
 
 <div align="center">
