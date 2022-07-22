@@ -191,37 +191,55 @@ Each task can require different input files, provided to the program in the form
 ### 4.1.1 - choice1 
 ---------
 
-**`Choice1`** option requires two mandatory files, i.e. the coordinates of all-atom structure of the biomolecule (_`protein.gro`_) and the list of central residues that require an atomistic description (_`list_AT_res.dat`_). On the other hand, the diameter value of medium-grained region of CANVAS model (_`diameter_MG_region`_) is an optional argument, that can also be changed (the default value is 1.0 nm). The above mentioned arguments are described in **Sec. 4.2**
+**`Choice1`** option requires two mandatory files, i.e. the coordinates of all-atom structure of the biomolecule (_`protein.gro`_) and the list of central residues that require an atomistic description (_`list_AT_res.dat`_). On the other hand, the diameter value of medium-grained region of CANVAS model (_`diameter_MG_region`_) is an optional argument, that can also be changed (the default value is 1.0 nm). Furthermore, the MPI-version (_block-MPI.py_) gives the user the possibility to define the number of cores for parallelizing this code (_`number_of_cores`_): the default value is maxiumum number of available cores present in your laptop/cluster. The above mentioned arguments are described in **Sec. 4.2**.
 
 In order to launch the **choice1** task the command-line is the following: 
 
 ```bash
+### SERIAL VERSION 
 python3 block.py choice1 -g <protein.gro> -l <list_AT_res.dat> [-D <diameter_MG_region>] 
 
-or 
+or
 
 python3 block.py choice1 --gro  <protein.gro> --list <list_AT_res.dat> [--diameter <diameter_MG_region>] 
+```
+``` bash
+### MPI VERSION 
+python3 block.py choice1 -g <protein.gro> -l <list_AT_res.dat> [-D <diameter_MG_region>] [-n <number_of_cores>] 
+
+or
+
+python3 block.py choice1 --gro  <protein.gro> --list <list_AT_res.dat> [--diameter <diameter_MG_region>] [--ncpu <number_of_cores>]
 ```
 
 The output of the program is the list of survived atoms. For further information, please type on terminal `python3 block.py choice1`.[^1]
 
-[^1]: For simplicity, the previous commands are referred to `block.py`, but nothing changes for `block-MPI.py`
+[^1]: For simplicity, this command is referred to `block.py`, but nothing changes for `block-MPI.py`
 
 <br />
 
 ### 4.1.2 - choice2 
 ---------
 
-**`Choice2`** option requires two mandatory files, i.e. the coordinates of all-atom structure of the biomolecule (_`protein.gro`_) and the list of **all** residues that require an atomistic description (_`list_all_AT_res.dat`_).  On the other hand, the diameter value of medium-grained region of CANVAS model (_`diameter_MG_region`_) is an optional argument, that can also be changed (the default value is 1.0 nm). The above mentioned arguments are described in **Sec. 4.2**  
+**`Choice2`** option requires two mandatory files, i.e. the coordinates of all-atom structure of the biomolecule (_`protein.gro`_) and the list of **all** residues that require an atomistic description (_`list_all_AT_res.dat`_).  On the other hand, the diameter value of medium-grained region of CANVAS model (_`diameter_MG_region`_) is an optional argument, that can also be changed (the default value is 1.0 nm). Furthermore, the MPI-version (_block-MPI.py_) gives the user the possibility to define the number of cores for parallelizing this code (_`number_of_cores`_): the default value is maxiumum number of available cores present in your laptop/cluster. The above mentioned arguments are described in **Sec. 4.2**.
 
 In order to launch the **choice2** task the command-line is the following:
 
 ```bash
+### SERIAL VERSION 
 python3 block.py choice2 -g <protein.gro> -l <list_all_AT_res.dat> [-D <diameter_MG_region>] 
 
 or 
 
 python3 block.py choice2 --gro  <protein.gro> --list <list_all_AT_res.dat> [--diameter <diameter_MG_region>] 
+```
+``` bash
+### MPI VERSION 
+python3 block.py choice1 -g <protein.gro> -l <list_all_AT_res.dat> [-D <diameter_MG_region>] [-n <number_of_cores>] 
+
+or
+
+python3 block.py choice1 --gro  <protein.gro> --list <list_all_AT_res.dat> [--diameter <diameter_MG_region>] [--ncpu <number_of_cores>]
 ```
 
 The output of the program is the list of survived atoms. For further information, please type on terminal `python3 choice2`.[^1]
@@ -231,16 +249,25 @@ The output of the program is the list of survived atoms. For further information
 ### 4.1.3 - choice3 
 ---------
 
-**`Choice3`** option requires two mandatory files, i.e. the coordinates of all-atom structure of the biomolecule (_`protein.gro`_) and the list of **all** residues that require an atomistic and medium-grained description (_`list_all_AT_MG_res.dat`_). The arguments are described in **Sec. 4.2**
+**`Choice3`** option requires two mandatory files, i.e. the coordinates of all-atom structure of the biomolecule (_`protein.gro`_) and the list of **all** residues that require an atomistic and medium-grained description (_`list_all_AT_MG_res.dat`_). Furthermore, the MPI-version (_block-MPI.py_) gives the user the possibility to define the number of cores for parallelizing this code (_`number_of_cores`_): the default value is maxiumum number of available cores present in your laptop/cluster. The above mentioned arguments are described in **Sec. 4.2**.
 
 In order to lunch the **choice3** task the command-line is the following:
 
 ```bash
+### SERIAL VERSION 
 python3 block.py choice2 -g <protein.gro> -l <list_all_AT_MG_res.dat> 
 
 or 
 
 python3 block.py choice2 --gro  <protein.gro> --list <list_all_AT_MG_res.dat> 
+```
+``` bash
+### MPI VERSION 
+python3 block.py choice1 -g <protein.gro> -l <list_all_AT_MG_res.dat> [-n <number_of_cores>] 
+
+or
+
+python3 block.py choice1 --gro  <protein.gro> --list <list_all_AT_MG_res.dat> [--ncpu <number_of_cores>]
 ```
 
 The output of the program is the list of survived atoms. For further information, please type on terminal `python3 choice3`.[^1]
@@ -262,7 +289,10 @@ of diameter or the medium-grained region (1.0 nm is the default one).[^2]
 
 [^2]: In **choice3** the diameter of medium-grained region cannot be set, as the user knows in advance all residues that require an a medium-grained resolution. 
 
-A short explaination of files and of the diameter value is the following:
+Eventually, in case the MPI version  of the code is chosen (_block-MPI.py_), whatever the option taken, the user has the possibility to define the number of cores for parallelizing this code. 
+
+
+A short explaination of files, the diameter value, and the number of cores is the following:
 
 * **`protein.gro`**: File containing the coordinates of all-atom structure of the biomolecule in .gro format. 
 
@@ -304,6 +334,11 @@ A short explaination of files and of the diameter value is the following:
 ```
 
 * **`Diameter hybrid region`**: Diameter value (in nm) of the medium-grained region. Default value: 1.0 nm
+
+* **`Number of Cores (MPI-version ONLY)`**: Integer number corresponding at the number of cores for parallelizing _block.py_ script. 
+                                            It goes between 1 and the maximum number of available cores present in the laptop/cluster, 
+                                            otherwise an error is returned. Default value: maxiumum number of available cores present 
+                                            in the laptop/cluster. 
                                         
 In **Appendix**  we focus on each argument discussed breafly before.
 
@@ -311,17 +346,27 @@ In **Appendix**  we focus on each argument discussed breafly before.
 
 # 5 - _CANVAS.py_ & _CANVAS-MPI4.py_
 
-_CANVAS.py_ does not have _tasks_ in the sense explained in **Sec. 4.1**. Indeed, this script requires three mandatory files: the coordinates file of all-atom structure of the biomolecule (_`protein.gro`_), the list of the atoms that survive (_`list_survived_atoms.dat`_) and the topology file of the all-atom configuration (_`topol.top`_). On the other hand, four arguments are optional: the list of atoms in the Fully-AT structure splitted in different domains (_`dom.txt`_), and the flags _`-c/--code lammps`_,  _`-r/--resc14 Y`_, _-s/--solvate n`_. The arguments are described in **Sec. 5.1**
+_CANVAS.py_ does not have _tasks_ in the sense explained in **Sec. 4.1**. Indeed, this script requires three mandatory files: the coordinates file of all-atom structure of the biomolecule (_`protein.gro`_), the list of the atoms that survive (_`list_survived_atoms.dat`_) and the topology file of the all-atom configuration (_`topol.top`_). On the other hand, four arguments are optional: the list of atoms in the Fully-AT structure splitted in different domains (_`dom.txt`_), the choice regarding which simulating package should be used for simulating the CANVAS model, namely LAMMPS or GROMACS (_`-c/--code`_), the option of introducing or not rescaled non-bonded 1-4 interactions also on the interface AT-CG (_`-r/--resc14`_), the possibility of solvating or not the system (_`-s/--solvate`_). Eventually, for MPI-version **only** (CANVAS-MPI4.py) the user has the possibility to define the number of cores for parallelizing this code (_`number_of_cores`_): the default value is maxiumum number of available cores present on laptop/cluster. The arguments are described in **Sec. 5.1**
 
 In order to launch the **CANVAS.py** script, the command-line is the following:
 
 ```bash 
+### SERIAL VERSION 
 python3 CANVAS.py [-h] -i <protein.gro> -l <list_survived_atoms.dat> -t <topol.top> [-d <dom.txt>] [-r Y] [-c lammps] [-s n]
 
    or: 
    
 python3 CANVAS.py [--help] --in <protein.gro> --list <list_survived_atoms.dat> --top <topol.top> [--dom <dom.txt>] [--resc14 Y] [--code lammps] [--solvate n]
 ```
+```bash 
+### MPI VERSION 
+python3 CANVAS.py [-h] -i <protein.gro> -l <list_survived_atoms.dat> -t <topol.top> [-d <dom.txt>] [-r Y] [-c lammps] [-s n] [-n <number_of_cores>]
+
+   or: 
+   
+python3 CANVAS.py [--help] --in <protein.gro> --list <list_survived_atoms.dat> --top <topol.top> [--dom <dom.txt>] [--resc14 Y] [--code lammps] [--solvate n] [--ncpu <number_of_cores>]
+```
+
 > **NOTE: Please, take in account that _list_survived_atoms.dat_ is the output file obtained after launching _block.py_.** 
 
 A short explaination of arguments is provided by launching the command `python3 CANVAS.py -h` or `python3 CANVAS.py --help`. Alternatively, for printing a short usage message, please type: `python3 CANVAS.py` or `python3 CANVAS.py -u`.[^1] 
