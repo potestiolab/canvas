@@ -346,9 +346,19 @@ In **Appendix**  we focus on each argument discussed breafly before.
 
 # 5 - _CANVAS.py_ & _CANVAS-MPI4.py_
 
-_CANVAS.py_ does not have _tasks_ in the sense explained in **Sec. 4.1**. Indeed, this script requires three mandatory files: the coordinates file of all-atom structure of the biomolecule (_`protein.gro`_), the list of the atoms that survive (_`list_survived_atoms.dat`_) and the topology file of the all-atom configuration (_`topol.top`_). On the other hand, four arguments are optional: the list of atoms in the Fully-AT structure splitted in different domains (_`dom.txt`_), the choice regarding which simulating package should be used for simulating the CANVAS model, namely LAMMPS or GROMACS (_`-c/--code`_), the option of also introducing rescaled non-bonded 1-4 interactions also on the interface AT-CG (_`-r/--resc14 Y`_), the possibility of not solvating the system (_`-s/--solvate N`_). Eventually, for MPI-version **only** (CANVAS-MPI4.py) the user has the possibility to define the number of cores for parallelizing this code (_`number_of_cores`_): the default value is maximum number of available cores present on laptop/cluster. The arguments are described in **Sec. 5.1**
+_CANVAS.py_ does not have _tasks_ in the sense explained in **Sec. 4.1**. Indeed, this script requires three mandatory files: the coordinates file of all-atom structure of the biomolecule [_`protein.gro`_], the list of the atoms that survive [_`list_survived_atoms.dat`_] and the topology file of the all-atom configuration [_`topol.top`_]. On the other hand, four arguments are optional: 
 
-In order to launch the **CANVAS.py** script, the command-line is the following:
+* the list of atoms in the Fully-AT structure splitted in different domains [_`dom.txt`_]; 
+
+* the choice regarding the production of the input-files for simulating the biomocule in multiple-resolution in LAMMPS, rather than GROMACS (default simulating package) [_`-c/--code lammps `_]
+
+* the option of also introducing rescaled non-bonded 1-4 interactions also on the interface AT-CG (by default, rescaled non-bonded 1-4 interactions are introduced only in the AT region) [_`-r/--resc14 Y`_] 
+
+* the possibility of not solvating the system (by default the system will be solvated and neutralized with ions) [_`-s/--solvate N`_]
+
+Furthermore, the MPI-version (_block-MPI.py_) gives the user the possibility to define the number of cores for parallelizing this code [_`number_of_cores`_]: by default the script will exploit the maximum number of available cores present on laptop/cluster.
+
+The arguments are described in **Sec. 5.1**. In order to launch the **CANVAS.py/CANVAS-MPI4.py** scripts, the command-line is the following:
 
 ```bash 
 ### SERIAL VERSION 
