@@ -335,7 +335,7 @@ A short explaination of files, the diameter value, and the number of cores is th
 
 * **`Diameter hybrid region`**: Diameter value (in nm) of the medium-grained region. Default value: 1.0 nm
 
-* **`Number of Cores (MPI-version ONLY)`**: Integer number corresponding at the number of cores for parallelizing _block.py_ script. 
+* **`Number of Cores (MPI-version ONLY)`**: Integer number corresponding at the number of cores for parallelizing _block-MPI.py_ script. 
                                             It goes between 1 and the maximum number of available cores present in the laptop/cluster, 
                                             otherwise an error is returned. Default value: maxiumum number of available cores present 
                                             in the laptop/cluster. 
@@ -346,7 +346,7 @@ In **Appendix**  we focus on each argument discussed breafly before.
 
 # 5 - _CANVAS.py_ & _CANVAS-MPI4.py_
 
-_CANVAS.py_ does not have _tasks_ in the sense explained in **Sec. 4.1**. Indeed, this script requires three mandatory files: the coordinates file of all-atom structure of the biomolecule (_`protein.gro`_), the list of the atoms that survive (_`list_survived_atoms.dat`_) and the topology file of the all-atom configuration (_`topol.top`_). On the other hand, four arguments are optional: the list of atoms in the Fully-AT structure splitted in different domains (_`dom.txt`_), the choice regarding which simulating package should be used for simulating the CANVAS model, namely LAMMPS or GROMACS (_`-c/--code`_), the option of introducing or not rescaled non-bonded 1-4 interactions also on the interface AT-CG (_`-r/--resc14`_), the possibility of solvating or not the system (_`-s/--solvate`_). Eventually, for MPI-version **only** (CANVAS-MPI4.py) the user has the possibility to define the number of cores for parallelizing this code (_`number_of_cores`_): the default value is maxiumum number of available cores present on laptop/cluster. The arguments are described in **Sec. 5.1**
+_CANVAS.py_ does not have _tasks_ in the sense explained in **Sec. 4.1**. Indeed, this script requires three mandatory files: the coordinates file of all-atom structure of the biomolecule (_`protein.gro`_), the list of the atoms that survive (_`list_survived_atoms.dat`_) and the topology file of the all-atom configuration (_`topol.top`_). On the other hand, four arguments are optional: the list of atoms in the Fully-AT structure splitted in different domains (_`dom.txt`_), the choice regarding which simulating package should be used for simulating the CANVAS model, namely LAMMPS or GROMACS (_`-c/--code`_), the option of also introducing rescaled non-bonded 1-4 interactions also on the interface AT-CG (_`-r/--resc14 Y`_), the possibility of not solvating the system (_`-s/--solvate N`_). Eventually, for MPI-version **only** (CANVAS-MPI4.py) the user has the possibility to define the number of cores for parallelizing this code (_`number_of_cores`_): the default value is maximum number of available cores present on laptop/cluster. The arguments are described in **Sec. 5.1**
 
 In order to launch the **CANVAS.py** script, the command-line is the following:
 
@@ -381,7 +381,7 @@ The output of the program consists of three directories, detailed described in *
 
 ## 5.1 - Arguments 
 
-As shown in **Sec. 5** the coordinates file  of all-atom structure of the biomolecule (_protein.gro_), the file containing the list of survived atoms (_list_survived_atoms.dat_), and the topology file (_topol.top_) are always, mandatory. Moreover, the file containing the list of atoms splitted in different domain (_dom.txt_) is strongly recommended, even though is optional. On the other hand, the usage of the flags `-r/--resc14 Y` (_rescaled14_), `-c/--code lammps` (_codestring_), and `-s/--solvate n` (_solvatestring_) are optional. A short explaination of the above mentioned files is the following:
+As shown in **Sec. 5** the coordinates file  of all-atom structure of the biomolecule (_protein.gro_), the file containing the list of survived atoms (_list_survived_atoms.dat_), and the topology file (_topol.top_) are always, mandatory. Moreover, the file containing the list of atoms splitted in different domain (_dom.txt_) is strongly recommended, even though is optional. On the other hand, the usage of the flags `-r/--resc14 Y` (_rescaled14_), `-c/--code lammps` (_codestring_), and `-s/--solvate n` (_solvatestring_) are optional. Eventually, in case the MPI version  of the code is chosen (_CANVAS-MPI4.py_), the user has the possibility to choose the number of cores for parallelizing this code. A short explaination of the above mentioned files is the following:
 
 * **`protein.gro`**: File containing the coordinates of all-atom structure of the biomolecule in .gro format. 
 
@@ -435,9 +435,13 @@ As shown in **Sec. 5** the coordinates file  of all-atom structure of the biomol
                       
 * **`solvatestring`**: String containing 'n' or 'y' letters. Other string are not allowed. If '-s/--solvate n' is set, then the 
                        system will be not solvated. Use this flag in case of implicit solvent simulations.
-                       If '-s/--solvate y' is set, or in case the user ignore this flag,
-                       the biomolecule will be solvated and neutralized (with `NA` and `CL` ions) 
+                       If '-s/--solvate y' is set, or in case the user ignore this flag, the biomolecule will be solvated 
+                       and neutralized (with `NA` and `CL` ions) 
 
+* **`Number of Cores (MPI-version ONLY)`**: Integer number corresponding at the number of cores for parallelizing _CANVAS-MPI4.py_ script. 
+                                            It goes between 1 and the maximum number of available cores present in the laptop/cluster, 
+                                            otherwise an error is returned. Default value: maxiumum number of available cores present 
+                                            in the laptop/cluster. 
 
 
 In the **Appendix** we focus on each argument discussed breafly before.
@@ -453,7 +457,7 @@ Hereafter, for the sake of clarity, only three examples are reported.
 
 
 ```perl
-### MPI version, Pembrolizumb 0A, Charmm forcefield, Lammps simulating program  
+### MPI version 48 cores (max number available cores --> ignore flag -n), Pembrolizumb 0A, Charmm forcefield, Lammps simulating program  
 
 CHARMM_PATH=../input-files/PEMBROLIZUMAB-ANTIBODY/sim-0A-charmm36m/charmm36-jul2021.ff
 
@@ -461,9 +465,9 @@ PYTHONDIR=../PYTHON-scripts
 
 inputDIR=../input-files/PEMBROLIZUMAB-ANTIBODY/sim-0A-charmm36m
 
-python3 $PYTHONDIR/block-MPI.py choice2 -g $inputDIR/apo-0A.gro -l $inputDIR/list-ATres-2nd-choice.txt
+python3 $PYTHONDIR/block-MPI.py choice2 -g $inputDIR/apo-0A.gro -l $inputDIR/list-ATres-2nd-choice.txt -n 24 
 
-echo $CHARMM_PATH | python3 $PYTHONDIR/CANVAS-MPI4.py -g $inputDIR/apo-0A.gro -l list-atoms-opt-2.txt -t $inputDIR/topol.top -d $inputDIR/dom.txt -c lammps
+echo $CHARMM_PATH | python3 $PYTHONDIR/CANVAS-MPI4.py -g $inputDIR/apo-0A.gro -l list-atoms-opt-2.txt -t $inputDIR/topol.top -d $inputDIR/dom.txt -c lammps -n 24 
 ```
 
 ```perl 
@@ -479,15 +483,15 @@ python3 $PYTHONDIR/CANVAS.py -g $inputDIR/apo-3A.gro -l list-atoms-opt-2.txt -t 
 ```
 
 ```perl 
-### MPI version, Adenylate Kinase, Amber forcefield, Lammps simulating program, system not solvated 
+### MPI version 24 cores, Adenylate Kinase, Amber forcefield, Lammps simulating program, system not solvated 
 
 PYTHONDIR=../PYTHON-scripts
 
 inputDIR=../input-files/ADENYLATE-KINASE/sim-w-amber99
 
-python3 $PYTHONDIR/block-MPI.py choice2 -g $inputDIR/frame_4ake_125ns.gro -l $inputDIR/list-ATres-2nd-choice.txt
+python3 $PYTHONDIR/block-MPI.py choice2 -n 24 -g $inputDIR/frame_4ake_125ns.gro -l $inputDIR/list-ATres-2nd-choice.txt
 
-python3 $PYTHONDIR/CANVAS-MPI4.py -g $inputDIR/frame_4ake_125ns.gro -l list-atoms-opt-2.txt -t $inputDIR/topol.top -d $inputDIR/dom.txt -c lammps -s n
+python3 $PYTHONDIR/CANVAS-MPI4.py -n 24 -g $inputDIR/frame_4ake_125ns.gro -l list-atoms-opt-2.txt -t $inputDIR/topol.top -d $inputDIR/dom.txt -c lammps -s n 
 ```
 
 
