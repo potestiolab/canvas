@@ -520,15 +520,15 @@ Which version of the python scripts is better to use? Serial or MPI? In order to
 The final result is **exactly** the same: the CANVAS model of a generic biomolecule is created. 
 
 According with the previous definition appears clear that the MPI version creates the model faster. However, depending on the the number of atoms in the fully-atomistic reference, the time for creating the CANVAS model is different:  
-* $N \sim 10^3$ (_Tamapin_ or _Adenylate Kinase_): serial and MPI version have comparable speeds.
-* $N \sim 10^4$ (_Pembrolizumab_): increasing the number of cores, a slight gain, in terms of speed up, can been noticed when using the MPI-version. 
+* $N \sim 10^3$ (_Tamapin_ or _Adenylate Kinase_): serial and MPI version have comparable speeds, and just few seconds are needed for creating the CANVAS model. 
+* $N \sim 10^4$ (_Pembrolizumab_): increasing the number of cores, a slight gain, in terms of speed up, can been noticed when using the MPI-version (from few minutes, to less than one minute) 
 * $N \sim 10^5$ (_Viral capsid_): the MPI-version creates the CANVAS model much faster than the serial version; indeed, increasing the number of cores, the time gradually passes from several hours to few minutes. 
 
-**Fig.4** shows the time (in seconds) for creating the CANVAS model, as a function of number of cores (processors) used for different systems: in particular, 1 core means that the serial version has been employed. 
+Fig.4 shows the time (in seconds) for creating the CANVAS model, as a function of number of cores (processors) used for different systems: in particular, 1 core means that the serial version has been employed. 
 
 <div align="center">
 
-<img src="images/" alt="Scheme" width="385">
+<img src="images/time-vs-NCores-systems.jpg" alt="Scheme" width="385">
 </div>
 <div align = "center">
 <b>Fig.4</b> - <i> time (in seconds) for creating the CANVAVS model starting from an all-atom reference, varying the number of cores, for different systems. The bigger the system, the more the time difference bewteen the usage of 1 and 48 cores </i>. 
