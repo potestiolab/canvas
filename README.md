@@ -113,7 +113,7 @@ Directory folders are shown in light blue; files are shown in light yellow, whil
 
 # 3 - Usage 
 
-The typical usage of the program consists in a call to _`block.py`_ and _`CANVAS.py`_ in succession by using Python3. The MPI version of the two previous codes, _`block-MPI.py`_ and _`CANVAS-MPI4.py`_,  is also possible: it makes use of _multiprocessing_ module with the purpose of creating the CANVAS model exploiting multiple processors at one time. Generally, the MPI version is recommended when your system consists of more than 100 thousand atoms. All details about the performance and efficiency can be found is Sec. XXX. 
+The typical usage of the program consists in a call to _`block.py`_ and _`CANVAS.py`_ in succession by using Python3. The MPI version of the two previous codes, _`block-MPI.py`_ and _`CANVAS-MPI4.py`_,  is also possible: it makes use of _multiprocessing_ module with the purpose of creating the CANVAS model exploiting multiple processors at one time. Generally, the MPI version is recommended when your system consists of more than $10^5$ atoms. All details about the performance and efficiency can be found is Sec. XXX. 
 
 Afterwards, it is possible to simulate the BioMolecule through Gromacs or Lammps, as proposed in **Sec. 7**. 
 
