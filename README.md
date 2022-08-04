@@ -528,10 +528,10 @@ Fig.4 shows the time (in seconds) for creating the CANVAS model, as a function o
 
 <div align="center">
 
-<img src="images/time-vs-NCores-systems.jpg" alt="Scheme" width="385">
+<img src="images/time-vs-NCores-systems.jpg" alt="Scheme" width="485">
 </div>
 <div align = "center">
-<b>Fig.4</b> - <i> time (in seconds) for creating the CANVAVS model starting from an all-atom reference, varying the number of cores, for different systems. The bigger the system, the more the time difference bewteen the usage of 1 and 48 cores </i>. 
+<b>Fig.4</b> - <i> time (in seconds) for creating the CANVAVS model starting from the all-atom reference, varying the number of cores, for different systems. The bigger the system, the more the time difference bewteen the usage of 1 and 48 cores </i>. 
 </div>
 
 
