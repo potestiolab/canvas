@@ -113,9 +113,9 @@ Directory folders are shown in light blue; files are shown in light yellow, whil
 
 # 3 - Usage 
 
-The typical usage of the program consists in a call to _`block.py`_ and _`CANVAS.py`_ in succession by using Python3. The MPI version of the two previous codes, _`block-MPI.py`_ and _`CANVAS-MPI4.py`_,  is also possible: it makes use of _multiprocessing_ module with the purpose of creating the CANVAS model exploiting multiple processors at one time. Generally, the MPI version is recommended when your system consists of more than $10^5$ atoms. All details about the performance and efficiency can be found is Sec. XXX. 
+The typical usage of the program consists in a call to _`block.py`_ and _`CANVAS.py`_ in succession by using Python3. The MPI version of the two previous codes, _`block-MPI.py`_ and _`CANVAS-MPI4.py`_,  is also possible: it makes use of _multiprocessing_ module with the purpose of creating the CANVAS model exploiting multiple processors at one time. Generally, the MPI version is recommended when your system consists of more than $10^5$ atoms. All details about the performance and efficiency can be found is **Sec.7**. 
 
-Afterwards, it is possible to simulate the BioMolecule through Gromacs or Lammps, as proposed in **Sec. 7**. 
+Afterwards, it is possible to simulate the biomolecule through Gromacs or Lammps, as proposed in **Sec.8**. 
 
 * **`block.py`** or **`block-MPI.py`:** has the purpose to write a file containing the list of survived atoms, that must be used in _CANVAS.py/CANVAS-MPI4.py_ as mandatory argument as explained in **Sec. 4.1**. 
                 
@@ -123,7 +123,7 @@ Afterwards, it is possible to simulate the BioMolecule through Gromacs or Lammps
 
                 
 Before running the python scripts, read carefully the next section that provides a detailed explaination of each task 
-and argument. Moreover, take care to not moving them outside the main folder (`canvas/`) otherwise a fatal error is 
+and argument. Moreover, take care to not moving them outside the main folder (`canvas/`) otherwise a fatal error occurs and it is 
 printed on screen.
 
 <br />
@@ -134,12 +134,7 @@ printed on screen.
 
 _`block.py`_ and its MPI version (_`block-MPI.py`_) are inside the `PYTHON-SCRIPT/` directory. This code has the purpose to write a file containing the list of survived atoms. Before lauching the code, te user is required to select one of three possible options, depending on the type of _`atomistic`_/_`medium-grained`_/_`coarse-grained`_ subdivision that would like to obtain: 
 
-* **`choice1`**: One or more central atomistic residues that require an atomistic description is/are known. 
-               Since the high-resolution region is not completely defined, an atomistic sphere with radius _R_, 
-               defined by the user, is traced around the central residue(s) (green circle in **Fig.1**). Then, the latter, is sourrounded by 
-               a 3D-annulus of width _D_ that defines a medium-grained region where only the backbone atoms ($N$\, 
-               $C_\alpha$, $C$, $O$) are retained (orange area of **Fig.1**). The remainder, is modelled coarse-grained, where only 
-               the $C_\alpha$ atoms are kept (blue are of **Fig.1**). A schematic represention is shown hereafter: 
+* **`choice1`**: One or more central atomistic residues that require an atomistic description is/are known. Since the high-resolution region is not completely defined, an atomistic sphere with radius _R_, defined by the user, is traced around the central residue(s) (green circle in **Fig.1**). Then, the latter, is sourrounded by a 3D-annulus of width _D_ that defines a medium-grained region where only the backbone atoms ( $N$, $C_\alpha$, $C$, $O$) are retained (orange area of **Fig.1**). The remainder, is modelled coarse-grained, where only the $C_\alpha$ atoms are kept (blue area of **Fig.1**). A schematic represention is shown hereafter: 
 
 <div align="center">
 
@@ -152,11 +147,7 @@ _`block.py`_ and its MPI version (_`block-MPI.py`_) are inside the `PYTHON-SCRIP
 
 <br /><br />
 
-* **`choice2`**: All residues that require an atomistic description are known; therefore the higher resolution region
-                   is completely defined (green area in **Fig.2**) Around, a medium-grained region of width _D_ will be traced where only the backbone 
-                   atoms ($N$, $C_\alpha$, $C$, $O$) are retained (orange are in **Fig.2**). Note that in *choice1* the atomistic region 
-                   is not completely defined a priori, but it will be described  by a radius _R_ starting from the 
-                   knowledge of one or more central residues.  
+* **`choice2`**: All residues that require an atomistic description are known; therefore the higher resolution region is completely defined (green area in **Fig.2**) Around, a medium-grained region of width _D_ will be traced where only the backbone atoms ( $N$, $C_\alpha$, $C$, $O$) are retained (orange are in **Fig.2**). Note that in *choice1* the atomistic region is not completely defined a priori, but it will be described  by a radius _R_ starting from the knowledge of one or more central residues.  
 
 <div align="center">
 
@@ -320,7 +311,7 @@ A short explaination of files, the diameter value, and the number of cores is th
 |----------------| 
 ```                                        
                                         
-* **`List At-bb-CG FILE (for choice3)`**: File containing the list of _all_ residues that require an atomistic (first column) and medium-grained (second column) description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of such file.[^3]
+* **`list_all_AT_res.dat (for choice3)`**: File containing the list of _all_ residues that require an atomistic (first column) and medium-grained (second column) description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of such file.[^3]
 
 ```
 |-------------------|---------------------|  
@@ -333,12 +324,9 @@ A short explaination of files, the diameter value, and the number of cores is th
 |-------------------|---------------------|  
 ```
 
-* **`Diameter hybrid region`**: Diameter value (in nm) of the medium-grained region. Default value: 1.0 nm
+* **`Diameter_MG_region`**: Diameter value (in nm) of the medium-grained region. Default value: 1.0 nm
 
-* **`Number of Cores (MPI-version ONLY)`**: Integer number corresponding at the number of cores for parallelizing _block-MPI.py_ script. 
-                                            It goes between 1 and the maximum number of available cores present in the laptop/cluster, 
-                                            otherwise an error is returned. Default value: maxiumum number of available cores present 
-                                            in the laptop/cluster. 
+* **`Number of Cores (MPI-version ONLY)`**: Integer number corresponding at the number of cores for parallelizing _block-MPI.py_ script. It goes between 1 and the maximum number of available cores present in the laptop/cluster, otherwise an error is returned. Default value: maxiumum number of available cores present in the laptop/cluster. 
                                         
 In **Appendix**  we focus on each argument discussed breafly before.
 
@@ -354,7 +342,7 @@ _CANVAS.py_ does not have _tasks_ in the sense explained in **Sec. 4.1**. Indeed
 
 * the option of also introducing rescaled non-bonded 1-4 interactions also on the interface AT-CG (by default, rescaled non-bonded 1-4 interactions are introduced only in the AT region) [_`-r/--resc14 Y`_] 
 
-* the possibility of not solvating the system (by default the system will be solvated and neutralized with ions) [_`-s/--solvate N`_]
+* the decision of not solvating the system (by default the system will be solvated and neutralized with sodium and chlorine ions) [_`-s/--solvate N`_]
 
 Furthermore, the MPI-version (_block-MPI.py_) gives the user the possibility to define the number of cores for parallelizing this code [_`number_of_cores`_]: by default the script will exploit the maximum number of available cores present on laptop/cluster.
 
@@ -381,7 +369,7 @@ python3 CANVAS.py [--help] --in <protein.gro> --list <list_survived_atoms.dat> -
 
 A short explaination of arguments is provided by launching the command `python3 CANVAS.py -h` or `python3 CANVAS.py --help`. Alternatively, for printing a short usage message, please type: `python3 CANVAS.py` or `python3 CANVAS.py -u`.[^1] 
 
-The output of the program consists of three directories, detailed described in **Sec. 7**, with the purpose of simulating with Gromacs or Lammps a Biomolecule with the CANVAS model, and analyze the resulting data: 
+The output of the program consists of three directories, detailed described in **Sec.8**, with the purpose of simulating with Gromacs or Lammps a Biomolecule with the CANVAS model, and analyze the resulting data: 
  
 * **other-files/**
 * **run_simulation/**
@@ -429,34 +417,30 @@ As shown in **Sec. 5** the coordinates file  of all-atom structure of the biomol
 |---------------------------------------------------| 
 ```
 
-* **`rescaled14`**: String containing the word `Y` or `y`. Other strings are not allowed. In this model, by default, rescaled non-bonded 1-4 
-                    interactions are introduced only in the fully-atomistic region.
-                    However, if `-r/--resc14 Y` is set, the latter are also mainteined on the interface AT-CG. Indeed, if in all-atom representation a 
-                    rescaled non-bonded interaction is present between two atoms whose rapresentation in the CANVAS model is AT-CG, 
-                    the latter is kept in the multi-resolution model. [^5] 
-                    Keep attention, as it might create artifacts in MD simulation. If using charmm forcefield this command is ignored.
-               
+* **`rescaled14`**: In this model, by default, rescaled non-bonded 1-4 interactions are introduced only in the fully-atomistic region. However, if `-r/--resc14 Y` is set, the latter are also maintained on the interface AT-CG. Indeed, if in all-atom representation a rescaled non-bonded interaction is present between two atoms whose rapresentation in the CANVAS model is AT-CG, the latter is kept in the multi-resolution model. [^5] Other strings, other than `Y` are not allowed.  
+Keep attention, as it might create artifacts in MD simulation. If using charmm forcefield this flag is ignored.
+              
 [^5]: In case of CG-CG pairs, no rescaled non-bonded 1-4 interaction is applied, even if `-r/--resc14 Y` is set since it might create artifacts because each bead has espilon and sigma values far away from the all-atom reference. 
                   
 
-* **`codestring`**:   String containing `lammps` word. Other strings are not allowed. If `-c/--code lammps` is set, then the program
-                      produces the input files needed for simulating the CANVAS model in lammps. If `-c/--code gromacs` is set, or in case
-                      this flag is ignored, the python script returns the input files for simulating the CANVAS model in gromacs.
-                      
-* **`solvatestring`**: String containing 'n' or 'y' letters. Other string are not allowed. If '-s/--solvate n' is set, then the 
-                       system will be not solvated. Use this flag in case of implicit solvent simulations.
-                       If '-s/--solvate y' is set, or in case the user ignore this flag, the biomolecule will be solvated 
-                       and neutralized (with `NA` and `CL` ions) 
+* **`codestring`**: By default this script produces the input files needed for simulating the CANVAS model in Gromacs.[^6] However, if `-c/--code lammps` is set, then this script produces the input files needed for simulating the CANVAS model in lammps. Other string other are not allowed. 
 
-* **`Number of Cores (MPI-version ONLY)`**: Integer number corresponding at the number of cores for parallelizing _CANVAS-MPI4.py_ script. 
-                                            It goes between 1 and the maximum number of available cores present in the laptop/cluster, 
-                                            otherwise an error is returned. Default value: maxiumum number of available cores present 
-                                            in the laptop/cluster. 
+[^6]: Also `-c/--code gromacs` is feasible, and it produce the input files needed for simulating the CANVAS model in Gromacs
+
+
+
+* **`solvatestring`**: By default the system will be solvated (and then neutralized with Sodium and Chlorine ions)[^7]. However, if `-s/--solvate n` is set the biomolecule will not be solvated. Fr instance, you can use this flag in case of implicit solvent simulations.
+
+[^7]: Also '-s/--solvate y' is feasible, and it has the effect of solvating the system.
+
+
+* **`Number of Cores (MPI-version ONLY)`**: Integer number corresponding at the number of cores for parallelizing _CANVAS-MPI4.py_ script. It goes between 1 and the maximum number of available cores present in the laptop/cluster, otherwise an error is returned. Default value: maxiumum number of available cores present in the laptop/cluster. 
 
 
 In the **Appendix** we focus on each argument discussed breafly before.
 
 <br />
+
 
 # 6 - Examples 
 
@@ -537,7 +521,7 @@ Fig.4 shows the time (in seconds) for creating the CANVAS model, as a function o
 
 # 8 - Simulating CANVAS model with GROMACS, analyze data, and Visualizing Proteins   
 
-After executing in sequence _block.py_ (_block_MPI.py) and _CANVAS.py_ (_CANVAS-MPI4.py_), three subfolders are created:
+After executing in sequence _block.py_ (_block_MPI.py_) and _CANVAS.py_ (_CANVAS-MPI4.py_), three subfolders are created:
 
 1. **`other-files`**: it contains a lot of intermediate files created by CANVAS.py: they are not useful per running simulation. However, the _initial-frame.gro_ file is helpful as it can be employed as reference frame for trajectory alignment, for Root Mean Square Deviation (RMSD) and  Root Mean Square Fluctuations (RMSF) calculations, and so on.
 
@@ -610,12 +594,16 @@ coarse-grained). This folder contains the following files:
   ```
   In this way, each bead will have a different radius according the value of $\sigma/2$, and a color given by the 
   Beta Coloring Method: in particular, blue shades are indicative of positive charges, red shades are indicative of
-  negative charges, while the white color corresponds to a neutral charge. The figure below displays the _4A_ form 
+  negative charges, while the white color corresponds to a neutral charge. The figure below displays the $4_A$ form 
   of Pembrolizumab in terms of this new representation just mentioned.  
 
 <div align="center">
  <img src="images/apo0-4A.jpg" alt="Scheme" width="350">
 </div>
+<div align = "center">
+<b>Fig.5</b> - <i> CANVAS representation of $4_A$ form of Pembrolizumab in terms of atoms and beads </i> 
+</div>
+
 
 <br />
 
@@ -660,7 +648,7 @@ Note that the charmm36m.ff present in `input-files` directory is modified accord
 
 ## 9.2 - Simulating CANVAS Model 
 
-As already seen in **Sec. 7.1**, another issue can be encountered when using the last version (july 2021) of Charmm36m is due to a different denomination of ions. In every force-field sodium and chloride ions are indicated with NA and CL, respectively. However, in charmm36m 
+As already seen in **Sec. 8.1**, another issue can be encountered when using the last version (july 2021) of Charmm36m is due to a different denomination of ions. In every force-field sodium and chloride ions are indicated with NA and CL, respectively. However, in charmm36m 
 they are named SOD and CLA. A solution for fixing the issue is modifying manually the `topol_new.itp` and `solvated_ions.gro` files, substituing: 
   *  **`NA`** with **`SOD`**  
   *  **`CL`** with **`CLA`** 
@@ -681,12 +669,10 @@ Hereafter, we focus on the arguments discussed breafly before in **Sec. 4.2**  a
 
 ## A - Coordinate input FILE 
 
-The coordinate file is mandatory for both _block.py_ and _CANVAS.py_.
-The same file is recommended when launching these two python scripts.  
+The coordinate file is mandatory for both _block.py_ and _CANVAS.py_ and related MPI versions. The same file is recommended when launching these two python scripts.  
 
-It must be provided in _gro_ format. It contains a molecular structure, that is the coordinates 
-of each atom in the reference structure. As an example a the coordinate gro file of a biomolecule named Adenylate 
-Kinase with 3241 atoms is the following: 
+It must be provided in _gro_ format. It contains a molecular structure, that is the coordinates of each atom in the reference structure. As an example a the coordinate gro file of a biomolecule named Adenylate 
+Kinase with 3241 atoms is the following:[^8]
 
 
 ```latex
@@ -705,16 +691,14 @@ Adenylate Kinase
   214GLY    OC2 3341   4.543   2.319   4.386
    9.97074   9.97074   9.97074
 ```
-> For simplicity we cut the file. The integral version can be found in `input-files/ADENYLATE-KINASE/kinase-w-amber99`
+
+[^8]: For simplicity this file is cut. The integral version can be found in `input-files/ADENYLATE-KINASE/sim-w-amber99`
    
 Detailed information can be found in [Gromacs-GroFile](https://manual.gromacs.org/archive/5.0.3/online/gro.html)
 
-It is, also, possible to find coordinate files with pdb extension. Indeed, the crystallographic structure 
-of a biomolecule is, in general, in the latter format. The most of proteins/biomolecules can be dowloaded 
-from [_Protein Data Bank_](https://www.rcsb.org) in pdb format.
+It is, also, possible to find coordinate files with pdb extension. Indeed, the crystallographic structure  of a biomolecule is, in general, in the latter format. The most of proteins/biomolecules can be dowloaded from [_Protein Data Bank_](https://www.rcsb.org) in pdb format.
 
-However, it is possible to transform pdb format in the gro one by means of a [pdb2gmx](https://manual.gromacs.org/documentation/current/onlinehelp/gmx-pdb2gmx.html#gmx-pdb2gmx)
-GROMACS tool.
+However, it is possible to transform pdb format in the gro one by means of a [pdb2gmx](https://manual.gromacs.org/documentation/current/onlinehelp/gmx-pdb2gmx.html#gmx-pdb2gmx) GROMACS tool.
 
 ```bash
 pdb2gmx -f <pdb FILE> -o <gro FILE> -water tip3p -ignh 
@@ -722,13 +706,11 @@ pdb2gmx -f <pdb FILE> -o <gro FILE> -water tip3p -ignh
 
 **Amber99sb-ildn** and **charmm36m** force-fields have been tested for performing a Multiple Resolution Simulation using CANVAS model; however, any other previous version of **Amber** and **Charmm** should not be a big deal. 
 
-> Note: in order that a forcefield is found, it is necessary that the main folder containing the latter is inside the gromacs installing package, or in current directory where the pdb file is present. 
+> **Note: in order that a forcefield is found, it is necessary that the main folder containing the latter is inside the gromacs installing package, or in current directory where the pdb file is present.** 
 
-Please, take in account that the _coordinate FILE_ is the reference structure from which the CANVAS model is constructed; 
-therefore choose it carefully. Indeed, you can select the crystallographic version of the biomolecule, or other equilibrated frames.  
+Please, take in account that the coordinate file of all-atom structure (_protein.gro_) is the reference structure from which the CANVAS model is constructed; therefore choose it carefully. Indeed, you can select the crystallographic version of the biomolecule, or other equilibrated frames.  
 
-At the end, if everything went fine, the coordinate file in .gro format, and the topology file (topol.top) will be created.
-The latter will be discussed in **Appendix B**.
+At the end, if everything went fine, the coordinate file (protein.gro) and the topology file (topol.top) will be created. The latter will be discussed in **Appendix B**.
 
 <br />
 
@@ -736,8 +718,7 @@ The latter will be discussed in **Appendix B**.
 
 The topology file is mandatory for _CANVAS.py_. It is not used when launching _block.py_. 
 
-This file contains the parameters and the bonded interactions of the reference structure. 
-The topology file usually specify _`[bonds]`_ (2 atoms connected), _`[angles]`_ (3 atoms connected), and _`[dihedrals]`_ 
+This file contains the parameters and the bonded interactions of the reference structure. The topology file usually specify _`[bonds]`_ (2 atoms connected), _`[angles]`_ (3 atoms connected), and _`[dihedrals]`_ 
 (4 atoms connected linearly).
 
 *Amber99sb-ildn* and *Charmm36m* forcefields has been successfully tested and employed. 
@@ -756,16 +737,11 @@ At the end, if everything went fine, the topology file (topol.top) will be creat
 
 <br />
 
-## C - List AT-bb-CG FILE 
 
-_list AT-bb-CG_ is a mandatory file when launching _block.py_. As already explained in **Sec. 4.2**, this file  
-is organized in different way according the task chosen: 
+## C - list_AT_res.dat 
 
-* **`List At-bb-CG FILE (for choice1)`**: File with a list of central atomistic(s) residue(s)
-                                        and corresponding atomistic(s) radius(ii) organized in two columns. 
-                                        The left column must present only integer numbers; the right one 
-                                        must show only integer or float number. No strings, or special characters 
-                                        are permitted. An error message is printed on screen if some condition is not fulfilled. 
+This file is mandatory when launching _block.py_ after selecting the option **choice1**. This file contains the list of central atomistic(s) residue(s) (first column) and corresponding atomistic(s) radius(ii) (second column). In particular, given the coordinates file of all-atom structure of the system, protein.gro, the _residue number_ corresponds at the first column of such file,[^3] while the radius _R_ (in nm) defines the atomistic sphere around the central residue(s). The residue number is an integer number, while the radius could be integer or float. No strings, or special characters are permitted. An error message is printed on screen if some condition is not fulfilled.
+
 ```                                                                       
 |-----------------|-----------------------|                                        
 | residue1 (int)  |   radius1 (int/float) |  
@@ -773,12 +749,12 @@ is organized in different way according the task chosen:
 | ........        |   ........            |
 | residueN        |   radiusN             |  
 |-----------------|-----------------------|                                     
-```                                   
+```    
+
+## D - list_all_AT_res.dat 
+
+This file is mandatory when launching _block.py_ after selecting the option **choice2**.This file contains the list of _all_ residues that require an atomistic description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ corresponds at the first column of such file.[^3] The residue number is an integer number, thus no float, no strings, or special characters are permitted. An error message is printed on screen if some condition is not fulfilled.
                                     
-* **`List AT-bb-CG FILE (for choice2)`**: File organized in only one column that contains 
-                                        the list of atomistic residues. Only integer numbers are, 
-                                        thus, permitted. No strings, or special characters are feasible. 
-                                        An error message is printed on screen if some condition is not fulfilled. 
 ```
 |----------------|  
 | residue1 (int) |  
@@ -788,31 +764,41 @@ is organized in different way according the task chosen:
 |----------------| 
 ```                                        
                                         
-* **`List At-bb-CG FILE (for choice3)`**: File organized in two columns that contains the list of atomistic residues
-                                        and the list of residues that require an hybrid resolution. Thus, both columns 
-                                        must present only integer numbers. No strings, or special characters are 
-                                        feasible. 
-                                        An error message is printed on screen if some condition is not fulfilled. 
-                                        
+## E - list_all_AT_MG.dat
+
+This file is mandatory when launching _block.py_ after selecting the option **choice3**. This file contains the list of _all_ residues that require an atomistic (first column) and medium-grained (second column) description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of such file.[^3] The residue number is an integer number, thus no float, no strings, or special characters are permitted. An error message is printed on screen if some condition is not fulfilled.
+
 ```
-|-----------------|-----------------|  
-| res1_AT (int)   |  res1_hy (int)  |  
-| res2_AT         |  res2_hy        |  
-| res3_AT         |  ........       |  
-| res4_AT         |  resM_hy        |  
-| ........        |                 |  
-| resN_AT         |                 |  
-|-----------------|-----------------|  
-``` 
+|-------------------|---------------------|  
+| residue1_AT (int) |  residue1_MG (int)  |  
+| residue2_AT       |  residue2_MG        |  
+| residue3_AT       |  ........           |  
+| residue4_AT       |  residueM_MG        |  
+| ........          |                     |  
+| residueN_AT       |                     |  
+|-------------------|---------------------|  
+```
 
 <br />
 
-## D - List survived atoms FILE
+## F - list_survived_atoms.dat 
 
-The file containing the list of survived atoms is a mandatory argument when launching _CANVAS.py_.
-The user is not require to write this file, as the latter is the output of _block.py_.
+_list_survived_atoms.dat_ is a mandatory argument when launching _CANVAS.py_. The user is not require to write this file, as the latter is the output of _block.py_. It contains the list of survived atoms, in terms of _atom number_ (first column) and its label (second column). In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _atom number_ is the fourth column of such file.[^3] On the other hand, the label of the corresponding survived atom, can assume only two strings: 
+   * _`at`_ in case the latter conserves the highest/atomistic resolution (i.e. its own atomistic properties)  
+   * _`cg`_ in case of medium-grained or coarse-grained resolution. 
 
-Hereafter, we report an example of list: 
+```                                
+|----------------------|------------------------| 
+| atom number 1 (int)  | label 1 ('at' or 'cg') |
+| atom number 2        | label 2                |
+| atom number 3        | label 3                |
+| atom number 4        | label 4                |
+| ....                 | ....                   |
+| atom number N        | label N                |
+|--------------------- |------------------------|  
+```
+
+Hereafter, we report an example: 
    
 ```latex
    ...   ..
@@ -826,36 +812,28 @@ Hereafter, we report an example of list:
    ...   ..
 ```
 
-This file is organized in two columns: 
 
-* The `1st column` corresponds to the atom number of the atoms that survive from the fullyAT 
-  reference 
-  
-* The `2nd column` corresponds to the label of each atom that survives: 
-     * **`at`** stands for **atomistic**: it means that the the atom token in account conserves it own properties. 
-  
-     * **`cg`** stands for **coarse-grained or hybrid**: it means that the atom token in account will be treated 
-       as CG bead and it will have average properties of the atoms (decimated) that it represents. This label should be 
-       used for both the coarse-grained part (only $C_\alpha$ atoms are retained) and hybrid part (backbone atoms 
-       are kept: $N$, $C_\alpha$, $C$, $O$)
-
-For the sake of completeness, please note that it is possible to write by yourself a text file 
-containing the list of the atoms, each one labelled with the caption (`at` or `cg`) if you know 
-in advance all the atoms that survived.  However, we do not encurage this precedure to continue
-especially in case of biomolecules with tens of thousand atoms, since the probability to make 
-mistakes becomes higher and higher.
+For the sake of completeness, please note that it is possible to write by yourself a text file containing the list of the atoms, each one labelled with the caption (`at` or `cg`) if you know in advance all the atoms that survived.  However, we do not encurage this precedure to continue
+especially in case of biomolecules with tens of thousand atoms, since the probability to make mistakes becomes higher and higher.
 
 <br />
 
-## E - Domains FILE 
+## G - dom.txt 
 
-The _Domains FILE_ is an optional argument when executing _CANVAS.py_, but we strongly encurage to make use of it. 
-It contains the list of atoms divided in different domains. 
+The list of atoms splitted in different domains (dom.txt) is an optional argument when executing _CANVAS.py_, but we strongly encurage to make use of it. In principle a biomolecule presents more domains. Thus, it could be a good pratice writing a file containing the list of atoms separated in domains. Indeed, this file is very useful for preventing bonds between CG beads that belongs to different domains, for guarantee system flexibility when the CANVAS model is constructed.[^4] This file is organized as follows: 
+  - Each row contains the _atom number_ [^3] of the atoms that belong to the same domain separated by spaces.  
+  - The number of columns is equal to the number of domains.
 
-Given the fully atomistic representation, we _transform_ the latter in multiple resolution ready to be simulated in GROMACS: according with the standard procedure, a bond is placed between atoms where at least a CG bead is involved if their distance lies below a cutoff. However, sometimes we would like to avoid bonds between atoms that belong 
-to different domains. If we do not, the CANVAS model might result very rigid. 
+                            
+```
+|---------------------------------------------------|
+| AT_Num-1   AT_Num-2   AT_Num-3   .....  AT_Num-N  |  # atoms of 1st domain
+| AT_Num-10  AT_Num-11  AT_Num-12  .....  AT_Num-M  |  # atoms of 2nd domain
+| .....      .....      .....      .....  .....     |  # atoms of nth domain     # Number of Domains: n
+|---------------------------------------------------| 
+```
 
-For each domain, we report in a row the list of all the atoms that belong to it as reported hereafter: 
+For instance, let us suppose that a protein consists of 33 atoms, divided in 3 domains of 13 atoms each. In this case, _dom.txt_ looks like as follows: 
  
 ```latex 
 1 2 3 4 5 6 7 8 9 10 11 12 13
@@ -863,16 +841,7 @@ For each domain, we report in a row the list of all the atoms that belong to it 
 24 25 26 27 28 29 30 31 32 33
 ```
 
-Therefore: 
-
-* The number of columns of this file is equals to the number of domains. 
-
-* Each number corresponds to the atomistic number (atnum) of the atom in all-atom representation.  
-
-* Each row contains all the atoms that belong to a certain domain, each one separated by spaces. 
-
-There is no automatic procedure to obtain automatically this file. Thus, you must write your 
-own txt file. The following script could be useful to construct the file _dom.txt_ for N domains: 
+There is no automatic procedure to obtain automatically this file. Thus, you must write your own txt file. The following script could be useful to construct the file _dom.txt_ for N domains: 
 
 ```bash 
 #!/bin/bash
@@ -890,31 +859,41 @@ domX=$(for i in {M1..Mn}; do echo -n $i ""; done)
 echo $domX >> dom.txt
 ```
 
-where in place of $A_1, A_2, B_1, B_2, M_1, M_2$ you should write the atomistic numbers. Please, note  that the script works good if each domain 
+where in place of $A_1, A_2, B_1, B_2, M_1, M_2$ you should write the atomistic numbers. Please, note that the script works good if each domain 
 is constituted by consecutive at_numbers.
 
 <br />
 
-## F - Diameter hybrid region 
+## H - Diameter_MG_region 
 
-The value of the diameter of the hybrid region is set to the default value _1.0 nm_. If you want to change it use the  
-flag `-D <value (nm)>` when launching _block.py_. Integer or decimal numbers are equally accepted. be sure that _`D`_ 
-is higher or equals to 0. _`D = 0`_, means that no hybrid region is constructed and the system assumes only two resolutions: **fullyAT** and **Coarse-grained** (keeping only C-alpha atoms).
+The value of the diameter of the medium-grained region is set to the default value _1.0 nm_. If you want to change it use the  flag `-D <value (nm)>` when launching _block.py_. Integer or decimal numbers are equally accepted. be sure that _`D`_  is higher or equals to 0. _`D = 0`_, means that no medium-grained region is constructed and the system assumes only two resolutions: **fullyAT** and **Coarse-grained** (keeping only C-alpha atoms).
 
-As already explained in **Sec. 4.2**, the value of diameter for hybrid region can be set only when selecting **choice1** and **choice2** options. Indeed, **choice3** does not require the setting of its value since is unnecessary. 
+As already explained in **Sec. 4.2**, the value of diameter for medium-grained region can be set only when selecting **choice1** and **choice2** options. Indeed, **choice3** does not require the setting of its value since is unnecessary. 
 
 <br />
 
-## G - Rescaled14
+## I - Rescaled14 (-r/--resc14 Y) 
 
-String containing the word `Y` or `y`. Other strings are not allowed. If `-r/--resc14 Y` is set, than all pairs where ONLY one CG bead is kept if in the corresponding all-atom representation that pair is present (by default only fully-atomistic rescaled non-bonded 1-4 interaction are mantained). Keep attention, as it might create artifacts in MD simulation. If using charmm.ff this command is ignored. 
+In this model, by default, rescaled non-bonded 1-4 interactions are introduced only in the fully-atomistic region. However, if `-r/--resc14 Y` is set, the latter are also maintained on the interface AT-CG. Indeed, if in all-atom representation a rescaled non-bonded interaction is present between two atoms whose rapresentation in the CANVAS model is AT-CG, the latter is kept in the multi-resolution model. [^5] Other strings, other than `Y` are not allowed.  
+Keep attention, as it might create artifacts in MD simulation. If using charmm forcefield this flag is ignored.
 
 <br />
 
-## H - Codestring 
+## L - Codestring (-c/--code lammps)  
 
-String containing `lammps` word. Other strings are not allowed. If `-c/--code lammps` is set, then this program produces the input files needed for simulating the CANVAS model in lammps. If `-c/--code gromacs` is set, or in case this flag is ignored, this program returns the input files
-for simulating the CANVAS model in gromacs
+By default this script produces the input files needed for simulating the CANVAS model in Gromacs.[^6] However, if `-c/--code lammps` is set, then this script produces the input files needed for simulating the CANVAS model in lammps. Other string other are not allowed. 
 
+<br />
+
+## M - Solvatestring (-s/--solvate n)
+
+By default the system will be solvated (and then neutralized with Sodium and Chlorine ions)[^7]. However, if `-s/--solvate n` is set the biomolecule will not be solvated. Fr instance, you can use this flag in case of implicit solvent simulations.
+
+<br />
+
+
+## N - Number of Cores (MPI-version ONLY) 
+
+Integer number corresponding at the number of cores for parallelizing _CANVAS-MPI4.py_ script. It goes between 1 and the maximum number of available cores present in the laptop/cluster, otherwise an error is returned. Default value: maxiumum number of available cores present in the laptop/cluster. 
 
 
