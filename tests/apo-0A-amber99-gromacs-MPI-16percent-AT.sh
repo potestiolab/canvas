@@ -3,7 +3,7 @@
 #################################################################################################################################
 ### ATTENTION: Hereafter, an example for executing MPI scripts on 48 cores on UniTn Cluster. Change it for your cluster/machine 
 
-#PBS -l select=1:ncpus=48:mpiprocs=48:mem=4gb
+#PBS -l select=1:ncpus=48:mpiprocs=1:mem=4gb
 #PBS -q VARIAMOLS_cpuQ
 
 echo "loading modules"
@@ -20,17 +20,20 @@ cd $PBS_O_WORKDIR
 # NOTE: The output of block.py is the list of survived atoms, i.e. list-atoms-opt-2.txt, that will be the input of CANVAS.py script  
 
 # In case you would like to execute the code in serial, please cancel the previuos code lines, and change block-MPI.py and CANVAS-MPI4.py
-# with 'block.py' and 'CANVAS.py', respectively
+# with 'block.py' and 'CANVAS.py', respectively 
+
+# Executing serial version of "block.py" and then "CANVAS.py" for the APO-2 conformation of Pembrolizumab Antibody 
+# NOTE: The output of block.py is the list of survived atoms, i.e. list-atoms-opt-2.txt, that will be the input of CANVAS.py script  
 
 PYTHONDIR=../PYTHON-scripts
 
-inputDIR=../input-files/ADENYLATE-KINASE/sim-w-amber99
+inputDIR=../input-files/PEMBROLIZUMAB-ANTIBODY/sim-0A-amber99
 
-python3 $PYTHONDIR/block-MPI.py choice2 -n 1 -g $inputDIR/frame_4ake_125ns.gro -l $inputDIR/list-ATres-2nd-choice.txt  
+python3 $PYTHONDIR/block-MPI.py choice2 -g $inputDIR/apo-0A.gro -l $inputDIR/list-ATres-2nd-choice-16percent.txt 
 
-python3 $PYTHONDIR/CANVAS-MPI4.py -n 1 -g $inputDIR/frame_4ake_125ns.gro -l list-atoms-opt-2.txt -t $inputDIR/topol.top -d $inputDIR/dom.txt -c lammps -s n
+python3 $PYTHONDIR/CANVAS-MPI4.py -g $inputDIR/apo-0A.gro -l list-atoms-opt-2.txt -t $inputDIR/topol.top -d $inputDIR/dom.txt
 
-rm -rf test-kinase-amber99-lammps-NoSolv
-mkdir test-kinase-amber99-lammps-NoSolv
+rm -rf test-apo-0A-amber99-gromacs-16percent-AT
+mkdir test-apo-0A-amber99-gromacs-16percent-AT
 
-mv run_simulation/ other-files/ analysis/ test-kinase-amber99-lammps-NoSolv 
+mv run_simulation/ other-files/ analysis/ test-apo-0A-amber99-gromacs-16percent-AT 
