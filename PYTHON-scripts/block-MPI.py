@@ -20,7 +20,7 @@ REAL_start = datetime.now()
 
 PYTHONPATH = os.path.abspath(os.getcwd())
 
-spl_word = "canvas-NEW-MPI" # We find CANVAS, cut the entire path until CANVAS and add /lib in order to find our libraries. 
+spl_word = "canvas-FINAL-GitHub" # We find CANVAS, cut the entire path until CANVAS and add /lib in order to find our libraries. 
 
 python_modules_path = PYTHONPATH.split(spl_word)[0] + spl_word + "/lib"
 
@@ -42,6 +42,7 @@ group_in.add_argument('-l', '--list', dest='listfile', metavar = 'FILE',help = a
 
 group_in.add_argument('-h', '--help', action='help', help = argparse.SUPPRESS)                                            # Optional
 group_in.add_argument('-D', '--diameter', dest='DiameterValue', metavar = 'VALUE', type=float, help = argparse.SUPPRESS)  # Optional 
+group_in.add_argument('-n', '--ncpu', dest='NumberCpu', metavar='INT', type=int, help = argparse.SUPPRESS)                # Optional 
 
 # ------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -94,8 +95,14 @@ grofile  = args.grofile          # Mandatory
 listfile = args.listfile         # Mandatory
 
 diameter = args.DiameterValue    # Optional 
+ncpu     = args.NumberCpu        # Optional 
 
 mandatory_files_present_block(grofile, listfile) 
+
+if(ncpu is not None):
+    print("o The number of cores employed is {}\n".format(ncpu))  
+else:
+    print("o The number of cores employed is {}\n".format(cpu_count())) 
 
 ## ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -314,8 +321,11 @@ if(option == "choice1"):
         for i in list_CG_residues:
             if((j[0]==i) and (j[2] == "CA")):
                 return j[3]
-    
-    pool       = Pool()
+   
+    if(ncpu is not None): 
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool() 
     
     temp       = partial(update_6p7_AT, list_AT_residues)
     upd_6p7_AT = pool.map(temp, iterable=atoms) 
@@ -472,7 +482,10 @@ elif(sys.argv[1].strip() == "choice2"):
 
         return list_bb_residues, list_CG_residues
 
-    pool = Pool() 
+    if(ncpu is not None):        
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()
 
     temp    = partial(update_7p4, list_other_atoms)
     upd_7p4 = pool.map(temp, iterable=list_AT_atoms)
@@ -561,7 +574,10 @@ elif(sys.argv[1].strip() == "choice2"):
             if((j[0]==i) and (j[2] == "CA")):
                 return j[3]
 
-    pool       = Pool()   
+    if(ncpu is not None):        
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()
 
     temp       = partial(update_7p7_AT, list_AT_residues)
     upd_7p7_AT = pool.map(temp, iterable=atoms)
@@ -728,7 +744,10 @@ elif(sys.argv[1].strip() == "choice3"):
             if((j[0]==i) and (j[2] == "CA")):
                 return j[3]
 
-    pool       = Pool()   
+    if(ncpu is not None):        
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()
 
     temp       = partial(update_8p4_AT, list_AT_residues)
     upd_8p4_AT = pool.map(temp, iterable=atoms)

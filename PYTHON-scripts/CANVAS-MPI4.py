@@ -22,7 +22,7 @@ from multiprocessing import Process, Pool, cpu_count, Queue
 
 PYTHONPATH = os.path.abspath(os.getcwd())
 
-spl_word = "canvas-NEW-MPI" # We find CANVAS, cut the entire path until CANVAS and add /lib in order to find our libraries. 
+spl_word = "canvas-FINAL-GitHub" # We find CANVAS, cut the entire path until CANVAS and add /lib in order to find our libraries. 
 
 python_modules_path = PYTHONPATH.split(spl_word)[0] + spl_word + "/lib"
 
@@ -58,6 +58,7 @@ group_in.add_argument('-d', '--dom',     dest='domfile',  metavar = 'FILE', help
 group_in.add_argument('-r', '--resc14',  dest='rescaled14', metavar = 'STR',  help = argparse.SUPPRESS)                # Optional
 group_in.add_argument('-c', '--code',    dest='codestring', metavar = 'STR', help = argparse.SUPPRESS) 		       # Optional 
 group_in.add_argument('-s', '--solvate', dest='solvatestring', metavar = 'STR', help = argparse.SUPPRESS)              # Optional
+group_in.add_argument('-n', '--ncpu',    dest='NumberCpu', metavar='INT', type=int, help = argparse.SUPPRESS)          # Optional
 
 #n2. Printing help message if the script does not have any arguments 
 if len(sys.argv)==1:
@@ -85,17 +86,35 @@ except SystemExit:
     sys.exit()
 
 
-grofile         = args.grofile
-topfile         = args.topfile
-listatomsfile   = args.listatomsfile
-domfile         = args.domfile 
-rescaled14      = args.rescaled14 
-codestring      = args.codestring 
-solvatestring   = args.solvatestring 
+grofile         = args.grofile          # Mandatory 
+topfile         = args.topfile          # Mandatory 
+listatomsfile   = args.listatomsfile    # Mandatory 
+
+domfile         = args.domfile          # Optional but strongly recommended 
+rescaled14      = args.rescaled14       # Optional 
+codestring      = args.codestring       # Optional
+solvatestring   = args.solvatestring    # Optional 
+ncpu            = args.NumberCpu        # Optional 
 
 mandatory_files_present_CANVAS(grofile, listatomsfile, topfile)
 
-#n5. Code Flag: LAMMPS or GROMACS. This program will return the input files for simulating the CANVS model in GROMACS (default) or LAMMPS. 
+
+#n5. Number CPUs Flag: The program will return an error if the user asks for a number of cores higher than the maximum allowed. 
+#                    : The program employes the maximum number of cores if ncpu is not specified.               
+
+if(ncpu is not None):
+    if(ncpu > cpu_count()):
+        print("ERROR. The maximum number of cores available is {}. You are asking for {} cores. Please, take care of it and repeat!".format(cpu_count,ncpu)) 
+        print_help_main_CANVAS()
+        sys.exit()
+
+if(ncpu is not None):
+    print("o The number of cores employed is {}\n".format(ncpu))
+else:
+    print("o The number of cores employed is {}\n".format(cpu_count()))
+
+
+#n6. Code Flag: LAMMPS or GROMACS. This program will return the input files for simulating the CANVS model in GROMACS (default) or LAMMPS. 
 FlagLammps = False 
 
 if(codestring is None):
@@ -121,7 +140,7 @@ if(codestring is not None):   # If codestring exists...
         print_help_main_CANVAS()
         quit()
 
-#n6. Solvate Flag. This program solvates or not the system for simulating the CANVAS model. 
+#n7. Solvate Flag. This program solvates or not the system for simulating the CANVAS model. 
 if(solvatestring is None):
     if(codestring is not None): 
         print("'-s/--solvate' is not set. This program will solvate the system before simulating the CANVAS model in {}\n".format(codestring))
@@ -445,7 +464,11 @@ def surv_atoms(dict_survived, i):
 
     return surv, oth 
 
-pool = Pool() 
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(surv_atoms, dict_survived)
 
 ALL= pool.map(temp, iterable=atom) 
@@ -521,7 +544,11 @@ def min_distance(list_survived_atoms, i):
     list_dist=[min_dist,index, i[-1]]
     return list_dist
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(min_distance, list_survived_atoms) 
 min_distances= pool.map(temp, iterable=list_other_atoms)
 
@@ -584,7 +611,11 @@ def update_1(block_list, i):
         if(block==i[9]):
             return block,i[-1]               #i[-1] = Q         --> return a tuple (block_ref, Q) 
 
-pool   = Pool() 
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp   = partial(update_1, block_list)
 
 Q_list_oth = pool.map(temp, iterable = list_other_atoms) 
@@ -627,7 +658,11 @@ def update_2(Q_list, k):
 
     return k 
 
-pool   = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp   = partial(update_2, Q_list)
 
 upd2 = pool.map(temp, iterable=list_survived_atoms)
@@ -671,7 +706,11 @@ def update_sigma1(block_list,i):
         if(block==i[9]):
             return block,i[4],i[5],i[6]               #i[4] = x  i[5]=y  i[6]=z         --> return a tuple (block_ref, x,y,z) 
 
-pool = Pool() 
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_sigma1, block_list)
 
 coo_oth = pool.map(temp, iterable=list_survived_atoms)
@@ -728,7 +767,11 @@ def update_sigma2(CM_list, j):
         if(i[0]==j[0]):
             return i[0], (i[1]-j[1])**2, (i[2]-j[2])**2, (i[3]-j[3])**2
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_sigma2, CM_list)
 
 RG_list = pool.map(temp, coo_tot) 
@@ -796,7 +839,11 @@ def update_sigma3(Rg_list, i):
     return i 
 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_sigma3, Rg_list)
 
 upd_s3 = pool.map(temp, list_survived_atoms)
@@ -852,7 +899,11 @@ def update_eps(dict_epsilon, i):
         if(k==i[8]):
             return i + [v] 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_eps, dict_epsilon)
 
 res_other = pool.map(temp, iterable=list_other_atoms)
@@ -879,7 +930,11 @@ def update_eps1(block_list,i):
         if(block==i[9] and i[-1]!=0):
             return block, log(i[-1])               #i[-1] = eps  --> return a tuple (block_ref, log(eps)) 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_eps1, block_list)
 
 log_eps_sur = pool.map(temp, iterable=list_survived_atoms)
@@ -936,7 +991,11 @@ def update_eps2(eps_list, i):
 
     return i 
 
-pool = Pool() 
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_eps2, eps_list)
 
 upd_e2 = pool.map(temp, iterable=list_survived_atoms)
@@ -972,7 +1031,11 @@ def update_Four_One_Atom(dict_coun, i):
         if(k==i[0]):
             return i + [v] 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_Four_One_Atom, dict_coun)
 Eps_tot= pool.map(temp, iterable=list_survived_atoms)
 list_survived_atoms = Eps_tot 
@@ -1005,7 +1068,11 @@ def update_atomic_number(dict_atnum, i):
         if(i[8]==k):
             return i + [v] 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_atomic_number, dict_atnum)
 Atomic_Number= pool.map(temp, iterable=list_survived_atoms)
 list_survived_atoms = Atomic_Number
@@ -1235,7 +1302,11 @@ def update_A1(list_survived_only_num, i):
     if(result==True):
         return i 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_A1, list_survived_only_num)
 bond_prot_fully_at = pool.map(temp, iterable=original_bonds_protein_fully_at)
 
@@ -1267,7 +1338,11 @@ def update_A2(bond_prot_fully_at, k):
  
     return A 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_A2, bond_prot_fully_at)
 upd_A2 = pool.map(temp, iterable=list_survived_atoms) 
 
@@ -1293,7 +1368,11 @@ def update_A2b(upd_A2, i):
 
     return i
 
-pool    = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp    = partial(update_A2b, upd_A2)
 upd_A2b = pool.map(temp, iterable=bond_prot_fully_at)  
 
@@ -1318,7 +1397,11 @@ def update_b0_kb(bondtypes, i):
 
             return i + [float(j[3]*836.8)] + [float(j[2]/10)]    # Append kb value (in Groamacs units) and b0 value (Gromacs units) 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_b0_kb, bondtypes)
 b0_kb= pool.map(temp, iterable=bond_prot_fully_at)
 bond_prot_fully_at = b0_kb
@@ -1340,7 +1423,11 @@ def update_A4(bond_prot_fully_at, i):
 
     return A
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_A4, bond_prot_fully_at)
 upd_A4 = pool.map(temp, iterable=list_survived_atoms)
 
@@ -1360,7 +1447,11 @@ def update_A4b(upd_A4, i):
 
     return i
 
-pool    = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp    = partial(update_A4b, upd_A4)
 upd_A4b = pool.map(temp, iterable=bond_prot_fully_at)
 
@@ -1604,7 +1695,11 @@ def update_bonds(list_survived_atoms, i):
     return orig
 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_bonds, list_survived_atoms)
 ALL_bonds = pool.map(temp, iterable=list_survived_atoms2)
 
@@ -1650,7 +1745,6 @@ bonds_mult_res_prot = sorted(bonds_mult_res_prot, key = itemgetter(0,1))        
 bonds_mult_res_prot=[list(my_iterator)[0] for g, my_iterator in itertools.groupby(bonds_mult_res_prot, lambda x: [x[0],x[1]])]   
 
 
-
 # A.6- Reading domfile: if Domain Division FILE is present, we exclude bonds between atoms of different domains, where both CG bead is involved.
 #      We cannot exclude CG-AT bonds, otherwise each domain is completely unconnected the the rest of system 
 
@@ -1680,23 +1774,23 @@ if domfile is not None:
     dom = [[int(j) for j in i] for i in dom]  # transform list of lists, from string in INT 
 
     #A.6.3- Creating dom$i_fullyAT and dom$i where i belongs to [1, n_domains] 
-    for i, value in enumerate(dom):
-        exec('dom%d_fullyAT = %s' % (i+1,value))
 
-    n_domains = i + 1
-    for i in range(1, n_domains+1):
-        exec('dom%d = []' % i)
+    dom_fullyAT  = dom
+    n_domains    = len(dom)
+    dom_NewIndex = [[ ] for i in range(n_domains)]   # list of empty internal lists...  
 
+    list_domains = [i for i in range(n_domains)]
 
-    list_domains = [i for i in range(1, n_domains+1)]
-
-    
-    def update_doms(list_domains, i):
+    def update_doms(list_domains,i):
         for count in list_domains:
-            if eval('i[3] in dom%d_fullyAT and i[7] == "cg"' % count):
+            if(i[3] in dom_fullyAT[count] and i[7] =="cg"):
                 return count, i[9]
-           
-    pool  = Pool()
+
+    if(ncpu is not None):
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()           
+
     temp  = partial(update_doms, list_domains)
     upd_d = pool.map(temp, iterable=list_survived_atoms) 
     
@@ -1705,60 +1799,117 @@ if domfile is not None:
     
     upd_d = [i for i in upd_d if i is not None]
 
-    def update_domsB(upd_d, count):
-        for i in upd_d:
-            if(i[0]==count): 
-                eval('dom%d.append(i[1])' % count) 
-
-        return eval('dom%d' % count)
-
-    pool   = Pool() 
-    temp   = partial(update_domsB, upd_d)
-    upd_d2 = pool.map(temp, iterable=list_domains)
-
-    pool.close() 
-    pool.join() 
+    for count,atom in upd_d:
+        dom_NewIndex[count].append(atom) 
     
-    count = 1 
-    for i in upd_d2: 
-        exec('dom%d = i' % count)
-        count = count + 1 
+
+    """OLD
+    #for i, value in enumerate(dom):
+    #    exec('dom%d_fullyAT = %s' % (i+1,value))
+
+    #n_domains = i + 1
+    #for i in range(1, n_domains+1):
+    #    exec('dom%d = []' % i)
+
+    #list_domains = [i for i in range(1, n_domains+1)]
+    
+    #def update_doms(list_domains, i):
+    #    for count in list_domains:
+    #        if eval('i[3] in dom%d_fullyAT and i[7] == "cg"' % count):
+    #            return count, i[9]
+
+    #if(ncpu is not None):
+    #    pool       = Pool(ncpu)
+    #else:
+    #    pool = Pool()           
+
+    #temp  = partial(update_doms, list_domains)
+    #upd_d = pool.map(temp, iterable=list_survived_atoms) 
+    
+    #pool.close()
+    #pool.join()
+    
+    #upd_d = [i for i in upd_d if i is not None]
+
+    #def update_domsB(upd_d, count):
+    #    for i in upd_d:
+    #        if(i[0]==count): 
+    #            eval('dom%d.append(i[1])' % count) 
+
+    #    return eval('dom%d' % count)
+
+    #if(ncpu is not None):
+    #    pool       = Pool(ncpu)
+    #else:
+    #    pool = Pool()
+    
+    #temp   = partial(update_domsB, upd_d)
+    #upd_d2 = pool.map(temp, iterable=list_domains)
+
+    #pool.close() 
+    #pool.join() 
+    
+    #count = 1 
+    #for i in upd_d2: 
+    #    exec('dom%d = i' % count)
+    #    count = count + 1 
+    """
+    #A.6.4- Appending in 'bonds_mult_res_prot' the number of domain (1,2,...,N) in case of CG beads 
+
+    
+    for i in bonds_mult_res_prot:
+        for count in range(n_domains):
+            if(i[0] in dom_NewIndex[count]):
+                i.append(count+1)
+
+    for i in bonds_mult_res_prot:
+        for count in range(n_domains):
+            if(i[1] in dom_NewIndex[count]):
+                i.append(count+1)
+
 
     # A.6.4- Creating the list 'bonds_AT' where in the bond, one or none CG beads are involved.  
-    bonds_AT= [i for i in bonds_mult_res_prot if i[4]=="at" or i[5]=="at"] # Whether one or none CG bead is present
+    #bonds_AT= [i for i in bonds_mult_res_prot if i[4]=="at" or i[5]=="at"] # Whether one or none CG bead is present
  
     #A.6.5- Appending in 'bonds_mult_res_prot' the number of domain (1,2,...,N) in case of CG beads 
-    list_domains = [i for i in range(1, n_domains+1)]
+    #list_domains = [i for i in range(1, n_domains+1)]
 
-    def update_domain_number(list_domains, i):
-        A = []
-        for count in list_domains:
-            if eval('i[0] in dom%d' % count): 
-                A = i + [count]
-            if eval('i[1] in dom%d' % count):
-                return A + [count]
-             
-    pool = Pool()
-    temp = partial(update_domain_number, list_domains)
-    upd_domains = pool.map(temp, iterable=bonds_mult_res_prot)
-    bonds_mult_res_prot = upd_domains
+    #def update_domain_number(list_domains, i):
+    #    A = []
+    #    for count in list_domains:
+    #        if eval('i[0] in dom%d' % count): 
+    #            A = i + [count]
+    #        if eval('i[1] in dom%d' % count):
+    #            return A + [count]
+
+    #if(ncpu is not None):
+    #    pool       = Pool(ncpu)
+    #else:
+    #    pool = Pool()         
+
+    #temp = partial(update_domain_number, list_domains)
+    #upd_domains = pool.map(temp, iterable=bonds_mult_res_prot)
+    #bonds_mult_res_prot = upd_domains
     
-    pool.close()
-    pool.join()
-    
-    bonds_mult_res_prot = [i for i in bonds_mult_res_prot if i is not None]    
+    #pool.close()
+    #pool.join()
 
+    #bonds_mult_res_prot = [i for i in bonds_mult_res_prot if i is not None]    
 
+ 
     #A.6.6- We keep: 
     #          o Bonds between CG beads having same domanin
     #          o Bonds where ONLY ONE CG bead is involved (even if belonging to different domains) 
     #          o Bonds between ATOMS (even if they belonging to different domains)
     # 
     #       We discard Bonds between CG beads that belong to different domains.
-    bonds_CG_SameDomain = [ i for i in bonds_mult_res_prot if len(i) == 10 if i[8] == i[9]] 
 
-  
-    bonds_mult_res_prot = bonds_CG_SameDomain + bonds_AT
+    bonds_CG_SameDomain = [ i for i in bonds_mult_res_prot if len(i) == 10 if i[8] == i[9]]
+
+    bonds_AT1= [ i for i in bonds_mult_res_prot if len(i) == 8]
+    bonds_AT2= [ i for i in bonds_mult_res_prot if len(i) == 9]    # If ONLY one CG bead is present 
+
+    bonds_mult_res_prot = bonds_CG_SameDomain + bonds_AT1 + bonds_AT2
 
     bonds_mult_res_prot = sorted(bonds_mult_res_prot, key=itemgetter(0,1))
 
@@ -1818,7 +1969,11 @@ def update_B1(list_survived_only_num, i):
     if(result==True):
         return i
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_B1, list_survived_only_num)
 pairs_mult_res_prot = pool.map(temp, iterable=original_pairs_protein_fully_at)
 
@@ -1841,7 +1996,11 @@ def update_B2(pairs_mult_res_prot, k):
 
     return A
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_B2, pairs_mult_res_prot)
 upd_B2 = pool.map(temp, iterable=list_survived_atoms)
 
@@ -1867,7 +2026,11 @@ def update_B2b(upd_B2, i):
 
     return i
 
-pool    = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp    = partial(update_B2b, upd_B2)
 upd_B2b = pool.map(temp, iterable=pairs_mult_res_prot)
 
@@ -1897,7 +2060,11 @@ def update_s14_eps14(pairttypes, i):
     return i 
 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_s14_eps14, pairtypes)
 s14_eps14= pool.map(temp, iterable=pairs_mult_res_prot)
 pairs_mult_res_prot = s14_eps14 
@@ -1975,7 +2142,11 @@ def update_C1(list_survived_only_num, i):
     if(result==True):
         return i
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_C1, list_survived_only_num)
 angles_prot_fully_at = pool.map(temp, iterable=original_angles_protein_fully_at)
 
@@ -1996,7 +2167,11 @@ def update_C2(angles_prot_fully_at, k):
 
     return A
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_C2, angles_prot_fully_at)
 upd_C2 = pool.map(temp, iterable=list_survived_atoms)
 
@@ -2035,7 +2210,11 @@ def update_C2b(upd_C2, i):
 
     return i
 
-pool    = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp    = partial(update_C2b, upd_C2)
 upd_C2b = pool.map(temp, iterable=angles_prot_fully_at)
 
@@ -2069,7 +2248,11 @@ def update_cth_th0(angletypes, i):
     return i
 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_cth_th0, angletypes)
 cth_th0= pool.map(temp, iterable=angles_prot_fully_at)
 angles_prot_fully_at = cth_th0
@@ -2149,7 +2332,11 @@ def update_D2(list_survived_only_num, i):
     if(result==True):
         return i
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_D2, list_survived_only_num)
 
 dihedrals_prot_fully_at_dih4 = pool.map(temp, iterable=original_dihedrals_protein_fully_at_dih4)
@@ -2176,7 +2363,10 @@ def update_D3(dihedrals_prot_fully_at, k):
 
     return A
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
 
 temp_dih4   = partial(update_D3, dihedrals_prot_fully_at_dih4)
 upd_D3_dih4 = pool.map(temp_dih4, iterable=list_survived_atoms)
@@ -2234,7 +2424,10 @@ def update_D3b(upd_D3, i):
 
     return i 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
 
 temp_dih4    = partial(update_D3b, upd_D3_dih4)
 upd_D3b_dih4 = pool.map(temp_dih4, iterable=dihedrals_prot_fully_at_dih4)
@@ -2360,7 +2553,11 @@ def update_D4(dihedraltypes_dih49, i):
 
     return i 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_D4, dihedraltypes_dih4)
 upd_D4_dih4 = pool.map(temp, iterable=dihedrals_prot_fully_at_dih4)
 
@@ -2468,7 +2665,11 @@ dihedrals_prot_fully_at_dih4 = sorted(dihedrals_prot_fully_at_dih4, key=itemgett
 
 #D.7- Repeating the previous four steps (D.4, and D.5) for dih9 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_D4, dihedraltypes_dih9)
 upd_D4_dih9 = pool.map(temp, iterable=dihedrals_prot_fully_at_dih9)
 
@@ -2572,7 +2773,11 @@ def update_D7(dihedraltypes_tors, i):
 
     return i 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_D7, dihedraltypes_tors)
 upd_D7 = pool.map(temp, iterable=dihedrals_prot_fully_at_tors)
 
@@ -2654,7 +2859,11 @@ def update_D8(dihedraltypes_dih2, i):
 
     return i 
 
-pool = Pool()
+if(ncpu is not None):
+    pool       = Pool(ncpu)
+else:
+    pool = Pool()
+
 temp = partial(update_D8, dihedraltypes_dih2)
 upd_D8 = pool.map(temp, iterable=dihedrals_prot_fully_at_dih2)
 
@@ -3049,7 +3258,11 @@ if(Flag_cmaps == True):   # i.e. the "original_cmaps_protein_fully_at" list is n
         if(result==True):
             return i
 
-    pool = Pool()
+    if(ncpu is not None):
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()
+
     temp = partial(update_E1, list_survived_only_num)
     cmaps_prot_fully_at = pool.map(temp, iterable=original_cmaps_protein_fully_at)
 
@@ -3067,8 +3280,12 @@ if(Flag_cmaps == True):   # i.e. the "original_cmaps_protein_fully_at" list is n
                 A = (k[3], k[8],k[7],k[9],k[16])         #k[8] = type; k[7]=at/cg; k[9]=NewIndex, k[16]=A{i} in case of CGbead, otherwise i[16]=type
     
         return A
-    
-    pool = Pool()
+
+    if(ncpu is not None):
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()   
+ 
     temp = partial(update_E2, cmaps_prot_fully_at)
     upd_E2 = pool.map(temp, iterable=list_survived_atoms)
     
@@ -3121,8 +3338,12 @@ if(Flag_cmaps == True):   # i.e. the "original_cmaps_protein_fully_at" list is n
                 break
     
         return i
-    
-    pool    = Pool()
+
+    if(ncpu is not None):
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()    
+
     temp    = partial(update_E2b, upd_E2)
     upd_E2b = pool.map(temp, iterable=cmaps_prot_fully_at)
     
@@ -3155,8 +3376,11 @@ if(Flag_cmaps == True):   # i.e. the "original_cmaps_protein_fully_at" list is n
      
         return i 
 
+    if(ncpu is not None):
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()
 
-    pool = Pool()
     temp = partial(update_E3, cmaptypes)
     upd_E3 = pool.map(temp, iterable=cmaps_prot_fully_at)
 
@@ -3537,7 +3761,10 @@ if(FlagLammps == True):
 
     if(solvate_Flag == True):            
 
-        pool = Pool()
+        if(ncpu is not None):
+            pool       = Pool(ncpu)
+        else:
+            pool = Pool()
 
         temp = partial(update_L5a_solv, atoms_ions)
         upd_L5a_solv = pool.map(temp, iterable=list_survived_atoms)
@@ -3550,7 +3777,10 @@ if(FlagLammps == True):
 
     if(solvate_Flag == False): 
 
-        pool = Pool()
+        if(ncpu is not None):
+            pool       = Pool(ncpu)
+        else:
+            pool = Pool()
 
         temp = partial(update_L5a_notsolv, atoms_box)
         upd_L5a_notsolv = pool.map(temp, iterable=list_survived_atoms)
@@ -3585,7 +3815,10 @@ if(FlagLammps == True):
         
         ## L5.c- Appending "at_type" (i[8]) for water and ions
 
-        pool = Pool() 
+        if(ncpu is not None):
+            pool       = Pool(ncpu)
+        else:
+            pool = Pool()
 
         temp = partial(update_L5c_1, atoms_topol_water)
         upd_L5c_1 = pool.map(temp, iterable=list_survived_atoms)
@@ -3621,7 +3854,10 @@ if(FlagLammps == True):
 
             return i
 
-        pool = Pool()
+        if(ncpu is not None):
+            pool       = Pool(ncpu)
+        else:
+            pool = Pool()
 
         temp = partial(update_L5e, dict_mass)
         upd_L5e = pool.map(temp, iterable=list_survived_atoms)
@@ -3709,7 +3945,10 @@ if(FlagLammps == True):
 
         return i 
 
-    pool = Pool()
+    if(ncpu is not None):
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()
 
     temp = partial(update_L6c, dict_at_types)
     upd_L6c = pool.map(temp, iterable=list_survived_atoms)
@@ -3778,7 +4017,11 @@ if(FlagLammps == True):
 
             return i 
 
-        pool = Pool() 
+        if(ncpu is not None):
+            pool       = Pool(ncpu)
+        else:
+            pool = Pool()
+
         temp = partial(update_L7e, bondtypes)
         upd_L7e = pool.map(temp, iterable=bonds_mult_res_prot)
 
@@ -3845,7 +4088,11 @@ if(FlagLammps == True):
 
             return i
 
-        pool = Pool()
+        if(ncpu is not None):
+            pool       = Pool(ncpu)
+        else:
+            pool = Pool()
+
         temp = partial(update_L8c, angletypes)
         upd_L8c = pool.map(temp, iterable=angles_mult_res_prot)
 
@@ -3967,13 +4214,13 @@ if(FlagLammps == True):
         write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, number_of_dihedrals, number_of_impropers, number_atom_types, \
                        number_bond_types, number_angle_types, number_dihedral_types, number_improper_types, min_x, max_x, min_y, max_y, \
                        min_z, max_z, list_survived_atoms, bonds_mult_res_prot, angles_mult_res_prot, dihedrals_mult_res_prot, atoms_box, \
-                       type_OW, type_HW)
+                       type_OW, type_HW, ncpu)
 
     if(solvate_Flag == True):
         write_lmp_file(f_lmp, number_of_atoms,number_of_bonds, number_of_angles, number_of_dihedrals, number_of_impropers, number_atom_types, \
                        number_bond_types, number_angle_types, number_dihedral_types, number_improper_types, min_x, max_x, min_y, max_y, \
                        min_z, max_z, list_survived_atoms, bonds_mult_res_prot, angles_mult_res_prot, dihedrals_mult_res_prot, atoms_ions, \
-                       type_OW, type_HW)
+                       type_OW, type_HW, ncpu)
     
     f_lmp.close() 
 
@@ -3982,7 +4229,7 @@ if(FlagLammps == True):
     
     write_input_lammps_file(f_input, dihedrals_mult_res_prot, Flag_cmaps, number_of_bonds, number_of_angles, number_of_dihedrals, \
                             number_of_impropers, number_atom_types, list_survived_atoms, pairs_mult_res_prot, dict_at_types, \
-                            bonds_mult_res_prot, angles_mult_res_prot, type_OW, type_HW, solvate_Flag)
+                            bonds_mult_res_prot, angles_mult_res_prot, type_OW, type_HW, solvate_Flag, ncpu)
     
     f_input.close() 
 

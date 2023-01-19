@@ -7,12 +7,15 @@ import itertools   		      # It needs for removing duplicates in list of lists.
 
 from operator import itemgetter
 from math import sqrt 
+from datetime import datetime
 
 # --------------------------------------------
 
 PYTHONPATH = os.path.abspath(os.getcwd())
 
-spl_word = "canvas-NEW-MPI" # We find CANVAS, cut the entire path until CANVAS and add /lib in order to find our libraries. 
+REAL_start = datetime.now()
+
+spl_word = "canvas-FINAL-GitHub" # We find CANVAS, cut the entire path until CANVAS and add /lib in order to find our libraries. 
 
 python_modules_path = PYTHONPATH.split(spl_word)[0] + spl_word + "/lib"
 
@@ -226,6 +229,7 @@ if(option == "choice1"):
 
         if(i[2] == "O" or i[2] == "OC2"): 			      # It means that the next residue has been reached (OC2 in case of terminal res) 
             count = count + 1			                      # then, count can be increased by one 
+
 
 
     list_AT_residues = list_AT_residues + list_AT_res  # Adding in list_AT_residue the atomistic residues writtein in file.   
@@ -651,4 +655,7 @@ elif(sys.argv[1].strip() == "choice3"):
 
     print("\no '{}' containing the list of survived atoms has been written... 95% completed.\n".format(f_list.name))
 
-    print("\no No Errors... 100% completed\n")    
+    print("\no No Errors... 100% completed\n")   
+
+REAL_end = datetime.now()
+print("The time for executing the code(BLOCK) is: ", (REAL_end - REAL_start).total_seconds()) 

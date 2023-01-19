@@ -20,7 +20,7 @@ from datetime import datetime
 
 PYTHONPATH = os.path.abspath(os.getcwd())
 
-spl_word = "canvas-NEW-MPI" # We find CANVAS, cut the entire path until CANVAS and add /lib in order to find our libraries. 
+spl_word = "canvas-FINAL-GitHub" # We find CANVAS, cut the entire path until CANVAS and add /lib in order to find our libraries. 
 
 python_modules_path = PYTHONPATH.split(spl_word)[0] + spl_word + "/lib"
 
@@ -1368,30 +1368,54 @@ if domfile is not None:
 
 
     #A.6.3- Creating dom$i_fullyAT and dom$i where i belongs to [1, n_domains] 
-    for i, value in enumerate(dom):
-        exec('dom%d_fullyAT = %s' % (i+1,value))
 
-    n_domains = i + 1
-    for i in range(1, n_domains+1):
-        exec('dom%d = []' % i)
+    """OLD   
+    #for i, value in enumerate(dom):
+    #    exec('dom%d_fullyAT = %s' % (i+1,value))
 
-    
-    for count in range(1, n_domains+1):                
+    #n_domains = i + 1
+    #for i in range(1, n_domains+1):
+    #    exec('dom%d = []' % i)
+
+    #for count in range(1, n_domains+1):                
+    #    for i in list_survived_atoms:
+    #        if eval('i[3] in dom%d_fullyAT and i[7] == "cg"' % count): 
+    #            eval('dom%d.append(i[9])' % count)
+    """
+
+    dom_fullyAT  = dom 
+    n_domains    = len(dom)    
+    dom_NewIndex = [[ ] for i in range(n_domains)]   # list of empty internal lists...  
+ 
+    for count in range(n_domains):   
         for i in list_survived_atoms:
-            if eval('i[3] in dom%d_fullyAT and i[7] == "cg"' % count): 
-                eval('dom%d.append(i[9])' % count)
-
+            if(i[3] in dom_fullyAT[count] and i[7] =="cg"):
+                dom_NewIndex[count].append(i[9]) 
 
     #A.6.4- Appending in 'bonds_mult_res_prot' the number of domain (1,2,...,N) in case of CG beads 
-    for i in bonds_mult_res_prot:
-        for count in range(1, n_domains+1):
-            if eval('i[0] in dom%d' % count):
-                i.append(count)
+    
+    """OLD
+    #for i in bonds_mult_res_prot:
+    #    for count in range(1, n_domains+1):
+    #        if eval('i[0] in dom%d' % count):
+    #            i.append(count)
+
+    #for i in bonds_mult_res_prot:
+    #    for count in range(1, n_domains+1):
+    #        if eval('i[1] in dom%d' % count):
+    #            i.append(count)
+    """
 
     for i in bonds_mult_res_prot:
-        for count in range(1, n_domains+1):
-            if eval('i[1] in dom%d' % count):
-                i.append(count)
+        for count in range(n_domains):
+            if(i[0] in dom_NewIndex[count]):
+                i.append(count+1) 
+
+    for i in bonds_mult_res_prot:
+        for count in range(n_domains):
+            if(i[1] in dom_NewIndex[count]): 
+                i.append(count+1) 
+
 
     #A.6.5- We keep: 
     #          o Bonds between CG beads having same domanin
