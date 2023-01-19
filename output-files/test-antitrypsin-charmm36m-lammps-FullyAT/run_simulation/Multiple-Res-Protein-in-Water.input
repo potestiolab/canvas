@@ -1,0 +1,220 @@
+units real
+atom_style full
+
+dimension 3
+boundary p p p
+
+bond_style       hybrid harmonic
+angle_style      hybrid harmonic charmm
+dihedral_style   hybrid charmm multi/harmonic
+improper_style   hybrid harmonic
+special_bonds    lj 0.0 0.0 1.0 coul 0.0 0.0 1.0
+
+read_data        Multiple-Res-Protein-in-Water.lmp
+#read_restart    restart.Mult-Res-T300.50000
+
+######################################################################
+
+variable         root index Mult-Res-T300
+variable         Nrun equal 500000   #500 ps
+variable         Nf equal 100
+variable         Ne equal 100
+variable         Nr equal ${Nf}/${Ne}
+variable         Ndump equal 10000
+variable         Nrestart equal 10000
+variable         Text equal 300.0
+variable         Pext equal 10.0
+
+######################################################################
+
+pair_style       lj/cut/coul/dsf 0.2 10.0 12.0
+pair_modify      tail yes
+
+pair_coeff 1 1   0.2000000   3.2963253
+pair_coeff 2 2   0.0460000   0.4000135
+pair_coeff 3 3   0.0320000   3.5635949
+pair_coeff 4 4   0.0220000   2.3519726
+pair_coeff 5 5   0.0560000   3.5814128
+pair_coeff 6 6   0.0340000   2.3876086
+pair_coeff 7 7   0.0700000   3.5500532
+pair_coeff 8 8   0.0300000   2.4200373
+pair_coeff 9 9   0.1100000   3.5635949
+pair_coeff 10 10   0.1200000   3.0290556
+pair_coeff 11 11   0.2000000   3.2963253
+pair_coeff 12 12   0.0460000   0.4000135
+pair_coeff 13 13   0.0700000   3.5635949
+pair_coeff 14 14   0.2000000   3.2963253
+pair_coeff 15 15   0.0450000   2.3876086
+pair_coeff 16 16   0.0780000   3.6348668
+pair_coeff 17 17   0.0240000   2.3876086
+pair_coeff 18 18   0.1521000   3.1537815
+pair_coeff 19 19   0.2000000   3.2963253
+pair_coeff 20 20   0.0550000   3.8754094
+pair_coeff 21 21   0.0200000   4.0535892
+pair_coeff 22 22   0.0550000   3.8754094
+pair_coeff 23 23   0.0560000   3.5814128
+pair_coeff 24 24   0.1200000   3.0290556
+pair_coeff 25 25   0.2000000   3.2963253
+pair_coeff 26 26   0.2000000   3.2963253
+pair_coeff 27 27   0.0500000   3.2072354
+pair_coeff 28 28   0.0500000   3.2072354
+pair_coeff 29 29   0.0460000   1.6036177
+pair_coeff 30 30   0.2000000   3.2963253
+pair_coeff 31 31   0.0078000   2.6156786
+pair_coeff 32 32   0.4500000   3.5635949
+pair_coeff 33 33   0.0280000   2.3876086
+pair_coeff 34 34   0.0730000   3.5457769
+pair_coeff 35 35   0.2000000   3.2963253
+pair_coeff 36 36   0.0990000   3.3141432
+pair_coeff 37 37   0.0730000   3.5457769
+pair_coeff 38 38   0.1000000   0.8018088
+pair_coeff 39 39   0.1521000   3.1505742
+pair_coeff 40 40   0.0460000   0.4000135
+pair_coeff 41 41   0.0469000   2.5136707
+pair_coeff 1 5   0.0798487   1.8711417
+pair_coeff 1 10   0.1549193   2.8954208
+pair_coeff 1 11   0.2000000   3.0290556
+pair_coeff 2 5   0.0214476   1.8927143
+pair_coeff 3 3   0.0100000   3.3854151
+pair_coeff 3 4   0.0685634   0.6205875
+pair_coeff 3 5   0.0100000   3.3854151
+pair_coeff 3 6   0.0184391   2.8865118
+pair_coeff 3 7   0.0264575   3.4677342
+pair_coeff 3 9   0.0830427   1.3876758
+pair_coeff 3 10   0.0702669   1.4493801
+pair_coeff 3 11   0.0447214   3.0736006
+pair_coeff 3 12   0.0214476   1.8927143
+pair_coeff 3 13   0.0264575   3.4745050
+pair_coeff 3 14   0.0447214   3.3408702
+pair_coeff 3 15   0.0212132   2.8865118
+pair_coeff 3 16   0.0100000   3.3854151
+pair_coeff 3 17   0.0154919   2.8865118
+pair_coeff 3 19   0.0010000   3.3408702
+pair_coeff 3 20   0.0100000   3.3854151
+pair_coeff 3 21   0.0100000   3.3854151
+pair_coeff 3 24   0.0346410   3.2072354
+pair_coeff 3 26   0.0447214   3.3408702
+pair_coeff 3 27   0.0223607   3.2963253
+pair_coeff 3 30   0.0447214   3.3408702
+pair_coeff 3 32   0.0670820   3.4745050
+pair_coeff 3 36   0.0314643   3.3497792
+pair_coeff 3 38   0.0316228   2.0936120
+pair_coeff 4 5   0.0148324   2.8686939
+pair_coeff 4 10   0.0513809   2.4232445
+pair_coeff 4 11   0.0663325   2.5568793
+pair_coeff 4 16   0.0148324   2.8686939
+pair_coeff 4 19   0.0014832   2.8241489
+pair_coeff 4 20   0.0685634   0.6205875
+pair_coeff 4 22   0.0148324   2.8686939
+pair_coeff 5 5   0.0100000   3.3854151
+pair_coeff 5 6   0.0184391   2.8865118
+pair_coeff 5 7   0.0264575   3.4677342
+pair_coeff 5 8   0.0173205   2.9027262
+pair_coeff 5 9   0.0830427   1.3876758
+pair_coeff 5 10   0.0346410   2.9399658
+pair_coeff 5 11   0.0447214   3.0736006
+pair_coeff 5 12   0.0452370   0.8973680
+pair_coeff 5 13   0.0264575   3.4745050
+pair_coeff 5 14   0.0447214   3.3408702
+pair_coeff 5 16   0.0100000   3.3854151
+pair_coeff 5 17   0.0689893   0.6481825
+pair_coeff 5 19   0.0010000   3.3408702
+pair_coeff 5 24   0.0346410   3.2072354
+pair_coeff 5 25   0.0447214   3.3408702
+pair_coeff 5 26   0.0447214   3.3408702
+pair_coeff 5 28   0.0223607   3.2963253
+pair_coeff 5 30   0.0447214   3.3408702
+pair_coeff 5 31   0.0088318   3.0005469
+pair_coeff 5 35   0.0447214   3.3408702
+pair_coeff 5 36   0.0314643   3.3497792
+pair_coeff 5 37   0.0270185   3.4655960
+pair_coeff 6 10   0.0638749   2.4410625
+pair_coeff 6 11   0.0615367   3.4502148
+pair_coeff 6 16   0.0689893   0.7714915
+pair_coeff 6 19   0.0679246   0.0771491
+pair_coeff 6 20   0.0689893   0.7714915
+pair_coeff 6 21   0.0184391   2.8865118
+pair_coeff 6 22   0.0184391   2.8865118
+pair_coeff 7 8   0.0458258   2.9850452
+pair_coeff 7 11   0.0754283   4.9505756
+pair_coeff 8 8   0.0300000   2.4200373
+pair_coeff 8 12   0.0371484   1.4100254
+pair_coeff 8 18   0.0675500   2.7869094
+pair_coeff 8 34   0.0712932   1.9580047
+pair_coeff 8 35   0.0683122   3.2409125
+pair_coeff 8 36   0.0544977   2.8670903
+pair_coeff 8 37   0.0712932   1.9580047
+pair_coeff 9 16   0.0830427   1.3876758
+pair_coeff 9 20   0.0830427   1.3876758
+pair_coeff 9 22   0.0331662   3.4745050
+pair_coeff 9 23   0.0331662   3.4745050
+pair_coeff 10 11   0.0628143   6.4818249
+pair_coeff 10 12   0.0742967   1.4472650
+pair_coeff 10 16   0.0702669   1.4493801
+pair_coeff 10 19   0.0692022   0.1449380
+pair_coeff 10 20   0.0346410   2.9399658
+pair_coeff 10 21   0.0346410   2.9399658
+pair_coeff 10 22   0.0702669   1.4493801
+pair_coeff 10 23   0.0702669   1.4493801
+pair_coeff 10 33   0.0583428   2.4252768
+pair_coeff 11 11   0.2000000   2.7617860
+pair_coeff 11 13   0.1183216   3.1626904
+pair_coeff 11 15   0.0948683   2.5746973
+pair_coeff 11 16   0.0447214   3.0736006
+pair_coeff 11 17   0.0692820   2.5746973
+pair_coeff 11 18   0.1744133   2.9577837
+pair_coeff 11 19   0.0044721   3.0290556
+pair_coeff 11 22   0.0734608   1.8711417
+pair_coeff 11 23   0.0734608   1.8711417
+pair_coeff 11 24   0.1549193   2.8954208
+pair_coeff 11 27   0.1000000   2.9845107
+pair_coeff 11 32   0.3000000   3.1626904
+pair_coeff 11 33   0.0615367   3.1310189
+pair_coeff 11 34   0.1208305   3.1537815
+pair_coeff 12 16   0.0214476   1.8927143
+pair_coeff 12 21   0.0452370   0.8973680
+pair_coeff 12 23   0.0214476   1.8927143
+pair_coeff 15 16   0.0212132   2.8865118
+pair_coeff 16 16   0.0100000   3.3854151
+pair_coeff 16 17   0.0154919   2.8865118
+pair_coeff 16 19   0.0010000   3.3408702
+pair_coeff 19 19   0.0001000   3.2963253
+pair_coeff 19 22   0.0798487   0.0418400
+pair_coeff 20 21   0.0809134   0.4184000
+pair_coeff 21 21   0.0100000   3.3854151
+pair_coeff 23 24   0.0346410   3.2072354
+
+pair_modify      mix arithmetic
+
+# In case you use a restart, you need to copy all bonds and angles coefficient from .lmp file
+# Please recall that before each row you need to write the string bond_coeff, angle_coeff
+# and dihedral_coeff according with the case we are considering: Example.
+# bond_coeff 1 harmonic  5.97514340e+01    3.95488306e+00    and so on
+
+group            water type 39 40
+
+group            AA    type 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38
+
+neighbor         1.0 bin
+neigh_modify     every 1 delay 10 check yes
+
+thermo_style     custom step temp press density vol ke ebond eangle evdwl ecoul etotal
+
+thermo_modify    flush yes
+thermo           ${Nf}
+
+dump             trj all custom ${Ndump} mult-res.lammpstrj id type x y z
+dump_modify      trj sort id
+
+minimize         1.0e-4 1.0e-6 100 1000
+
+fix 1            water shake 0.0001 20 0 t 39 40 b 5996 a 10895
+fix 2            all npt temp ${Text} ${Text} 100.0 iso ${Pext} ${Pext} 1000.0
+
+#fix 3           all nve
+#fix 4           all langevin ${Text} ${Text} 100 9892571
+
+restart          ${Nrestart} restart.${root}
+
+timestep         1.0
+run              ${Nrun}

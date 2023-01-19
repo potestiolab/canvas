@@ -1,0 +1,43 @@
+;
+;       File 'topol_new.top' was generated
+;       By user: USERNAME
+;       On host: hpc-head-n2.unitn.it
+;       At date: Mon 04 July 2022 - 16:29:23
+;
+;       This is the topology file for Multiple resolution protein
+;
+
+; Include forcefield parameters
+#include "/home/raffaele.fiorentini/canvas-NEW-MPI/input-files/ANTITRYPSIN/sim-w-charmm36m/charmm36-jul2021.ff/forcefield.itp"
+#include "ffnonbonded_new.itp"
+#include "ffbonded_new.itp"
+#include "cmap_new.itp"
+#include "mult.itp"
+
+; Include Position restraint file
+#ifdef POSRES
+#include "posre_mul_res.itp"
+#endif
+
+; Include water topology
+#include "/home/raffaele.fiorentini/canvas-NEW-MPI/input-files/ANTITRYPSIN/sim-w-charmm36m/charmm36-jul2021.ff/tip3p.itp"
+
+#ifdef POSRES_WATER
+; Position restraint for each water oxygen
+[ position_restraints ]
+;  i funct       fcx        fcy        fcz
+   1    1       1000       1000       1000
+#endif
+
+; Include topology for ions
+#include "/home/raffaele.fiorentini/canvas-NEW-MPI/input-files/ANTITRYPSIN/sim-w-charmm36m/charmm36-jul2021.ff/ions.itp"
+
+[ system ]
+; Name
+Multiple resolution protein in fully-at water
+
+[ molecules ]
+; Compound        #mols
+Mult_Res_Prot         1
+SOL         43949
+NA               10
