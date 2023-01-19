@@ -9,7 +9,7 @@ from datetime import datetime
 def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, number_of_dihedrals, number_of_impropers, number_atom_types, \
                    number_bond_types, number_angle_types, number_dihedral_types, number_improper_types, min_x, max_x, min_y, max_y, \
                    min_z, max_z, list_survived_atoms, bonds_mult_res_prot, angles_mult_res_prot, dihedrals_mult_res_prot, atoms_ions, \
-                   type_OW, type_HW): 
+                   type_OW, type_HW, ncpu): 
 
     ## A- Writing title, number of: atoms, bonds, angles, dihedrals, and impropers 
     f_lmp.write("File ilmp Variable resolution Protein in fully atomistic water\n\n")
@@ -47,8 +47,11 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
             if(count == i[-1]):
                 return i[-1],i[10],i[16]
 
-    pool = Pool()
-     
+    if(ncpu is not None):
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()
+
     temp = partial(update_masses, list_count)
     upd_mass = pool.map(temp, iterable=list_survived_atoms)
     
@@ -81,7 +84,10 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
             if(count == i[-1]):
                 return i[-1], i[6]/836.8, i[7]*10         # namely the specific number of bondtype: i[6]=Ek, i[7]=b0 both in Lammps Units. 
 
-    pool = Pool()
+    if(ncpu is not None):
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()
 
     temp         = partial(update_b_coeffs, list_b_count)
     upd_b_coeffs = pool.map(temp, iterable=bonds_mult_res_prot)
@@ -134,7 +140,10 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
                 if(count == i[-1]):
                     return i[-1], i[7]/8.368, i[8], i[10]/836.8, i[9]*10 # If funct==5, return the specific number of angletype in Lammps Units
 
-    pool = Pool()
+    if(ncpu is not None):
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()
 
     temp         = partial(update_a_coeffs, list_a_count)
     upd_a_coeffs = pool.map(temp, iterable=angles_mult_res_prot)
@@ -180,8 +189,11 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
                 if(i[-2] == "charmm"):
                     return i[-1],i[-6],i[-5],int(i[-4]),int(i[-3])    # i[7] has to be integer
 
-    pool = Pool()
-    
+    if(ncpu is not None):
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()
+
     temp         = partial(update_d_coeffs, list_d_count)
     upd_d_coeffs = pool.map(temp, iterable=dihedrals_mult_res_prot)
 
@@ -227,8 +239,11 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
                 if(i[4] == 2):                                                                        # i[4]==2 means funct==2
                     return i[-1], i[10]/8.368, i[9]*10                                                # i[10] = K, i[9] = X0 both in Lammps Units. 
 
-    pool = Pool()
-    
+    if(ncpu is not None):
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()
+
     temp         = partial(update_i_coeffs, list_i_count)
     upd_i_coeffs = pool.map(temp, iterable=dihedrals_mult_res_prot)
 
@@ -406,7 +421,7 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
 
 def write_input_lammps_file(f_input, dihedrals_mult_res_prot, Flag_cmaps, number_of_bonds, number_of_angles, number_of_dihedrals, \
                             number_of_impropers, number_atom_types, list_survived_atoms, pairs_mult_res_prot, dict_at_types, \
-                            bonds_mult_res_prot, angles_mult_res_prot, type_OW, type_HW, solvate_Flag):
+                            bonds_mult_res_prot, angles_mult_res_prot, type_OW, type_HW, solvate_Flag, ncpu):
 
     ## a- Checking if charmm forcefield is employed
     Flag_charmm = False
@@ -495,7 +510,10 @@ def write_input_lammps_file(f_input, dihedrals_mult_res_prot, Flag_cmaps, number
             if(count == i[-1]):
                 return i[-1],i[-1], i[13]/4.184, i[12]*10
 
-    pool = Pool()
+    if(ncpu is not None):
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()
 
     temp      = partial(update_L16b, list_count_number_atom_types)
     upd_L16b  = pool.map(temp, iterable=list_survived_atoms)
@@ -554,8 +572,11 @@ def write_input_lammps_file(f_input, dihedrals_mult_res_prot, Flag_cmaps, number
 
         return i
 
-    pool      = Pool()
-    
+    if(ncpu is not None):
+        pool       = Pool(ncpu)
+    else:
+        pool = Pool()
+
     temp      = partial(update_L16, list_number_type)
     upd_L16 = pool.map(temp, iterable=pairs_mult_res_prot)
     pairs_mult_res_prot = upd_L16
@@ -565,8 +586,9 @@ def write_input_lammps_file(f_input, dihedrals_mult_res_prot, Flag_cmaps, number
 
     
     pairs_ij = [x for x in pairs_mult_res_prot if len(x)>8]       # Remove pairs where no sigma14 and Eps14 are not present. 
-    pairs_ij = [[x[1],x[0], x[3],x[2], x[5],x[4], x[7],x[6], x[9],x[8]] if x[8]>x[9] else x for x in pairs_ij]  # If n_AT_Type1 > n_AT_Type2: exchange values
-    
+    pairs_ij = [[x[1],x[0], x[3],x[2], x[5],x[4], x[6],x[7], x[9],x[8]] if x[8]>x[9] else x for x in pairs_ij]  # If n_AT_Type1 > n_AT_Type2: exchange values
+						# not x[7],x[6]    
+
     pairs_ij = sorted(pairs_ij, key=itemgetter(8,9))                                                         # sorting 9th-10th columns, i.e. the n_AT_Type
     pairs_ij =[list(my_iterator)[0] for g, my_iterator in itertools.groupby(pairs_ij, lambda x: [x[-2],x[-1]])]
     

@@ -419,8 +419,9 @@ def write_input_lammps_file(f_input, dihedrals_mult_res_prot, Flag_cmaps, number
 
     
     pairs_ij = [x for x in pairs_mult_res_prot if len(x)>8]                                   # Remove pairs where no sigma14 and Eps14 are not present. 
-    pairs_ij = [[x[1],x[0], x[3],x[2], x[5],x[4], x[7],x[6], x[9],x[8]] if x[8]>x[9] else x for x in pairs_ij]  # If n_AT_Type1 > n_AT_Type2: exchange values
-    
+    pairs_ij = [[x[1],x[0], x[3],x[2], x[5],x[4], x[6],x[7], x[9],x[8]] if x[8]>x[9] else x for x in pairs_ij]  # If n_AT_Type1 > n_AT_Type2: exchange values
+   														# not x[7],x[6]
+ 
     pairs_ij = sorted(pairs_ij, key=itemgetter(8,9))                                                         # sorting 9th-10th columns, i.e. the n_AT_Type
     pairs_ij =[list(my_iterator)[0] for g, my_iterator in itertools.groupby(pairs_ij, lambda x: [x[-2],x[-1]])]
     

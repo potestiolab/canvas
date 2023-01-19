@@ -121,8 +121,8 @@ def check_empty_rows_block(line, file):
 
 # Function: it prints the main usage of CANVAS.py program 
 def print_usage_main_CANVAS():
-    print("Usage: python3 {} -g <Coordinate FILE> -l <List survived atoms FILE> -t <Topology FILE> [-d <Domain division FILE>] [-r Y] [-c lammps] [-s n]".format(sys.argv[0]))
-    print("   or: python3 {} --gro <Coordinate FILE> --list <List survived atoms FILE> --top <Topology FILE> [--dom <Domain division FILE>] [--resc14 Y] [--code lammps] [--solvate n]".format(sys.argv[0]))
+    print("Usage: python3 {} -g <Coordinate FILE> -l <List survived atoms FILE> -t <Topology FILE> [-d <Domain division FILE>] [-r Y] [-n <nCPU>] [-c lammps] [-s n]".format(sys.argv[0]))
+    print("   or: python3 {} --gro <Coordinate FILE> --list <List survived atoms FILE> --top <Topology FILE> [--dom <Domain division FILE>] [--resc14 Y] [--ncpu <nCPU>] [--code lammps] [--solvate n]".format(sys.argv[0]))
 
     print("\nTry python3 {} -h or {} --help for more information.\n".format(sys.argv[0], sys.argv[0]))
 
@@ -139,8 +139,8 @@ def print_usage_main_block():
 
 # Function: it prints the main help of CANVAS.py program 
 def print_help_main_CANVAS():  
-    print("Usage: python3 {} -g <Coordinate FILE> -l <List survived atoms FILE> -t <Topology FILE> [-d <Domain division FILE>] [-r Y] [-c lammps] [-s n]".format(sys.argv[0]))
-    print("   or: python3 {} --gro <Coordinate FILE> --list <List survived atoms FILE> --top <Topology FILE> [--dom <Domain division FILE>] [--resc14 Y] [--code lammps] [--solvate n]".format(sys.argv[0]))
+    print("Usage: python3 {} -g <Coordinate FILE> -l <List survived atoms FILE> -t <Topology FILE> [-d <Domain division FILE>] [-r Y] [-n <nCPU>] [-c lammps] [-s n]".format(sys.argv[0]))
+    print("   or: python3 {} --gro <Coordinate FILE> --list <List survived atoms FILE> --top <Topology FILE> [--dom <Domain division FILE>] [--resc14 Y] [--ncpu <nCPU>] [--code lammps] [--solvate n]".format(sys.argv[0]))
 
     print("\n-----------------------------------------------------------------------------------------------------")
 
@@ -181,6 +181,11 @@ def print_help_main_CANVAS():
     print("                                                     do not solvate the system. Use it in case of implicit solvent simulations")
     print("                                                     If '-s/--solvate y' is set, or in case the user ignore this flag,")
     print("                                                     this program solvates and neutralizes (with NA and CL ions) the system\n") 
+    print("  NumberCpu                       OPTIONAL           Integer number containg the number of cpus that you would like to employ")
+    print("                                                     for creating the CANVAS model of a biomolecule.") 
+    print("                                                     If '-n/--ncpu <nCPU>' is set, the code will be parallelized by employing nCPU cores")  
+    print("                                                     If '-n/--npu <nCPU>' is not set, the code will be parallelized by employing")
+    print("                                                     the maximum number of allowed cores in your laptop/cluster\n") 
 
     print("-----------------------------------------------------------------------------------------------------");
     print("Hereafter the list of flags:\n");
@@ -192,6 +197,7 @@ def print_help_main_CANVAS():
     print("  [-r] [--resc14]                 STR                If string is 'Y', rescaled VdW and Coulomb is applied for CG beads") 
     print("  [-c] [--code]                   STR                If string is 'lammps' the program returns the input files for LAMMPS simulation")  
     print("  [-s] [--solvate]                STR                If string is 'n' the system will sot solvated.") 
+    print("  [-n] [--ncpu]                   INT                Integer number corresponding at the number of cores employed for parallelizing the code")  
 
     print("  [-h] [--help]                                      Give this help list\n")
 
@@ -240,13 +246,13 @@ def print_help_main_block():
 # Function: it prints the help of each task chosen in "block.py"  
 def print_help_block(): 
     if(sys.argv[1]=="choice1" or sys.argv[1]=="choice2"):
-        print("usage: python3 {} {} -g <Coordinate FILE> -l <List AT-bb-CG FILE> [-D <diameter hybrid region>]".format(sys.argv[0], sys.argv[1]))
-        print("   or: python3 {} {} --gro <Coordinate FILE> --list <List AT-bb-CG FILE> [-diameter <diameter hybrid region>]"\
+        print("usage: python3 {} {} -g <Coordinate FILE> -l <List AT-bb-CG FILE> [-D <diameter hybrid region>] [-n <nCPU>]".format(sys.argv[0], sys.argv[1]))
+        print("   or: python3 {} {} --gro <Coordinate FILE> --list <List AT-bb-CG FILE> [-diameter <diameter hybrid region>] [--ncpu <nCPU>]"\
                .format(sys.argv[0],sys.argv[1])) 
 
     else: 
-        print("usage: python3 {} {} -g <Coordinate FILE> -l <List AT-bb-CG FILE>".format(sys.argv[0], sys.argv[1])) 
-        print("   or: python3 {} {} --gro <Coordinate FILE> --list <List AT-bb-CG FILE> ".format(sys.argv[0], sys.argv[1]))
+        print("usage: python3 {} {} -g <Coordinate FILE> -l <List AT-bb-CG FILE> [-n <nCPU>]".format(sys.argv[0], sys.argv[1])) 
+        print("   or: python3 {} {} --gro <Coordinate FILE> --list <List AT-bb-CG FILE> [--npu <nCPU>]".format(sys.argv[0], sys.argv[1]))
 
     print("\n-----------------------------------------------------------------------------------------------------")
     print("The *{}* task requires the following inputs:\n".format(sys.argv[1]));  
@@ -264,6 +270,12 @@ def print_help_block():
 
         print("  [Diameter hybrid region]     OPTIONAL           Value (in nm) of diameter of the hybrid region")
         print("                                                  Default value: 1.0 nm\n")
+        print("  [NumberCpu]                  OPTIONAL           Integer number containg the number of cpus that you would like to employ")
+        print("                                                  for creating the CANVAS model of a biomolecule.")
+        print("                                                  If '-n/--ncpu <nCPU>' is set, the code will be parallelized by employing nCPU cores")
+        print("                                                  If '-n/--npu <nCPU>' is not set, the code will be parallelized by employing")
+        print("                                                  the maximum number of allowed cores in your laptop/cluster\n")
+
             
     if(sys.argv[1] == "choice2"):
         print("   List At-bb-CG FILE          MANDATORY          File organized in only one column")
@@ -277,6 +289,12 @@ def print_help_block():
 
         print("  [Diameter hybrid region]     OPTIONAL           Value (in nm) of diameter of the hybrid region")
         print("                                                  Default value: 1.0 nm\n")
+        print("  [NumberCpu]                  OPTIONAL           Integer number containg the number of cpus that you would like to employ")
+        print("                                                  for creating the CANVAS model of a biomolecule.")
+        print("                                                  If '-n/--ncpu <nCPU>' is set, the code will be parallelized by employing nCPU cores")
+        print("                                                  If '-n/--npu <nCPU>' is not set, the code will be parallelized by employing")
+        print("                                                  the maximum number of allowed cores in your laptop/cluster\n")
+
 
     if(sys.argv[1] == "choice3"): 
         print("   List At-bb-CG FILE          MANDATORY          File organized in two columns")
@@ -291,6 +309,13 @@ def print_help_block():
         print("                                          	 | resN_AT         |                 |  ")
         print("                                          	 -------------------------------------  \n")
 
+        print("  [NumberCpu]                  OPTIONAL           Integer number containg the number of cpus that you would like to employ")
+        print("                                                  for creating the CANVAS model of a biomolecule.")
+        print("                                                  If '-n/--ncpu <nCPU>' is set, the code will be parallelized by employing nCPU cores")
+        print("                                                  If '-n/--npu <nCPU>' is not set, the code will be parallelized by employing")
+        print("                                                  the maximum number of allowed cores in your laptop/cluster\n")
+
+
     print("-----------------------------------------------------------------------------------------------------");
     print("Hereafter the list of flags:\n");
 
@@ -300,6 +325,7 @@ def print_help_block():
     if(sys.argv[1]=="choice1" or sys.argv[1]=="choice2"):
        print("  [-D] [--diameter]            INT/FLOAT          Value of diameter of hybrid region")
 
+    print("  [-n] [--ncpu]                INT                Integer number corresponding at the number of cores employed for parallelizing the code")
     print("  [-h] [--help]                                   Give this help list\n")
 
     print("Report bugs to <raffaele.fiorentini@unitn.it>\n")
