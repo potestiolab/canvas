@@ -76,9 +76,11 @@ flowchart LR
     style id4 fill:#9accdc
     style id5 fill:#9accdc
     style id6 fill:#9accdc
+    style id12 fill:#9accdc   
     style idT1 fill:#9accdc
     style idT2 fill:#9accdc
     style idT3 fill:#9accdc
+    style idT4 fill:#9accdc  
     style id7 fill:#fef5cc
     style id8 fill:#fef5cc
     style id9 fill:#fef5cc
@@ -89,6 +91,7 @@ flowchart LR
     id1-->id4[/input-files/];
     id1-->id5[/lib/]; 
     id1-->id6[/tests/];
+    id1-->id12[/TIMES-vs-CORES-systems/]
     id1-->id7([README.md]);
 
     id2-->id8([CANVAS.py]); 
@@ -101,10 +104,13 @@ flowchart LR
     id4-->idT1[/ADENYLATE-KINASE/]
     id4-->idT2[/ANTITRYPSIN/]
     id4-->idT3[/PEMBRLIZUMAB-ANTIBODY/]
+    id4-->idT4[/TAMAPIN/]
 
     id5-.->idA[python libraries] 
 
     id6-.->idTest[.sh scripts for executing CANVAS.py and block.py]  
+    
+    id12-.->idDat[*Ncores vs time* table for creating the CANVAS model for different systems]
 ```
 
 <br />
@@ -498,7 +504,7 @@ The output files of each test can be also found in `canvas/output-files/` direct
 
 Which version of the python scripts is better to use? Serial or MPI? In order to ask this question let us start to explain the difference between them. 
 
-1.  block.py and CANVAS.py make use or one processor on a given machine (your laptop or cluster) 
+1.  block.py and CANVAS.py make use of one processor on a given machine (your laptop or cluster) 
 2.  block-MPI.py and CANVAS-MPI4.py make use of `multiprocessing module` that allows the programmer to fully leverage multiple processors on a given machine.
 
 The final result is **exactly** the same: the CANVAS model of a generic biomolecule is created. 
