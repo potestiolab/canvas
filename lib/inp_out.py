@@ -180,8 +180,8 @@ def print_help_main_CANVAS():
     print("                                                     allowed. If '-s/--solvate n' is set, then this code")
     print("                                                     do not solvate the system. Use it in case of implicit solvent simulations")
     print("                                                     If '-s/--solvate y' is set, or in case the user ignore this flag,")
-    print("                                                     this program solvates and neutralizes (with NA and CL ions) the system\n") 
-    print("  NumberCpu                       OPTIONAL           Integer number containg the number of cpus that you would like to employ")
+    print("                                                     this program solvates and neutralizes (with NA and CL ions) the system\n")     
+    print("  NumberCpu                       OPTIONAL           Integer number corresponding at the number of cpus that you would like to employ")
     print("                                                     for creating the CANVAS model of a biomolecule.") 
     print("                                                     If '-n/--ncpu <nCPU>' is set, the code will be parallelized by employing nCPU cores")  
     print("                                                     If '-n/--npu <nCPU>' is not set, the code will be parallelized by employing")
@@ -270,7 +270,7 @@ def print_help_block():
 
         print("  [Diameter hybrid region]     OPTIONAL           Value (in nm) of diameter of the hybrid region")
         print("                                                  Default value: 1.0 nm\n")
-        print("  [NumberCpu]                  OPTIONAL           Integer number containg the number of cpus that you would like to employ")
+        print("  [NumberCpu]                  OPTIONAL           Integer number corresponding at the number of cpus that you would like to employ")
         print("                                                  for creating the CANVAS model of a biomolecule.")
         print("                                                  If '-n/--ncpu <nCPU>' is set, the code will be parallelized by employing nCPU cores")
         print("                                                  If '-n/--npu <nCPU>' is not set, the code will be parallelized by employing")
@@ -289,7 +289,7 @@ def print_help_block():
 
         print("  [Diameter hybrid region]     OPTIONAL           Value (in nm) of diameter of the hybrid region")
         print("                                                  Default value: 1.0 nm\n")
-        print("  [NumberCpu]                  OPTIONAL           Integer number containg the number of cpus that you would like to employ")
+        print("  [NumberCpu]                  OPTIONAL           Integer number corresponding at the number of cpus that you would like to employ")
         print("                                                  for creating the CANVAS model of a biomolecule.")
         print("                                                  If '-n/--ncpu <nCPU>' is set, the code will be parallelized by employing nCPU cores")
         print("                                                  If '-n/--npu <nCPU>' is not set, the code will be parallelized by employing")
@@ -309,7 +309,7 @@ def print_help_block():
         print("                                          	 | resN_AT         |                 |  ")
         print("                                          	 -------------------------------------  \n")
 
-        print("  [NumberCpu]                  OPTIONAL           Integer number containg the number of cpus that you would like to employ")
+        print("  [NumberCpu]                  OPTIONAL           Integer number corresponding at the number of cpus that you would like to employ")
         print("                                                  for creating the CANVAS model of a biomolecule.")
         print("                                                  If '-n/--ncpu <nCPU>' is set, the code will be parallelized by employing nCPU cores")
         print("                                                  If '-n/--npu <nCPU>' is not set, the code will be parallelized by employing")
