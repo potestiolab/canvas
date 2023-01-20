@@ -16,9 +16,9 @@ In the current implementation, we performed the choice of employing three levels
 * **`all-atom (AT)`**: the highest level of detail, where all the atoms of a given amino acid
 are retained;
 
-* **`medium-grained (MG)`**: intermediate level of detail, where only the backbone atoms of an amino acid are retained, i.e. the carbon alpha $CA_{mg}$, the nitrogen $N_{mg}$ of the amino group, the oxygen $O_{mg}$ and the carbon $C_{mg}$ of the carboxyl group.
+* **`medium-grained (MG)`**: intermediate level of detail, where only the backbone atoms of an amino acid are retained, i.e. the carbon alpha CA<sub>_mg_</sub>, the nitrogen N<sub>_mg_</sub> of the amino group, the oxygen O<sub>_mg_</sub> and the carbon C<sub>_mg_</sub> of the carboxyl group.
 
-* **`coarse-grained (CG)`**: the lowest level of resolution. In the applications presented here, only the $C_\alpha$ atoms of each CG residue are kept, dubbed $CA_{cg}$.
+* **`coarse-grained (CG)`**: the lowest level of resolution. In the applications presented here, only the C<sub>$\alpha$</sub> atoms of each CG residue are kept, dubbed CA<sub>_cg_</sub>.
 
 
 <div align="center">
