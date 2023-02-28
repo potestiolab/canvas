@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="images/New-logo-canvas.jpg" alt="Scheme" width="950">
+<img src="images/Canvas-logo-FINAL.jpg" alt="Scheme" width="950">
 </div>
 
 # 0 - Introduction 
