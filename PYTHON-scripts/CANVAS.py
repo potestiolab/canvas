@@ -20,7 +20,7 @@ from datetime import datetime
 
 PYTHONPATH = os.path.abspath(os.getcwd())
 
-spl_word = "canvas-FINAL-GitHub" # We find CANVAS, cut the entire path until CANVAS and add /lib in order to find our libraries. 
+spl_word = "canvas" # We find CANVAS, cut the entire path until CANVAS and add /lib in order to find our libraries. 
 
 python_modules_path = PYTHONPATH.split(spl_word)[0] + spl_word + "/lib"
 
