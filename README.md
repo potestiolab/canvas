@@ -32,8 +32,7 @@ The method is presented and validated on two case studies, the enzyme **Adenylat
 
 All the details of the work can be found in:
 
-**Fast, accurate, and system-specific variable-resolution modelling of proteins**, R. Fiorentini, T. Tarenzi, R. Potestio, 
-https://doi.org/10.48550/arXiv.2207.03187
+**Fast, accurate, and system-specific variable-resolution modelling of proteins**, R. Fiorentini, T. Tarenzi, R. Potestio, https://doi.org/10.1021/acs.jcim.2c01311
 
 <br />
 
