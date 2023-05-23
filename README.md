@@ -201,11 +201,11 @@ python3 block.py choice1 --gro  <protein.gro> --list <list_AT_res.dat> [--diamet
 ```
 ``` bash
 ### MPI VERSION 
-python3 block.py choice1 -g <protein.gro> -l <list_AT_res.dat> [-D <diameter_MG_region>] [-n <number_of_cores>] 
+python3 block-MPI.py choice1 -g <protein.gro> -l <list_AT_res.dat> [-D <diameter_MG_region>] [-n <number_of_cores>] 
 
 or
 
-python3 block.py choice1 --gro  <protein.gro> --list <list_AT_res.dat> [--diameter <diameter_MG_region>] [--ncpu <number_of_cores>]
+python3 block-MPI.py choice1 --gro  <protein.gro> --list <list_AT_res.dat> [--diameter <diameter_MG_region>] [--ncpu <number_of_cores>]
 ```
 
 The output of the program is the list of survived atoms. For further information, please type on terminal `python3 block.py choice1`.[^1]
@@ -231,11 +231,11 @@ python3 block.py choice2 --gro  <protein.gro> --list <list_all_AT_res.dat> [--di
 ```
 ``` bash
 ### MPI VERSION 
-python3 block.py choice1 -g <protein.gro> -l <list_all_AT_res.dat> [-D <diameter_MG_region>] [-n <number_of_cores>] 
+python3 block-MPI.py choice2 -g <protein.gro> -l <list_all_AT_res.dat> [-D <diameter_MG_region>] [-n <number_of_cores>] 
 
 or
 
-python3 block.py choice1 --gro  <protein.gro> --list <list_all_AT_res.dat> [--diameter <diameter_MG_region>] [--ncpu <number_of_cores>]
+python3 block-MPI.py choice2 --gro  <protein.gro> --list <list_all_AT_res.dat> [--diameter <diameter_MG_region>] [--ncpu <number_of_cores>]
 ```
 
 The output of the program is the list of survived atoms. For further information, please type on terminal `python3 choice2`.[^1]
@@ -251,19 +251,19 @@ In order to lunch the **choice3** task the command-line is the following:
 
 ```bash
 ### SERIAL VERSION 
-python3 block.py choice2 -g <protein.gro> -l <list_all_AT_MG_res.dat> 
+python3 block.py choice3 -g <protein.gro> -l <list_all_AT_MG_res.dat> 
 
 or 
 
-python3 block.py choice2 --gro  <protein.gro> --list <list_all_AT_MG_res.dat> 
+python3 block.py choice3 --gro  <protein.gro> --list <list_all_AT_MG_res.dat> 
 ```
 ``` bash
 ### MPI VERSION 
-python3 block.py choice1 -g <protein.gro> -l <list_all_AT_MG_res.dat> [-n <number_of_cores>] 
+python3 block-MPI.py choice3 -g <protein.gro> -l <list_all_AT_MG_res.dat> [-n <number_of_cores>] 
 
 or
 
-python3 block.py choice1 --gro  <protein.gro> --list <list_all_AT_MG_res.dat> [--ncpu <number_of_cores>]
+python3 block-MPI.py choice3 --gro  <protein.gro> --list <list_all_AT_MG_res.dat> [--ncpu <number_of_cores>]
 ```
 
 The output of the program is the list of survived atoms. For further information, please type on terminal `python3 choice3`.[^1]
