@@ -11,15 +11,29 @@ from datetime import datetime
 
 # --------------------------------------------
 
-PYTHONPATH = os.path.abspath(os.getcwd())
 
 REAL_start = datetime.now()
 
-spl_word = "canvas" # We find CANVAS, cut the entire path until CANVAS and add /lib in order to find our libraries. 
+# 1.2 Finding the path of the  main folder (usually "PrOpRe") after searching for 'PYTHON-scripts' folder. 
+#     Then, add /lib in order to find our libraries. 
 
-python_modules_path = PYTHONPATH.split(spl_word)[0] + spl_word + "/lib"
+desired_folder_name = "PYTHON-scripts"
+current_directory = os.getcwd()
+desired_path = None
 
+while True:
+    if desired_folder_name in os.listdir(current_directory):
+        desired_path = current_directory
+        break
+    elif current_directory == os.path.dirname(current_directory):
+        print("ERROR. 'PYTHON-script' folder has not been found. Please, check it out...\n")
+        quit()
+    else:
+        current_directory = os.path.dirname(current_directory)
+
+python_modules_path = desired_path + "/lib"
 sys.path.append(python_modules_path)
+
 
 
 from read_gromacs import * 
