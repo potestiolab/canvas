@@ -896,14 +896,17 @@ print("\nlist of survived atoms updated with all properties... 27% completed\n")
    Therefore PREFIX_FOLDER is equal to the difference between path_ff, forcefield, and share/gromacs/top  
    Finally, path_GMXRC = PREFIX_FOLDER + /bin
 
-   Check also for gmx command that could be 'gmx' or 'gmx_mpi'. We need it for solvating system and adding ions.   
+   In case GMXRC is not found, the code ask the user for gmx command that could be 'gmx' or 'gmx_mpi'. We need it for solvating system and adding ions.   
 """
 
 path_GMXRC = check_for_GRXRC(path_ff, forcefield)
-        
-os.system("source {}".format(path_GMXRC))
 
-gmx_command = check_for_gmx_command(path_ff, forcefield) 
+if(path_GMXRC[-3:]=="XRC"):
+    os.system("source {}".format(path_GMXRC))
+    gmx_command = check_for_gmx_command(path_ff, forcefield)
+
+if(path_GMXRC[-7:] == "gmx_mpi" or path_GMXRC[-3:] =="gmx"):
+    gmx_command = path_GMXRC
 
 
           ###############################################################
@@ -2971,11 +2974,33 @@ print("\nmdp files created... 98% completed\n")
 # VIII.a- Copy residuetypes.dat from Gromacs path in our simulating folder. Moreover, we add in the last row, 
 #         the new residue name for all CG beads (i.e. **MUL**) with the appropriate specification **Protein**.
 
-gromacs_folder = ''.join(path_ff.split(forcefield))  
+gromacs_folder = ''.join(path_ff.split(forcefield)) 
 residuetypes   = gromacs_folder + "residuetypes.dat"
 
-os.system("cp {} .".format(residuetypes))
-os.system("echo 'MUL "" "" "" "" Protein' >> residuetypes.dat")  # only way to add also 4 extra spaces between MUL and Protein. 
+Flag_res = False
+ 
+if(os.path.isfile(residuetypes)==True):
+    os.system("cp {} .".format(residuetypes))
+    os.system("echo 'MUL "" "" "" "" Protein' >> residuetypes.dat")  # only way to add also 4 extra spaces between MUL and Protein.
+    Flag_res = True  
+else:
+    residuetypes = ''.join(path_ff_new.split(forcefield)) + "residuetypes.dat"
+    if(os.path.isfile(residuetypes)==True):  
+        os.system("cp {} .".format(residuetypes))
+        os.system("echo 'MUL "" "" "" "" Protein' >> residuetypes.dat")  # only way to add also 4 extra spaces between MUL and Protein.
+        Flag_res = True 
+ 
+if(Flag_res == False): 
+    print("\nI did not find the path where 'residuetypes.dat' file is present")
+    print("Thus, write directly the path where the file 'residuetypes.dat' is present")
+    print("Usually, residuetypes.dat can be found in '$PREFIX/gromacs/top'")
+    print("namely in the folder where all the located all the forcefields. Check it out!")
+    residuetypes = input("Please, type now the entire path of 'residuetypes.dat' (included 'residuetypes.dat'): \n") 
+    if(os.path.isfile(residuetypes)==True):
+        print("\nThe 'residuetypes.dat' file  was correctly found in {}.\n".format(residuetypes))
+
+        os.system("cp {} .".format(residuetypes))
+        os.system("echo 'MUL "" "" "" "" Protein' >> residuetypes.dat")  # only way to add also 4 extra spaces between MUL and Protein. 
 
 
 # VIII.b- Creating running directory (and remove it if already present) 
@@ -3417,7 +3442,7 @@ if(FlagLammps == True):
     
     write_input_lammps_file(f_input, dihedrals_mult_res_prot, Flag_cmaps, number_of_bonds, number_of_angles, number_of_dihedrals, \
                             number_of_impropers, number_atom_types, list_survived_atoms, pairs_mult_res_prot, dict_at_types, \
-                            bonds_mult_res_prot, angles_mult_res_prot, type_OW, type_HW, solvate_Flag)
+                            bonds_mult_res_prot, angles_mult_res_prot, type_OW, type_HW, solvate_Flag, max_sigma)
     
     f_input.close() 
 

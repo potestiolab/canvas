@@ -1,32 +1,31 @@
 import os 
 
 # Function that checks for the path where GROMACS is installed
-def check_for_GRXRC(path_ff, forcefield): 
+def check_for_GRXRC(path_ff, forcefield):
     prefix_folder = ''.join(path_ff.split(forcefield))                            # Only way to make a difference between two strings.
-    
+
     prefix_folder = ''.join(prefix_folder.split("/share/gromacs/top"))
-    
+
     path_GMXRC = prefix_folder + "bin/GMXRC"
-    
+
     Flag = False
-    
+
     while(Flag == False):
-    
+
         if(os.path.isfile(path_GMXRC)==True):
             print("\nThe file GMXRC was correctly found in {}... 28% completed\n".format(path_GMXRC))
             Flag = True
-    
+
         else:
             print("\nI did not find the path where GMXRC is present")
-            print("The path has usually the following shape:\n")
-            print("PREFIX_FOLDER/bin/GMXRC\n")
-            print("where:")
-            print("PREFIX_FOLDER is the path where gromacs is installed\n")
-            path_GMXRC = input("Please, insert now the entire path (included GMXRC): \n" )
+            print("Thus, write directly the path of the executable file 'gmx' or 'gmx_mpi' is present")
+            print("A possible path could be /usr/bin/gmx. Check it out")
+            path_GMXRC = input("Please, type now the entire path of 'gmx' or 'gmx_mpi' (included 'gmx' or 'gmx_mpi'): \n")
             if(os.path.isfile(path_GMXRC)==True):
-                print("\nThe file GMXRC was correctly found in {}... 28% completed\n".format(path_GMXRC)) 
+                print("\nThe executable file 'gmx' or 'gmx_mpi' was correctly found in {}... 28% completed\n".format(path_GMXRC))
                 Flag = True
-    
+   
+ 
     return path_GMXRC 
 
 

@@ -5,6 +5,79 @@ from functools import partial
 
 from datetime import datetime
 
+global update_masses    # before defining the function, 'global' string is required in order to be read by an external python script, as CANVAS.py 
+def update_masses(list_count, i):
+    for count in list_count:
+        if(count == i[-1]):
+            return i[-1],i[10],i[16]
+
+
+global update_b_coeffs
+def update_b_coeffs(list_b_count, i):
+    for count in list_b_count:
+        if(count == i[-1]):
+            return i[-1], i[6]/836.8, i[7]*10         # namely the specific number of bondtype: i[6]=Ek, i[7]=b0 both in Lammps Units. 
+
+
+global update_a_coeffs
+def update_a_coeffs(list_a_count, type_OW, type_HW, i):
+    for count in list_a_count:
+        if(i[3] == 1):
+            if(count == i[-1]):
+                return i[-1], i[7]/8.368, i[8]         # If funct==1, return the specific number of angletype in Lammps Units
+
+        if(i[3] == type_OW or i[3] == type_HW):
+            if(count == i[-1]):
+                return i[-1], i[6]/8.368, i[7]
+
+        if(i[3] == 5):
+            if(count == i[-1]):
+                return i[-1], i[7]/8.368, i[8], i[10]/836.8, i[9]*10 # If funct==5, return the specific number of angletype in Lammps Units
+
+
+global update_d_coeffs
+def update_d_coeffs(list_d_count, i):
+    for count in list_d_count:
+
+        if(count == i[-1]):                                       # namaly the specific number of dihedraltype
+            if(i[-2] == "multi"):
+                return i[-1], i[-7], i[-6], i[-5], i[-4], i[-3]
+
+            if(i[-2] == "charmm"):
+                return i[-1],i[-6],i[-5],int(i[-4]),int(i[-3])    # i[7] has to be integer
+
+
+global update_i_coeffs
+def update_i_coeffs(list_i_count, i):
+    for count in list_i_count:
+        if(count == i[-1]):                                                                       # namely the specific value of impropertype: 
+            if(i[4] == 2):                                                                        # i[4]==2 means funct==2
+                return i[-1], i[10]/8.368, i[9]*10                                                # i[10] = K, i[9] = X0 both in Lammps Units. 
+
+
+global update_L16b
+def update_L16b(list_count_number_atom_types, i):
+    for count in list_count_number_atom_types:
+        if(count == i[-1]):
+            return i[-1],i[-1], i[13]/4.184, i[12]*10
+
+
+global update_L16
+def update_L16(list_number_type, i):
+    for j in list_number_type:
+        if(j[0]==i[2]):
+            i.append(j[1])
+            break
+
+    for j in list_number_type:
+        if(j[0]==i[3]):
+            i.append(j[1])
+            break
+
+    return i
+
+
+
 # Function that writes the .lmp file of Lammps 
 def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, number_of_dihedrals, number_of_impropers, number_atom_types, \
                    number_bond_types, number_angle_types, number_dihedral_types, number_improper_types, min_x, max_x, min_y, max_y, \
@@ -40,12 +113,12 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
     
     list_count = [i for i in range(1, number_atom_types + 1)]
 
-    global update_masses    # before defining the function, 'global' string is required in order to be read by an external python script, as CANVAS.py   
+    #global update_masses    # before defining the function, 'global' string is required in order to be read by an external python script, as CANVAS.py   
 
-    def update_masses(list_count, i):
-        for count in list_count:
-            if(count == i[-1]):
-                return i[-1],i[10],i[16]
+    #def update_masses(list_count, i):
+    #    for count in list_count:
+    #        if(count == i[-1]):
+    #            return i[-1],i[10],i[16]
 
     if(ncpu is not None):
         pool       = Pool(ncpu)
@@ -78,11 +151,11 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
 
     list_b_count = [i for i in range(number_bond_types + 1)]
 
-    global update_b_coeffs
-    def update_b_coeffs(list_b_count, i):
-        for count in list_b_count:
-            if(count == i[-1]):
-                return i[-1], i[6]/836.8, i[7]*10         # namely the specific number of bondtype: i[6]=Ek, i[7]=b0 both in Lammps Units. 
+    #global update_b_coeffs
+    #def update_b_coeffs(list_b_count, i):
+    #    for count in list_b_count:
+    #        if(count == i[-1]):
+    #            return i[-1], i[6]/836.8, i[7]*10         # namely the specific number of bondtype: i[6]=Ek, i[7]=b0 both in Lammps Units. 
 
     if(ncpu is not None):
         pool       = Pool(ncpu)
@@ -125,27 +198,27 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
     
     list_a_count = [i for i in range(1, number_angle_types + 1)]
 
-    global update_a_coeffs
-    def update_a_coeffs(list_a_count, i): 
-        for count in list_a_count:
-            if(i[3] == 1): 
-                if(count == i[-1]):
-                    return i[-1], i[7]/8.368, i[8]         # If funct==1, return the specific number of angletype in Lammps Units
-    
-            if(i[3] == type_OW or i[3] == type_HW):  
-                if(count == i[-1]):
-                    return i[-1], i[6]/8.368, i[7]
-    
-            if(i[3] == 5):
-                if(count == i[-1]):
-                    return i[-1], i[7]/8.368, i[8], i[10]/836.8, i[9]*10 # If funct==5, return the specific number of angletype in Lammps Units
+    #global update_a_coeffs
+    #def update_a_coeffs(list_a_count, i): 
+    #    for count in list_a_count:
+    #        if(i[3] == 1): 
+    #            if(count == i[-1]):
+    #                return i[-1], i[7]/8.368, i[8]         # If funct==1, return the specific number of angletype in Lammps Units
+    # 
+    #        if(i[3] == type_OW or i[3] == type_HW):  
+    #            if(count == i[-1]):
+    #                return i[-1], i[6]/8.368, i[7]
+    # 
+    #        if(i[3] == 5):
+    #            if(count == i[-1]):
+    #                return i[-1], i[7]/8.368, i[8], i[10]/836.8, i[9]*10 # If funct==5, return the specific number of angletype in Lammps Units
 
     if(ncpu is not None):
         pool       = Pool(ncpu)
     else:
         pool = Pool()
 
-    temp         = partial(update_a_coeffs, list_a_count)
+    temp         = partial(update_a_coeffs, list_a_count, type_OW, type_HW)
     upd_a_coeffs = pool.map(temp, iterable=angles_mult_res_prot)
 
     pool.close()
@@ -177,17 +250,16 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
 
     list_d_count = [i for i in range(1, number_dihedral_types + 1)]
 
-    global update_d_coeffs
-
-    def update_d_coeffs(list_d_count, i):
-        for count in list_d_count:
-
-            if(count == i[-1]):                                       # namaly the specific number of dihedraltype
-                if(i[-2] == "multi"): 
-                    return i[-1], i[-7], i[-6], i[-5], i[-4], i[-3]
-    
-                if(i[-2] == "charmm"):
-                    return i[-1],i[-6],i[-5],int(i[-4]),int(i[-3])    # i[7] has to be integer
+    #global update_d_coeffs
+    #def update_d_coeffs(list_d_count, i):
+    #    for count in list_d_count:
+    #
+    #        if(count == i[-1]):                                       # namaly the specific number of dihedraltype
+    #            if(i[-2] == "multi"): 
+    #                return i[-1], i[-7], i[-6], i[-5], i[-4], i[-3]
+    #
+    #            if(i[-2] == "charmm"):
+    #                return i[-1],i[-6],i[-5],int(i[-4]),int(i[-3])    # i[7] has to be integer
 
     if(ncpu is not None):
         pool       = Pool(ncpu)
@@ -231,13 +303,12 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
 
     list_i_count = [i for i in range(1, number_improper_types + 1)]
 
-    global update_i_coeffs 
-
-    def update_i_coeffs(list_i_count, i):
-        for count in list_i_count: 
-            if(count == i[-1]):                                                                       # namely the specific value of impropertype: 
-                if(i[4] == 2):                                                                        # i[4]==2 means funct==2
-                    return i[-1], i[10]/8.368, i[9]*10                                                # i[10] = K, i[9] = X0 both in Lammps Units. 
+    #global update_i_coeffs 
+    #def update_i_coeffs(list_i_count, i):
+    #    for count in list_i_count: 
+    #        if(count == i[-1]):                                                                       # namely the specific value of impropertype: 
+    #            if(i[4] == 2):                                                                        # i[4]==2 means funct==2
+    #                return i[-1], i[10]/8.368, i[9]*10                                                # i[10] = K, i[9] = X0 both in Lammps Units. 
 
     if(ncpu is not None):
         pool       = Pool(ncpu)
@@ -421,7 +492,7 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
 
 def write_input_lammps_file(f_input, dihedrals_mult_res_prot, Flag_cmaps, number_of_bonds, number_of_angles, number_of_dihedrals, \
                             number_of_impropers, number_atom_types, list_survived_atoms, pairs_mult_res_prot, dict_at_types, \
-                            bonds_mult_res_prot, angles_mult_res_prot, type_OW, type_HW, solvate_Flag, ncpu):
+                            bonds_mult_res_prot, angles_mult_res_prot, type_OW, type_HW, solvate_Flag, ncpu, max_sigma):
 
     ## a- Checking if charmm forcefield is employed
     Flag_charmm = False
@@ -488,7 +559,10 @@ def write_input_lammps_file(f_input, dihedrals_mult_res_prot, Flag_cmaps, number
     f_input.write("variable         Text equal 300.0\n")                 # External Temperature
     f_input.write("variable         Pext equal 10.0\n\n")                # External Pressure 
     f_input.write("######################################################################\n\n")
-    f_input.write("pair_style       lj/cut/coul/dsf 0.2 10.0 12.0\n")    #LJ = cut,  #coul = with DSF 
+    if(solvate_Flag == True):
+        f_input.write("pair_style       lj/cut/coul/dsf 0.2 {}\n".format(25*max_sigma))    #LJ = cut,  #coul = with DSF 
+    if(solvate_Flag == False):
+        f_input.write("pair_style       lj/cut/coul/debye 0.1268 {:5.3f}     #0.1268 is the value of *kappa* for ionic concentration\n".format(25*max_sigma))
     f_input.write("pair_modify      tail yes\n\n")
     
     
@@ -502,13 +576,14 @@ def write_input_lammps_file(f_input, dihedrals_mult_res_prot, Flag_cmaps, number
     ##
     ##    eps = i[13], sigma = i[12] of "list_survived_atoms". 
 
-    global update_L16b
-  
+    #global update_L16b
+    #def update_L16b(list_count_number_atom_types, i):
+    #    for count in list_count_number_atom_types:
+    #        if(count == i[-1]):
+    #            return i[-1],i[-1], i[13]/4.184, i[12]*10
+
     list_count_number_atom_types = [i for i in range(1, number_atom_types + 1)]
-    def update_L16b(list_count_number_atom_types, i):
-        for count in list_count_number_atom_types:
-            if(count == i[-1]):
-                return i[-1],i[-1], i[13]/4.184, i[12]*10
+
 
     if(ncpu is not None):
         pool       = Pool(ncpu)
@@ -557,20 +632,19 @@ def write_input_lammps_file(f_input, dihedrals_mult_res_prot, Flag_cmaps, number
 
     list_number_type = list(list_number_type for list_number_type,_ in itertools.groupby(list_number_type))     # remove duplicates if present
 
-    global update_L16 
-
-    def update_L16(list_number_type, i):
-        for j in list_number_type:
-            if(j[0]==i[2]):
-                i.append(j[1])
-                break 
-
-        for j in list_number_type:         
-            if(j[0]==i[3]):
-                i.append(j[1]) 
-                break 
-
-        return i
+    #global update_L16 
+    #def update_L16(list_number_type, i):
+    #    for j in list_number_type:
+    #        if(j[0]==i[2]):
+    #            i.append(j[1])
+    #            break 
+    #
+    #    for j in list_number_type:         
+    #        if(j[0]==i[3]):
+    #            i.append(j[1]) 
+    #            break 
+    #
+    #    return i
 
     if(ncpu is not None):
         pool       = Pool(ncpu)

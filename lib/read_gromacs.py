@@ -390,7 +390,11 @@ def read_ffnonbonded(f_nb):
             atom_number = int(splt[1]) 
             mass_attype = float(splt[2])
             sigma       = float(splt[5])       
-            epsilon     = float(splt[6])
+            epsilon     = splt[6]   # In charmm27.ff we could find 0.0; --> we take only 0.0 (without semicolon ";") 
+            if ";" in epsilon:
+                epsilon = float(epsilon.split(";")[0])
+            else:
+                epsilon = float(epsilon)
 
             dict_sig    = {atomtypes : sigma}
             dict_eps    = {atomtypes : epsilon} 

@@ -298,7 +298,7 @@ def write_lmp_file(f_lmp, number_of_atoms, number_of_bonds, number_of_angles, nu
 
 def write_input_lammps_file(f_input, dihedrals_mult_res_prot, Flag_cmaps, number_of_bonds, number_of_angles, number_of_dihedrals, \
                             number_of_impropers, number_atom_types, list_survived_atoms, pairs_mult_res_prot, dict_at_types, \
-                            bonds_mult_res_prot, angles_mult_res_prot, type_OW, type_HW, solvate_Flag):
+                            bonds_mult_res_prot, angles_mult_res_prot, type_OW, type_HW, solvate_Flag, max_sigma):
 
     ## a- Checking if charmm forcefield is employed
     Flag_charmm = False
@@ -366,7 +366,10 @@ def write_input_lammps_file(f_input, dihedrals_mult_res_prot, Flag_cmaps, number
     f_input.write("variable         Text equal 300.0\n")                 # External Temperature
     f_input.write("variable         Pext equal 10.0\n\n")                # External Pressure 
     f_input.write("######################################################################\n\n")
-    f_input.write("pair_style       lj/cut/coul/dsf 0.2 10.0 12.0\n")    #LJ = cut,  #coul = with DSF 
+    if(solvate_Flag == True):
+        f_input.write("pair_style       lj/cut/coul/dsf 0.2 {}\n".format(25*max_sigma))    #LJ = cut,  #coul = with DSF 
+    if(solvate_Flag == False):
+        f_input.write("pair_style       lj/cut/coul/debye 0.1268 {:5.3f}     #0.1268 is the value of *kappa* for ionic concentration\n".format(25*max_sigma))
     f_input.write("pair_modify      tail yes\n\n")
     
     

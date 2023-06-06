@@ -1,6 +1,8 @@
 import os 
 import sys
 
+from multiprocessing import cpu_count
+
 # Function: it writes a file containing a list in sequence of the CA atom number (it can be useful when using VMD) 
 def write_CA(f_CA, CA_list): 
     for i in CA_list:
@@ -23,32 +25,70 @@ def columns(line):
     return lenght
 
 
+
+# Function: it checks if an argument of argparse (that will be treated always as string) is integer, float, or string. The function returns "x" 
+def check_Int_Float_Str(x):
+    if(isIntFloat(x)):
+        try:
+            x = int(x)
+        except:
+            x = float(x)
+    return x
+
+
+
+# Function: Checking if a mandatory file actually found or not. 
+def checking_file_found_block(FileName):
+    if not os.path.isfile(FileName):
+        print("\n####################################################################################")
+        print("ERROR. Error while opening the file. '{}' does not exist.\n".format(FileName))
+        print("####################################################################################\n\n")
+        print_usage_main_block()
+        quit()
+
+
 # Function: check if mandatory files are present 
 def mandatory_files_present_CANVAS(grofile, listatomsfile, topfile):
     if (grofile is None):
-        print("\nError. The Coordinate file is missing. Look below for further help.\n")
+        print("\n####################################################################################")
+        print("ERROR. The Coordinate file is missing.")
+        print("       Look below for further help.")
+        print("####################################################################################\n\n")
         print_help_main_CANVAS()
         quit()
 
     if (listatomsfile is None):
-        print("\nError. The file containing the list of survived atoms is missing. Look below for further help.\n")
+        print("\n####################################################################################")
+        print("ERROR. The file containing the list of survived atoms is missing.")
+        print("       Look below for further help.")
+        print("####################################################################################\n\n")
         print_help_main_CANVAS()
         quit()
 
     if (topfile is None): 
-        print("\nError. The topology file is missing. Look below for further help. \n") 
+        print("\n####################################################################################")
+        print("ERROR. The topology file is missing.")
+        print("       Look below for further help.") 
+        print("####################################################################################\n\n")
         print_help_main_CANVAS()
         quit() 
 
-# Function: check if mandatory files are present 
+
+# Function: check if mandatory files are present in 'block.py' code 
 def mandatory_files_present_block(grofile, listfile): 
     if (grofile is None):
-        print("\nError. The Coordinate file missing. Look below for further help.\n")
+        print("\n####################################################################################")
+        print("ERROR. The Coordinate file is missing.")
+        print("       Look below for further help.")
+        print("####################################################################################\n\n")
         print_help_block()
         quit() 
 
     if (listfile is None):
-        print("\nError. The List AT-bb-CG is missing. Look below for further help.\n")
+        print("\n####################################################################################")
+        print("ERROR. The List AT-bb-CG is missing.")
+        print("       Look below for further help.")
+        print("####################################################################################\n\n")
         print_help_block()
         quit() 
 
@@ -72,6 +112,34 @@ def check_argv_errors_CANVAS():
             if(sys.argv[i][0] == '-' and sys.argv[i][1] == '-' and  len(sys.argv[i]) == 2):
                 print_help_main_CANVAS()
                 quit()
+
+# Function: Printing help message if 'block.py' does not present valid arguments: 
+#           in particular, the first argument must be 'choice1' or 'choice2', or 'choice3' according the user choice.
+def checking_accepted_tasks_block():
+    found = False
+    tasks = ["choice1", "choice2", "choice3"]
+
+    for tk in tasks:
+        if(sys.argv[1] == tk):
+                found = True;
+
+    if(found == False):
+
+        if(sys.argv[1].strip() == "--usage") or (sys.argv[1].strip() == "-u"):
+            print_usage_main_block()
+            quit()
+
+        if(sys.argv[1].strip() == "--help" or sys.argv[1].strip() == "-h"):
+            print_help_main_block()
+            quit()
+
+        print("\n####################################################################################")
+        print("ERROR. '{}' not in the list of accepted tasks!\n".format(sys.argv[1]))
+        print("       Be sure that either 'bin' or 'density' task is the first argument. Other tasks are not allowed.")
+        print("       Look below for more information.")
+        print("####################################################################################\n\n")
+        print_usage_main_block()
+        quit()
 
 
 # Function: it checks for not accepted flags for block.py program
@@ -329,3 +397,294 @@ def print_help_block():
     print("  [-h] [--help]                                   Give this help list\n")
 
     print("Report bugs to <raffaele.fiorentini@unitn.it>\n")
+
+
+
+# Function: Parsing arguments, printing error and help message if 'Hs-Hk-plot.py' presents not allowed arguments, and checking if mandatory files are present 
+def checking_valid_arguments_block(parser):
+    try:        
+        args  = parser.parse_args()
+    except SystemExit:
+        print("\n####################################################################################")
+        print("ERROR. Arguments with no flag are not allowed. Check that each flag (e.g. -f) is followed by its specific argument")
+        print("       Look below for more information.")
+        print("####################################################################################\n\n")
+        print_help_block()
+        quit()
+
+
+# Function: Checking if the optional argument "ncpu" is set. The program returns an error if the user askes for a number of cores 
+#           higher than the maximum allowed. If 'ncpu' is not specified, the maximum number of cores is employed.  
+def checking_errors_ncpu_opt_arg(ncpu):
+    if(ncpu is not None):
+        ncpu = check_Int_Float_Str(ncpu)  # it returns "ncpu" accordingly with its nature: integer, float, or string
+        if(not isinstance(ncpu, int)): # if ncpu is not integer (i.e. float or string)
+                        print("\n####################################################################################")
+                        print("ERROR. '-n/--ncpu {}' set, but not recognized. Only an integer number higher than 0 is permitted.".format(ncpu))
+                        print("       Please, insert an integer number higher than 0 (-n/--ncpu <INT>)")
+                        print("       or ignore this flag, that means that the maximum number of cores are employed (-n/--ncpu {})".format(cpu_count()))
+                        print("       Look below for further help.")
+                        print("####################################################################################\n\n")
+                        print_help_block()
+                        quit()
+        else:
+            if(ncpu <= 0):
+                print("\n####################################################################################")
+                print("ERROR. '-n/--ncpu {}' set, but not recognized. Only an integer number higher than 0 is allowed.".format(ncpu))
+                print("       A negative number or zero are meaningless.")
+                print("       Please, insert an integer number (-n/--ncpu <INT>),")
+                print("       or ignore this flag leaving that means that the maximum number of cores are employed (-n/--npu {})".format(cpu_count()))
+                print("       Look below for further help.")
+                print("####################################################################################\n\n")
+                print_help_block()
+                quit()
+
+            if(ncpu > cpu_count()):
+                print("\n####################################################################################")
+                print("ERROR. '-n/--ncpu {} set, but not recognized. The max number of cores available in your cluster/laptop is {}.".format(ncpu, cpu_count()))
+                print("       You are asking for {} cores. Please, take care of it and repeat!".format(ncpu))
+                print("       Look below for further help.")
+                print("####################################################################################\n\n")
+                print_help_block()
+                quit()
+
+        ncpu_employed = ncpu
+        print("\no '-n/--ncpu {}' set. The number of cores employed is {}... 40% completed. \n".format(ncpu_employed, ncpu_employed))
+
+    if(ncpu is None):
+        ncpu_employed = cpu_count()
+        print("\no '-n/--ncpu {}' set. The number of cores employed is {}... 40% completed. \n".format(ncpu_employed, ncpu_employed))
+ 
+    return ncpu_employed
+
+
+
+# Function: Checking if the optional argument "diameter" is set.  
+#           As first, this argument can be set ONLY if the 'choice1' or 'choice2' option is set, otherwise an error occurs. 
+#           If 'choice1' or 'choice2' option is set, moreover, an error occurs if a string or negative (incl. zero) is inserted. 
+#           Only an integer or float number is accepted. 
+#           Consider that, after defining arguments, the latter are treated always as STRING, thus we have to check if we are deal with INT, FLOAT or STRINGS.    
+
+def checking_errors_diameter_opt_arg(diameter): 
+    if(diameter is not None):   # If diameter exists... 
+        if(sys.argv[1]=='choice1' or sys.argv[1]=='choice2'):      # If 'choice1' or 'choice2' option is set  
+            diameter = check_Int_Float_Str(diameter)               # it returns "diameter" accordingly with its nature: integer, float, or string
+ 
+            if(isinstance(diameter, str)):                         # if diameter is string 
+                print("\n####################################################################################")
+                print("ERROR. '-D/--diameter {}' set, but not recognized. Only an integer or float number higher than 0 is permitted.".format(diameter))
+                print("       Please, insert an integer or float number higher than 0 (-D/--diameter <INT/FLOAT>)")
+                print("       or ignore this flag leaving the default value of 1.0 (-D/--diameter 1.0)")
+                print("       Look below for further help.")
+                print("####################################################################################\n\n")
+                print_help_block()
+                quit()
+
+            else:
+                if(diameter <= 0):
+                    print("\n####################################################################################")
+                    print("ERROR. '-D/--diameter {}' set, but not recognized. Only an integer or float number higher than 0 is allowed.".format(diameter))
+                    print("       A negative number or zero are meaningless.")
+                    print("       Please, insert an integer or float number (-D/--diameter <INT/FLOAT>)")
+                    print("       or ignore this flag leaving the default value of 1.0 (-D/--diameter 1.0).")
+                    print("       Look below for further help.")
+                    print("####################################################################################\n\n")
+                    print_help_block()
+                    quit()
+
+            print("\no '-D/--diameter {}' set. The diameter 'D' of medium-grained region: {} nm... 30% completed. \n".format(diameter, diameter))
+
+
+        if(sys.argv[1]=='choice3'):  # If 'choice3' option is set
+            print("\n####################################################################################")
+            print("ERROR. With 'choice3' option the optional argument 'diameter' (-D/--diameter <INT/FLOAT>) cannot be set.")
+            print("       Please, do not use this flag if 'choice3' option is set.")
+            print("       Look below for further help.")
+            print("####################################################################################\n\n")
+            print_help_block()
+            quit()
+
+
+    if(diameter is None):
+        if(sys.argv[1]=='choice1' or sys.argv[1]=='choice2'):
+            diameter = 1.0
+            print("\no '-D/--diameter' not set. The diameter 'D' of medium-grained region is {} nm. Diameter = 1.0 nm (default value)... 30% completed. \n".format(diameter))
+
+    return diameter
+
+
+
+# Function: Checking if the mandatory argument "listfile" is correctly set for *choice1*.
+#           This file has to be organized in two columns. The first one must be a vertical list of residue numbers (INT NUMBERS) (not atom_numbers) 
+#           from which the atomistic sphere is traced. The radius of this sphere is defined in the second column: it can be 
+#           integer or float, and it is the radius value in nm.  
+
+def checking_errors_listfile_choice1_mand_arg(listfile):  
+    f = open(listfile, "r")
+
+    list_AT_res      = []
+    list_radii       = []
+
+    count_line = 1
+    for line in f:
+        check_empty_rows_block(line, listfile)
+        line = line.split()
+
+        if(len(line) != 2):       #N_lines = 2 
+            print("\n####################################################################################")
+            print("ERROR. *choice1* selected: the input file '{}' cannot be read correctly.".format(listfile))
+            print("       Each line must contain 2 columns: the {}th row has {} columns".format(count_line, len(line)))
+            print("       Be sure that '{}' is organized in two different columns:".format(listfile))
+            print("       • 1st column       INT                List of residues numbers from which the atomistic sphere will be traced.")
+            print("       • 2nd column       INT/FLOAT          Atomistic radius of each residue in nm.")
+            print("       Look below for further information.")
+            print("####################################################################################\n\n")
+            print_help_block()
+            quit()
+
+        else:
+            if not line[0].isdigit():  #1st column = INT
+                print("\n####################################################################################")
+                print("ERROR. *choice1* selected: the input file '{}' cannot be read correctly.".format(listfile))
+                print("        The 1st column must be an integer number. '{}' at {}th row is not integer.". format(line[0], count_line))
+                print("        Be sure that '{}' is organized in two different columns:".format(listfile))
+                print("        • 1st column       INT                List of residues numbers from which the atomistic sphere will be traced.")
+                print("        • 2nd column       INT/FLOAT          Atomistic radius of each residue in nm.")
+                print("        Look below for further information.")
+                print("####################################################################################\n\n")
+                print_help_block()
+                quit()
+
+            if not isIntFloat(line[1]): #2nd column = INT/FLOAT
+                print("\n####################################################################################")
+                print("ERROR. *choice1* selected: the input file '{}' cannot be read correctly.".format(listfile))
+                print("       The 2nd column must be a Float or Integer number. '{}' at {}th row is a string.". format(line[1], count_line))
+                print("       Be sure that '{}' is organized in two different columns:".format(listfile))
+                print("       • 1st column       INT                List of residues numbers from which the atomistic sphere will be traced.")
+                print("       • 2nd column       INT/FLOAT          Atomistic radius of each residue in nm.")
+                print("       Look below for further information.")
+                print("####################################################################################\n\n")
+                print_help_block()
+                quit()
+
+        res    = int(line[0])
+        radius = float(line[1])
+
+        list_AT_res.append(res)
+        list_radii.append(radius)
+
+        count_line = count_line + 1
+
+    return list_AT_res, list_radii
+
+
+# Function: Checking if the mandatory argument "listfile" is correctly set for *choice2*.
+#           This file has to be organized in one column containing a vertical list of all residue numbers (INT NUMBERS) (not atom_numbers) 
+#           modelled atomistically.  
+def checking_errors_listfile_choice2_mand_arg(listfile):
+    f = open(listfile, "r")
+
+    list_AT_residues = []
+
+    count_line = 1
+    for line in f:
+        check_empty_rows_block(line, listfile)
+        line = line.split()
+
+        if(len(line) != 1):
+            print("\n####################################################################################")
+            print("ERROR. *Choice2* selected: the input file '{}' cannot be read".format(listfile))
+            print("       Each line must contain only 1 column: the {}th row has {} columns".format(count_line, len(line)))
+            print("       Be sure that '{}' is organized in only one column containing the list of residue numbers modelled atomistically.".format(listfile))
+            print("       Look below for further information.")
+            print("####################################################################################\n\n")
+            print_help_block()
+            quit()
+
+        else:
+            if not line[0].isdigit():
+                print("\n####################################################################################")
+                print("ERROR. *choice2* selected: the input file '{}' cannot be read correctly.".format(listfile))
+                print("       The unique column must contain an integer number. '{}' at {}th row is not integer.". format(line[0], count_line))
+                print("       Be sure that '{}' is organized in only one column containing the list of residue numbers modelled atomistically.".format(listfile))
+                print("       Look below for further information.")
+                print("####################################################################################\n\n")
+                print_help_block()
+                quit()
+
+
+        res = int(line[0])
+        list_AT_residues.append(res)
+
+        count_line = count_line + 1
+
+    return list_AT_residues
+
+
+
+# Function: Checking if the mandatory argument "listfile" is correctly set for *choice3*.
+#           This file has to be organized in two columns: 
+#           o 1st: It contains a vertical list of all residue numbers (INT NUMBERS) (not atom_numbers) that require a fully-atomistic description.
+#           o 2nd: It contains a vertical list of all residue numbers (INT NUMBERS) (not atom_numbers) that require a medium-grained description.   
+def checking_errors_listfile_choice3_mand_arg(listfile):
+
+    f = open(listfile, "r")
+
+    list_AT_residues = []
+    list_bb_residues = []
+
+    count_line = 1
+    for line in f:
+        check_empty_rows_block(line, listfile)
+        line = line.split()     # number of columns must be == 2 
+                                # if Ncols == 2, both columns must contain integer numbers (isdigit check for int numbers, not float) 
+                                # If Ncols == 1, the column must contain integer numbers 
+
+        if(len(line) < 1 or len(line) > 2):
+            print("\n####################################################################################")
+            print("ERROR. *Choice3* selected: the input file '{}' cannot be read".format(listfile))
+            print("       Each line must contain 1 or 2 columns: the {}th row has {} columns:".format(count_line, len(line)))
+            print("       Be sure that each row of '{}' is organized in only one or two columns.")
+            print("       Look below for further information.")
+            print("####################################################################################\n\n")
+            print_help_block()
+            quit()
+
+        else:
+            if(len(line) == 1):
+                if not line[0].isdigit():
+                    print("\n####################################################################################")
+                    print("ERROR. *choice3* selected: the input file '{}' cannot be read correctly.".format(listfile))
+                    print("       The 1st column must be an integer number. '{}' at {}th row is not an integre number.". format(line[0], count_line))
+                    print("       Be sure that each row of '{}' is organized in one or two columns:".format(listfile))
+                    print("       • 1st column       INT                List of residue numbers modelled atomistically")
+                    print("       • 2nd column       INT                List of residue numbers that require an hybrid treatment")
+                    print("       Look below for further information.")
+                    print("####################################################################################\n\n")
+                    print_help_block()
+                    quit()
+                else:
+                    AT_res  = int(line[0])
+                    list_AT_residues.append(AT_res)
+                    count_line = count_line + 1
+
+            if(len(line) == 2):
+                if not line[1].isdigit():
+                    print("\n####################################################################################")
+                    print("ERROR. *choice3* selected: the input file '{}' cannot be read correctly.".format(listfile))
+                    print("       The 2nd column must be an integer number. '{}' at {}th row is not an integer number.". format(line[1], count_line))
+                    print("       Be sure that each row of '{}' is organized in one or two columns:".format(listfile))
+                    print("       • 1st column       INT                List of residue numbers modelled atomistically")
+                    print("       • 2nd column       INT                List of residue numbers that require an hybrid treatment")
+                    print("       Look below for further information.")
+                    print("####################################################################################\n\n")
+                    print_help_block()
+                    quit()
+                else:
+                    AT_res  = int(line[0])
+                    bb_res  = int(line[1])
+                    list_AT_residues.append(AT_res)
+                    list_bb_residues.append(bb_res)
+                    count_line = count_line + 1
+
+    return list_AT_residues, list_bb_residues 
