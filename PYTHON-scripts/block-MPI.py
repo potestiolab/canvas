@@ -233,9 +233,12 @@ if __name__ == '__main__':
     print("\no '-g/--gro {}' set. Coordinate file correctly read... 15% completed.\n".format(os.path.basename(grofile)))  # Print ONLY Filename
 
 
-    # 3.10 Checking if listfile  is actually found and that it is not empty 
+    # 3.10 Checking if listfile  is actually found and that it is not empty (for choice1 or choice2). 
+    #      Indeed, when using choice3, listfile could also be empty: in such case the biomolecules is modelled all CG.
     checking_file_found_block(listfile)
-    check_empty_file(listfile)
+
+    if(sys.argv[1].strip() == "choice1" or sys.argv[1].strip() == "choice2"):
+        check_empty_file(listfile)
 
 
     # 3.11 Reading listfile and checking that the format is correct according with the choice done (choice1, choice2, or choice3):
