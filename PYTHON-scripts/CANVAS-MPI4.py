@@ -3958,7 +3958,8 @@ if __name__ == '__main__':
         atoms_topol_water       = toop_wat[0]
         original_bonds_water    = toop_wat[1]
         original_angles_water   = toop_wat[2]
-    
+
+ 
         # L4- Reading solvated file if present (incl. ions for neutralizing charge)
         if(solvate_Flag == True):  
     

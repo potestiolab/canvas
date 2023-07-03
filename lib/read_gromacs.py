@@ -650,7 +650,7 @@ def readtop_water(ft_w):
                                         # If the row is empty, then we exit the loop beacuse we have read all the atoms in topology file...
             break
 
-        if(line[0] !=";"):               # If the 1st letter of line is ";" then skip the line itself, otherwise we split it. 
+        if(line[0] !=";" and line[0] !="#"):             # If the 1st letter of line is ";" or "#" then skip the line itself, otherwise we split it. 
             splt = line.split()
 
             id_water   = int(splt[0])
@@ -721,8 +721,11 @@ def readtop_water(ft_w):
 
         if not line.strip():
             break
+            
+        if line[0]=="[":
+            break
 
-        if(line[0]!=";"):
+        if(line[0]!=";" and line[0]!="#"):
             splt = line.split()
 
             first_atom       = int(splt[0])
