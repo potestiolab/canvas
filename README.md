@@ -112,6 +112,24 @@ flowchart LR
 
 # 3 - Usage 
 
+<p>
+  The typical usage of the program consists of calling <i><code>block.py</code></i> and <i><code>CANVAS.py</code></i> in succession using Python3. An MPI version of the codes, <i><code>block-MPI.py</code></i> and <i><code>CANVAS-MPI4.py</code></i>, is also available, utilizing the <i>multiprocessing</i> module to exploit multiple processors simultaneously for creating the CANVAS model. The MPI version is recommended for systems with more than 10^5 atoms. For detailed information regarding performance and efficiency, please refer to <strong>Section 7</strong>.
+</p>
+
+<p>Afterward, it is possible to simulate the biomolecule using either Gromacs or Lammps, as described in <strong>Section 8</strong>.</p>
+
+<ul>
+  <li>
+    <code>block.py</code> or <code>block-MPI.py</code>: This script generates a file containing the list of survived atoms, which is a mandatory argument for <code>CANVAS.py</code> or <code>CANVAS-MPI4.py</code> as explained in <strong>Section 4.1</strong>.
+  </li>
+  <li>
+    <code>CANVAS.py</code> or <code>CANVAS-MPI4.py</code>: This script creates the necessary input files for simulating a solvated system with Multiple Resolution in Gromacs or Lammps and performs analysis on the system.
+  </li>
+</ul>
+
+<p>Before running the Python scripts, carefully read the following section, which provides detailed explanations of each task and argument. Additionally, ensure that the scripts are not moved outside the main folder (<code>canvas/</code>), as doing so will result in a fatal error that will be displayed on the screen.</p>
+
+
 The typical usage of the program consists in a call to _`block.py`_ and _`CANVAS.py`_ in succession by using Python3. The MPI version of the two previous codes, _`block-MPI.py`_ and _`CANVAS-MPI4.py`_,  is also possible: it makes use of _multiprocessing_ module with the purpose of creating the CANVAS model exploiting multiple processors at one time. Generally, the MPI version is recommended when your system consists of more than $10^5$ atoms. All details about the performance and efficiency can be found is **Sec.7**. 
 
 Afterwards, it is possible to simulate the biomolecule through Gromacs or Lammps, as proposed in **Sec.8**. 
