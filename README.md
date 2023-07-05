@@ -20,7 +20,7 @@ are retained;</li> <br/>
 
   <li> <b><code>medium-grained (MG)</code></b>: intermediate level of detail, where only the backbone atoms of an amino acid are retained, i.e. the carbon alpha <b>CA<sub>mg</sub></b>, the nitrogen <b>N<sub>mg</sub></b> of the amino group, the oxygen <b>O<sub>mg</sub></b> and the carbon <b>C<sub>mg</sub></b> of the carboxyl group.</li> <br/>
 
-  <li> <b><code>coarse-grained (CG)</code></b>: the lowest level of resolution. In the applications presented here, only the <b>C<sub>α</sub></b> atoms of each CG residue are kept, dubbed <b>CA<sub>cg</sub></b>.
+  <li> <b><code>coarse-grained (CG)</code></b>: the lowest level of resolution. In the applications presented here, only the <b>C<sub>α</sub></b> atoms of each CG residue are kept, dubbed <b>CA<sub>cg</sub></b>. </li>
 
 </ul>
 </div>
