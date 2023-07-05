@@ -33,39 +33,32 @@ are retained;</li> <br/>
 
 <p align="justify"> The method is presented and validated on two case studies, the enzyme <b>Adenylate Kinase</b> and the therapeutic antibody <b>Pembrolizumab</b> in acqueous solution, by comparing results obtained with the CANVAS model against fully atomistic simulations. </p>
 
-<p align="justify"> All the details of the work can be found in the following paper: <b><code>Fast, accurate, and system-specific variable-resolution modelling of proteins</b>, R. Fiorentini, T. Tarenzi, R. Potestio</code>, https://doi.org/10.1021/acs.jcim.2c01311 </p>
+<p align="justify"> All the details of the work can be found in the following paper: <b>Fast, accurate, and system-specific variable-resolution modelling of proteins</b>, <i>R. Fiorentini, T. Tarenzi, R. Potestio</i>, https://doi.org/10.1021/acs.jcim.2c01311 </p>
 
 <br />
 
 # 1 - Requirements  
 
-The only requirements are the following: 
+<p align="justify"> The following requirements need to be fulfilled: </p>
 
-* **`GROMACS`**: it is a versatile package to perform molecular dynamics. The installation guide is reported 
-  on [this link](https://manual.gromacs.org/documentation/2018-current/install-guide/index.html). 
-  Please, note that we tested our code with GROMACS-2018, but nothing should change using another (older or newer) 
-  version of this simulating package.
 
-* **`Python3`**: it is an interpreted, object-oriented, high-level programming language with dynamic semantics. 
-  The installation guide is provided [Here](https://docs.python-guide.org/starting/installation/). 
-  If you are working on _Linux_ or _MacOs_ system, Python3 should be already installed. 
-  On the other hand, if you are using Windows operating system, it is not certain for its presence.
-  Please, be care of working with Python3 (3.7 or 3.9 is the best choice) as the code would return an error if using Python2.
+<div align ="justify">
+<ul>
+  <li> <b><code>GROMACS</code></b>: GROMACS is a versatile package used for molecular dynamics simulations. You can find the installation guide at <a href="https://manual.gromacs.org/documentation/2018-current/install-guide/index.html">this link</a>. Please note that this code has been tested with GROMACS-2018, but it should work with other versions of the software as well. </li> </br>
+  
+  <li> <b><code>Python3</code></b>: Python3 is an interpreted, object-oriented, high-level programming language with dynamic semantics. You can refer to the installation guide provided <a href="https://docs.python-guide.org/starting/installation/">here</a>. If you are using a Linux or macOS system, Python3 should already be installed. However, if you are using Windows, it might not be pre-installed. Please ensure that you have Python3 installed (preferably version 3.7 or 3.9) as this code will produce an error if run with Python2. </li> </br>
+  
+  <li> <b><code>VMD</code></b>: VMD is a molecular visualization program used for displaying, animating, and analyzing large biomolecular systems using 3-D graphics and built-in scripting. The latest version of VMD can be found <a href="https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD">here</a>, and the installation guide is available at <a href="https://www.ks.uiuc.edu/Research/vmd/current/ig/node6.html">this link</a>. While not mandatory, <b>we strongly recommend installing VMD</b> as it is used for biomolecule visualization and certain analyses in our code. </li> </br>
+  
+  <li> <b><code>LAMMPS</code></b>: LAMMPS is another versatile package for performing molecular dynamics simulations. The installation guide can be found
+    <a href="https://docs.lammps.org/Install.html">here</a>. You only need to install LAMMPS if you intend to simulate biomolecules using LAMMPS instead of GROMACS, as it is mandatory for such cases. </li> </br>
     
-* **`VMD`**: it is a molecular visualization program for displaying, animating, and analyzing large biomolecular systems
-  using 3-D graphics and built-in scripting. 
-  [Here](https://www.ks.uiuc.edu/Development/Download/download.cgi?PackageName=VMD) it is possible to find the last 
-  version of VMD, while the installation guide can be found on [this link](https://www.ks.uiuc.edu/Research/vmd/current/ig/node6.html). The biomolecule visualization and some analyses are based on its use, therefore **we strongly 
-  recommend its installation**, even tough it is not mandatory. 
-
-* **`LAMMPS`**:  it is a versatile package to perform molecular dynamics. The installation guide is reported 
-  on [this link](https://docs.lammps.org/Install.html). Its installation is mandatory only in case of canvas 
-  simulation of BioMolecule in Lammps (instead of GROMACS).  
-<br />
+</ul>
+</div>
 
 # 2 - Tree Diagram 
 
-Before looking the usage of this code, a tree diagram, representing the sequence of files and directories, is present for easier global reading.
+<p align="justify"> To facilitate a comprehensive understanding of the code's usage, a tree diagram illustrating the sequence of files and directories is provided hereafter for easy reference before proceeding with further instructions. </p>
 
 ```mermaid
 flowchart LR
@@ -115,7 +108,7 @@ flowchart LR
 
 <br />
 
-Directory folders are shown in light blue; files are shown in light yellow, while grey boxes explain only what is inside the folders. In this latter case, files and/or directory  are not indicated in this diagram for sake of clarity and compactness.  
+<p align="justify"> To enhance clarity and compactness, the directory folders in the tree diagram are depicted in light blue, while files are represented in light yellow. Grey boxes are utilized to indicate the contents within the folders, excluding specific files and directories for the purpose of maintaining a concise and easily understandable diagram. </p> 
 
 # 3 - Usage 
 
