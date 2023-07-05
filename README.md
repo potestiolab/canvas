@@ -5,34 +5,35 @@
 
 # 0 - Introduction 
 
-The **CANVAS** model is a novel Multiple-Resolution approach which allows one to model at an atomistic resolution only the precise subset of degrees really  necesssary for the study of a given phenomenon, even when this leads to a boundary between resolutions which falls within a bio-molecule. 
+<p align="justify"> The <b>CANVAS</b> model is a novel Multiple-Resolution approach which allows one to model at an atomistic resolution only the precise subset of degrees really necesssary for the study of a given phenomenon, even when this leads to a boundary between resolutions which falls within a bio-molecule. </p>
 
-CANVAS is the acronym of **C**oarse-grained **A**nisotropic **N**etwork model for **VA**riable resolution **S**imulation. 
+<p align="justify"> CANVAS is the acronym of <b>C</b>oarse-grained <b>A</b>nisotropic <b>N</b>etwork model for <b>VA</b>riable resolution <b>S</b>imulation. </p>
 
-The CANVAS strategy leverages the blurred and approximate nature of coarse-grained models to identify effective sites based on a user-provided input, and determines the interactions among them based on the molecule’s structure and all-atom force field, making it unnecessary to run reference simulations. This strategy makes the parametrisation of the model practically instantaneous, and allows the modulation of the system’s resolution in a quasi-continuous manner across the structure, from all-atom to (very) coarse-grained. Most notably, the interaction between regions of the system at different resolution (including the solvent) is accounted for and straightforward to set up, allowing the seamless implementation in standard MD software packages (e.g. GROMACS or LAMMPS).
+<p align="justify"> The CANVAS strategy leverages the blurred and approximate nature of coarse-grained models to identify effective sites based on a user-provided input, and determines the interactions among them based on the molecule’s structure and all-atom force field, making it unnecessary to run reference simulations. This strategy makes the parametrisation of the model practically instantaneous, and allows the modulation of the system’s resolution in a quasi-continuous manner across the structure, from all-atom to (very) coarse-grained. Most notably, the interaction between regions of the system at different resolution (including the solvent) is accounted for and straightforward to set up, allowing the seamless implementation in standard MD software packages (e.g. GROMACS or LAMMPS).  </p>
 
-In the current implementation, we performed the choice of employing three levels of resolution:
+<p align="justify"> In the current implementation, we performed the choice of employing three levels of resolution: </p>
 
-* **`all-atom (AT)`**: the highest level of detail, where all the atoms of a given amino acid
-are retained;
+<div align ="justify">
+<ul>
+  <li> <b><code>all-atom (AT)</code></b>: the highest level of detail, where all the atoms of a given amino acid
+are retained;</li> <br/>
 
-* **`medium-grained (MG)`**: intermediate level of detail, where only the backbone atoms of an amino acid are retained, i.e. the carbon alpha CA<sub>_mg_</sub>, the nitrogen N<sub>_mg_</sub> of the amino group, the oxygen O<sub>_mg_</sub> and the carbon C<sub>_mg_</sub> of the carboxyl group.
+  <li> <b><code>medium-grained (MG)</code></b>: intermediate level of detail, where only the backbone atoms of an amino acid are retained, i.e. the carbon alpha <b>CA<sub>mg</sub></b>, the nitrogen <b>N<sub>mg</sub></b> of the amino group, the oxygen <b>O<sub>mg</sub></b> and the carbon <b>C<sub>mg</sub></b> of the carboxyl group.</li> <br/>
 
-* **`coarse-grained (CG)`**: the lowest level of resolution. In the applications presented here, only the C<sub>$\alpha$</sub> atoms of each CG residue are kept, dubbed CA<sub>_cg_</sub>.
+  <li> <b><code>coarse-grained (CG)</code></b>: the lowest level of resolution. In the applications presented here, only the <b>C<sub>α</sub></b> atoms of each CG residue are kept, dubbed <b>CA<sub>cg</sub></b>.
 
+</ul>
+</div>
 
 <div align="center">
-
 <img src="images/Table-AT-MG-CG.jpg" alt="Scheme" width="500">
 </div>
 
 <br><br>
 
-The method is presented and validated on two case studies, the enzyme **Adenylate Kinase** and the therapeutic antibody **Pembrolizumab** in acqueous solution, by comparing results obtained with the CANVAS model against fully atomistic simulations. 
+<p align="justify"> The method is presented and validated on two case studies, the enzyme <b>Adenylate Kinase</b> and the therapeutic antibody <b>Pembrolizumab</b> in acqueous solution, by comparing results obtained with the CANVAS model against fully atomistic simulations. </p>
 
-All the details of the work can be found in:
-
-**Fast, accurate, and system-specific variable-resolution modelling of proteins**, R. Fiorentini, T. Tarenzi, R. Potestio, https://doi.org/10.1021/acs.jcim.2c01311
+<p align="justify"> All the details of the work can be found in the following paper: <b><code>Fast, accurate, and system-specific variable-resolution modelling of proteins</b>, R. Fiorentini, T. Tarenzi, R. Potestio</code>, https://doi.org/10.1021/acs.jcim.2c01311 </p>
 
 <br />
 
