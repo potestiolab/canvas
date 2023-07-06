@@ -128,7 +128,10 @@ flowchart LR
 
 <br />
 
-# 4 - _block.py_ & _block-MPI.py_
+# 4 - block.py & block-MPI.py
+
+## 4.0 - Scope 
+<p align="justify"> The main scope of this preliminary code is to generate the list of atoms that will survive. Each atom is assigned a label: <b>AT</b> for atoms that will be modeled atomistically and <b>CG</b> for atoms that will be described in a medium- or coarse-grained manner. Essentially, the code takes into account the desired residues to be treated at a high resolution (atomistically) and the preferred subdivision type (atomistic, medium-grained, or coarse-grained). Three different options are available as shown in <b>Section 4.1</b>, and the aforementioned file is generated accordingly. </p>
 
 ## 4.1 - Tasks 
 
