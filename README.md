@@ -135,50 +135,46 @@ flowchart LR
 
 ## 4.1 - Tasks 
 
-_`block.py`_ and its MPI version (_`block-MPI.py`_) are inside the `PYTHON-SCRIPT/` directory. This code has the purpose to write a file containing the list of survived atoms. Before lauching the code, te user is required to select one of three possible options, depending on the type of _`atomistic`_/_`medium-grained`_/_`coarse-grained`_ subdivision that would like to obtain: 
+<p align="justify"> The code files <i><code>block.py</code></i> and its MPI version <i><code>block-MPI.py</code></i> can be found inside the <code>PYTHON-SCRIPT/</code> directory. These files are designed to generate a file containing a list of surviving atoms. Prior to running the code, the user is required to choose one of three available options based on the desired subdivision type: atomistic, medium-grained, or coarse-grained: </p>
 
-* **`choice1`**: One or more central atomistic residues that require an atomistic description is/are known. Since the high-resolution region is not completely defined, an atomistic sphere with radius _R_, defined by the user, is traced around the central residue(s) (green circle in **Fig.1**). Then, the latter, is sourrounded by a 3D-annulus of width _D_ that defines a medium-grained region where only the backbone atoms ( $N$, $C_\alpha$, $C$, $O$) are retained (orange area of **Fig.1**). The remainder, is modelled coarse-grained, where only the $C_\alpha$ atoms are kept (blue area of **Fig.1**). A schematic represention is shown hereafter: 
+<div align ="justify">
+<ul>
+  <li> <strong><code>choice1</code></strong>: In this option, the user selects one or more central atomistic residues that require an atomistic description. The code traces an atomistic sphere with a user-defined radius <em>R</em> around the central residue(s) (green circle in <b>Figure 1</b>). The region surrounding the sphere is a 3D-annulus of width <em>D</em>, where only the backbone atoms (<em>N</em>, <em>C<sub>α</sub></em>, <em>C</em>, <em>O</em>) are retained (orange area of <b>Figure 1</b>). The remainder of the system is modeled as coarse-grained (blue area of <b>Figure 1</b>). </li> </br>
 
-<div align="center">
-
-<img src="images/choice1.jpg" alt="Scheme" width="385">
-</div>
-<div align = "center">
-<b>Fig.1</b> - <i> Pictorial representation of atomistic/medium-grained/coarse-grained division for <b>choice1</b> </i> 
-</div>
-
-
-<br /><br />
-
-* **`choice2`**: All residues that require an atomistic description are known; therefore the higher resolution region is completely defined (green area in **Fig.2**) Around, a medium-grained region of width _D_ will be traced where only the backbone atoms ( $N$, $C_\alpha$, $C$, $O$) are retained (orange are in **Fig.2**). Note that in *choice1* the atomistic region is not completely defined a priori, but it will be described  by a radius _R_ starting from the knowledge of one or more central residues.  
-
-<div align="center">
-
-<img src="images/choice2.jpg" alt="Scheme" width="400">
-</div>
-<div align = "center">
-<b>Fig.2</b> - <i> Pictorial representation of atomistic/medium-grained/coarse-grained division for <b>choice2</b> </i>
-</div>
+  <div align="center">
+  <img src="images/choice1.jpg" alt="Scheme" width="385">
+  </div>
+  <div align = "justify">
+  <b>Figure 1</b> - <i> Pictorial representation of atomistic/medium-grained/coarse-grained division for <b>choice1</b>. The red points correspond at the central residues that require an atomistic description. The green, orange and the blue area correspond at the part of system with fully atomistic, medium-grained an coarse-grained description, respectively. </i> 
+  </div>
 
 <br /><br />
 
-* **`choice3`**: All residues that require an atomistic and medium-grained description(where only the backbone atoms 
-                   are retained i.e. $N$, $C_\alpha$, $C$, $O$) are known (green and orange area in **Fig.3**, respectively). 
-                   Consequently, the residues that will be modelled as corse grained (where only $C_\alpha$ atoms are kept) 
-                   are also automatically enstablished. 
+  <li> <strong>choice2:</strong> In this option, all residues requiring an atomistic description are known, and the high-resolution region is completely defined (green area in <strong>Figure 2</strong>). Around the high-resolution region, a medium-grained region of width <em>D</em> is traced, where only the backbone atoms (<em>N</em>, <em>C<sub>α</sub></em>, <em>C</em>, <em>O</em>) are retained (orange area in <strong>Figure 2</strong>). Unlike <i>choice1</i>, where the atomistic region is not fully defined initially, in <b>choice2</b the atomistic region is defined a priori based on the knowledge of all residues. </li> </br>
 
-
-<div align="center">
-
-<img src="images/choice3.jpg" alt="Scheme" width="400">
-</div>
-<div align = "center">
-<b>Fig.3</b> - <i> Pictorial representation of atomistic/mediium-grained/coarse-grained division for <b>choice3</b> </i>
-</div>
+  <div align="center">
+  <img src="images/choice2.jpg" alt="Scheme" width="400">
+  </div>
+  <div align = "justify">
+  <b>Figure 2</b> - <i> Pictorial representation of atomistic/medium-grained/coarse-grained division for <b>choice2</b>. The red points correspond at all the residues that require an atomistic description. The green, orange and the blue area correspond at the part of system with fully atomistic, medium-grained an coarse-grained description, respectively. </i>
+  </div>
 
 <br /><br />
 
-Each task can require different input files, provided to the program in the form of command-line options. A short explaination of tasks and arguments is given by launching the command `python3 block.py -h` or `python3 block.py --help`. Alternatively, for printing a short usage message, please type: `python3 block.py` or `python3 block.py -u`. Equally, the same flags are available also for `block-MPI.py` 
+   <li> <strong>Choice 3:</strong> In this option, all residues requiring both atomistic and medium-grained descriptions (retaining only the backbone atoms) are known (green and orange areas in <strong>Figure 3</strong>, respectively). The coarse-grained region, where only <em>C<sub>α</sub></em> atoms are kept, is automatically determined. </li> </br>
+
+  <div align="center">
+  <img src="images/choice3.jpg" alt="Scheme" width="400">
+  </div>
+  <div align = "justify">
+  <b>Figure 3</b> - <i> Pictorial representation of atomistic/medium-grained/coarse-grained division for <b>choice3</b>. The red and orange points correspond at all the residues that require an atomistic and medium-grained description, respecively. The green, orange and the blue area correspond at the part of system with fully atomistic, medium-grained an coarse-grained description, respectively. </i>
+  </div>
+
+<br /><br />
+
+<p align="justify"> Based on the selected option, you should refer to the appropriate section. If you choose the <code>choice1</code> option, please refer to <b>Section 4.1.1</b>. If you choose the <code>choice2</code> option, please refer to <b>Section4.1.2</b>. Eventually, if you choose the <code>choice3</code> option, please refer to <b>Section 4.1.3</b> </p>
+
+<p align="justify"> Each task can require different input files, provided to the program in the form of command-line options. A short explaination of tasks and arguments is given by launching the command <code>python3 block.py -h</code> or <code>python3 block.py --help</code>. Alternatively, for printing a short usage message, please type: <code>python3 block.py</code>` or <code>python3 block.py -u</code>. Equally, the same flags are available also for <code>block-MPI.py</code>. </p> 
 
 <br />
 
