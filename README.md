@@ -150,7 +150,8 @@ flowchart LR
 
 <br /><br />
 
-  <li> <strong>choice2:</strong> In this option, all residues requiring an atomistic description are known, and the high-resolution region is completely defined (green area in <strong>Figure 2</strong>). Around the high-resolution region, a medium-grained region of width <em>D</em> is traced, where only the backbone atoms (<em>N</em>, <em>C<sub>α</sub></em>, <em>C</em>, <em>O</em>) are retained (orange area in <strong>Figure 2</strong>). Unlike <i>choice1</i>, where the atomistic region is not fully defined initially, in <b>choice2</b the atomistic region is defined a priori based on the knowledge of all residues. </li> </br>
+  <li> <strong>choice2:</strong> In this option, all residues requiring an atomistic description are known, and the high-resolution region is completely defined (green area in <strong>Figure 2</strong>). Around the high-resolution region, a medium-grained region of width <em>D</em> is traced, where only the backbone atoms (<em>N</em>, <em>C<sub>α</sub></em>, <em>C</em>, <em>O</em>) are retained (orange area in <strong>Figure 2</strong>). Unlike <i>choice1</i>, where the atomistic region is not fully defined initially, in <b>choice2</b> the atomistic region is defined a priori based on the knowledge of all residues. </li> </br></br>
+
 
   <div align="center">
   <img src="images/choice2.jpg" alt="Scheme" width="400">
@@ -159,7 +160,7 @@ flowchart LR
   <b>Figure 2</b> - <i> Pictorial representation of atomistic/medium-grained/coarse-grained division for <b>choice2</b>. The red points correspond at all the residues that require an atomistic description. The green, orange and the blue area correspond at the part of system with fully atomistic, medium-grained an coarse-grained description, respectively. </i>
   </div>
 
-<br /><br />
+</br></br>
 
    <li> <strong>Choice 3:</strong> In this option, all residues requiring both atomistic and medium-grained descriptions (retaining only the backbone atoms) are known (green and orange areas in <strong>Figure 3</strong>, respectively). The coarse-grained region, where only <em>C<sub>α</sub></em> atoms are kept, is automatically determined. </li> </br>
 
@@ -169,6 +170,9 @@ flowchart LR
   <div align = "justify">
   <b>Figure 3</b> - <i> Pictorial representation of atomistic/medium-grained/coarse-grained division for <b>choice3</b>. The red and orange points correspond at all the residues that require an atomistic and medium-grained description, respecively. The green, orange and the blue area correspond at the part of system with fully atomistic, medium-grained an coarse-grained description, respectively. </i>
   </div>
+
+</ul>
+</div>
 
 <br /><br />
 
