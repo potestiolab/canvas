@@ -172,9 +172,10 @@ flowchart LR
 
 <br /><br />
 
-<p align="justify"> Based on the selected option, you should refer to the appropriate section. If you choose the <code>choice1</code> option, please refer to <b>Section 4.1.1</b>. If you choose the <code>choice2</code> option, please refer to <b>Section4.1.2</b>. Eventually, if you choose the <code>choice3</code> option, please refer to <b>Section 4.1.3</b> </p>
+<p align="justify"> Based on the selected option, please refer to the appropriate section. If you choose the <code>choice1</code> option, please refer to <b>Section 4.1.1</b>. If you choose the <code>choice2</code> option, please refer to <b>Section 4.1.2</b>. And if you choose the <code>choice3</code> option, please refer to <b>Section 4.1.3</b>.
+</p>
 
-<p align="justify"> Each task can require different input files, provided to the program in the form of command-line options. A short explaination of tasks and arguments is given by launching the command <code>python3 block.py -h</code> or <code>python3 block.py --help</code>. Alternatively, for printing a short usage message, please type: <code>python3 block.py</code>` or <code>python3 block.py -u</code>. Equally, the same flags are available also for <code>block-MPI.py</code>. </p> 
+<p align="justify"> Each task requires different input files, which are provided to the program as command-line options. You can get a brief explanation of the tasks and arguments by running the command <code>python3 block.py -h</code> or <code>python3 block.py --help</code>. Additionally, you can print a short usage message by typing <code>python3 block.py</code> or <code>python3 block.py -u</code>. The same flags are also available for <code>block-MPI.py</code>. </p> 
 
 <br />
 
