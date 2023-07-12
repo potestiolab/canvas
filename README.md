@@ -5,10 +5,9 @@
 
 # 0 - Introduction 
 
-<!-- Line-breaks suiting auto-p in WordPress: -->
-Paragraph with a footnote<a id="a1" href="#f1"><sup>[1]</sup></a> and more text afterwards.
+Bla bla <sup id="a1">[1](#f1)</sup>
 
-Another paragraph with another footnote<a id="a2" href="#f2"><sup>[2]</sup></a> and more text afterwards.
+<b id="f1">1</b> Footnote content here. [↩](#a1)
 
 
 <p align="justify"> The <b>CANVAS</b> model is a novel Multiple-Resolution approach which allows one to model at an atomistic resolution only the precise subset of degrees really necesssary for the study of a given phenomenon, even when this leads to a boundary between resolutions which falls within a bio-molecule. </p>
