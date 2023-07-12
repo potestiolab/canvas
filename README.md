@@ -5,6 +5,12 @@
 
 # 0 - Introduction 
 
+<!-- Line-breaks suiting auto-p in WordPress: -->
+Paragraph with a footnote<a id="a1" href="#f1"><sup>[1]</sup></a> and more text afterwards.
+
+Another paragraph with another footnote<a id="a2" href="#f2"><sup>[2]</sup></a> and more text afterwards.
+
+
 <p align="justify"> The <b>CANVAS</b> model is a novel Multiple-Resolution approach which allows one to model at an atomistic resolution only the precise subset of degrees really necesssary for the study of a given phenomenon, even when this leads to a boundary between resolutions which falls within a bio-molecule. </p>
 
 <p align="justify"> CANVAS is the acronym of <b>C</b>oarse-grained <b>A</b>nisotropic <b>N</b>etwork model for <b>VA</b>riable resolution <b>S</b>imulation. </p>
@@ -208,9 +214,7 @@ or
 python3 block-MPI.py choice1 --gro  <protein.gro> --list <list_AT_res.dat> [--diameter <diameter_MG_region>] [--ncpu <number_of_cores>]
 ```
 
-<p align="justify"> The output of the program is the list of survived atoms. To obtain further information and execute the "block.py" script with the "choice1" option, please type on terminal  `python3 block.py choice1`.<a href="#footnote-1">[1]</a> </p>
-
-<p id="footnote-1">[1] Here is my first footnote.</p>
+ The output of the program is the list of survived atoms. To obtain further information and execute the "block.py" script with the "choice1" option, please type on terminal  `python3 block.py choice1`.[^1]</p>
 
 [^1]: For simplicity, this command is referred to `block.py`, but nothing changes for `block-MPI.py`
 
@@ -934,4 +938,11 @@ By default the system will be solvated (and then neutralized with Sodium and Chl
 
 Integer number corresponding at the number of cores for parallelizing _CANVAS-MPI4.py_ script. It goes between 1 and the maximum number of available cores present in the laptop/cluster, otherwise an error is returned. Default value: maxiumum number of available cores present in the laptop/cluster. 
 
+<footer class="footnotes">
+
+<a id="f1" href="#a1">[1]</a> Footnote #1 here.
+
+<a id="f2" href="#a2">[2]</a> Footnote #2 here.
+
+</footer>
 
