@@ -685,7 +685,7 @@ Raffaele Fiorentini: raffaele.fiorentini@unitn.it
 
 # Appendix 
 
-Hereafter, we focus on the arguments discussed breafly before in **Sec. 4.2**  and **Sec. 5.1**. 
+Hereafter, we focus on the arguments discussed breafly before in **Sec. 4.2 (4.1.3 4.2.3 4.3.3 NEW)**  and **Sec. 5.1**. 
 
 ## A - Coordinate input FILE 
 
