@@ -181,7 +181,7 @@ flowchart LR
 
 <br /><br />
 
-<p align="justify"> Based on the selected option, please refer to the appropriate section. If you choose the <code>choice1</code> option, please refer to <b>Section 4.1.1</b>. If you choose the <code>choice2</code> option, please refer to <b>Section 4.1.2</b>. And if you choose the <code>choice3</code> option, please refer to <b>Section 4.1.3</b>.
+<p align="justify"> Based on the selected option, please refer to the appropriate section. If you choose the <code>choice1</code> option, please refer to <b>Section 4.1.1 (4.2 NEW)</b>. If you choose the <code>choice2</code> option, please refer to <b>Section 4.1.2 (4.3 NEW)</b>. And if you choose the <code>choice3</code> option, please refer to <b>Section 4.1.3 (4.4 NEW)</b>.
 </p>
 
 <p align="justify"> Each task requires different input files, which are provided to the program as command-line options. You can get a brief explanation of the tasks and arguments by running the command <code>python3 block.py -h</code> or <code>python3 block.py --help</code>. Additionally, you can print a short usage message by typing <code>python3 block.py</code> or <code>python3 block.py -u</code>. The same flags are also available for <code>block-MPI.py</code>. </p> 
