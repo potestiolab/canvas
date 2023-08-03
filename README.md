@@ -186,9 +186,12 @@ flowchart LR
 ## 4.2 - choice1 
 
 ### 4.2.1 - Requirements
-<p align="justify"> <b><code>choice1</code></b> task requires two mandatory files, i.e. the coordinates of all-atom structure of the biomolecule (<i><code>protein.gro</code></i>) and the list of central residues that require an atomistic description (<i><code>list_AT_res.dat</code></i>). On the other hand, the diameter value of medium-grained region of CANVAS model (<i><code>diameter_MG_region</code></i>) is an optional argument, that can also be changed (the default value is 1.0 nm). Furthermore, the MPI-version (<i></i>block-MPI.py</i>) gives the user the possibility to define the number of cores for parallelizing this code (<i><code>number_of_cores</code></i>): the default value is maxiumum number of available cores present in your laptop/cluster. For more detailed information on these arguments, please refer to <b>Section 4.2.3</b>. </p> 
 
-### 4.2.2 - Usage)
+"To perform choice1 task, two mandatory files are required: the coordinates of the all-atom structure of the biomolecule (protein.gro) and the list of central residues that necessitate an atomistic description (list_AT_res.dat). Additionally, users have the option to specify the diameter value of the medium-grained region in the CANVAS model (diameter_MG_region), with the default value set to 1.0 nm. Moreover, for parallelization of the code, the MPI-version (block-MPI.py) allows users to define the number of cores (number_of_cores) to utilize, with the default value being the maximum number of available cores on their laptop or cluster. For more comprehensive information on these arguments, please refer to Section 4.2.3."
+
+<p align="justify"> <b><code>choice1</code></b> task requires two mandatory files: the coordinates of all-atom structure of the biomolecule (<i><code>protein.gro</code></i>) and the list of central residues that necessitate an atomistic description (<i><code>list_AT_res.dat</code></i>). Additionally, users have the option to specify the diameter value of the medium-grained region in the CANVAS model (<i><code>diameter_MG_region</code></i>), with the default value set to 1.0 nm. Moreover, for parallelization of the code, the MPI-version (block-MPI.py) allows users to define the number of cores (<i><code>number_of_cores</code></i>) to utilize, with the default value being the maximum number of available cores on their laptop or cluster. For more comprehensive information on these arguments, please refer to <b>Section 4.2.3</b>.</p> 
+
+### 4.2.2 - Usage
 <p align="justify"> To run the <b>block.py</b> (or <b>block-MPI.py</b>) script with <b>choice1</b> task, the command-line is the following: </p>
 
 ```bash
@@ -216,9 +219,9 @@ The output of the program is the list of survived atoms. To obtain further infor
 ### 4.2.3 - Arguments
 In the "choice1" task, there are several arguments that can be used. These arguments (two mandatories and two optional) are as follows:
 
-* **`protein.gro`**: This is a mandatory file (-g/--gro) containing the coordinates of all-atom structure of the biomolecule in .gro format. 
+* **`protein.gro`**: This is a mandatory file (`-g/--gro`) that contains the coordinates of all-atom structure of the biomolecule in .gro format. 
 
-* **`list_AT_res.dat`**: This is a mandatory file that contains the list of central atomistic(s) residue(s) (first column) and corresponding atomistic(s) radius(ii) (second column). In particular, given the coordinates file of all-atom structure of the system, protein.gro, the _residue number_ corresponds at the first column of such file,[^3] while the radius _R_ (in nm) defines the atomistic sphere around the central residue(s)
+* **`list_AT_res.dat`**: This is a mandatory file (`-l/--list`) that contains the list of central atomistic(s) residue(s) (first column) and corresponding atomistic(s) radius(ii) (second column). In particular, given the coordinates file of all-atom structure of the system, protein.gro, the _residue number_ corresponds at the first column of such file,[^3] while the radius _R_ (in nm) defines the atomistic sphere around the central residue(s)
 
   ```                                                           
   |-----------------|----------------------------|                                        
@@ -231,18 +234,18 @@ In the "choice1" task, there are several arguments that can be used. These argum
   
 [^3]: Look [here](https://manual.gromacs.org/archive/5.0.3/online/gro.html) for further information about **.gro** file 
 
-* **`Diameter_MG_region`** **(default: 1.0 nm)**: This is an optional argument (-D/--diameter) that specifies the diameter value (in nm) of the medium-grained region. 
+* **`Diameter_MG_region`** **(default: 1.0 nm)**: This is an optional argument (`-D/--diameter`) that specifies the diameter value (in nm) of the medium-grained region. 
 
-* **`Number of Cores (MPI-version ONLY)`** **(default: maximum number possible)**: Integer number corresponding at the number of cores for parallelizing _block-MPI.py_ script. It goes between 1 and the maximum number of available cores present in the laptop/cluster, otherwise an error is returned. Default value: maxiumum number of available cores present in the laptop/cluster. 
+* **`Number of Cores (MPI-version ONLY)`** **(default: maximum number possible)**: This is a mandatory argument (`-n/--ncpu`) that determines the number of CPUs used for parallelizing _block-MPI.py_ script. By default, the code will automatically utilize the maximum number of available cores in a single node of your laptop or cluster for parallelization. This means that if the `-n/--ncpu` option is not set the code will distribute the computational workload across all the available cores for efficient processing. However, if you want to manually specify the number of CPUs to be used, you can provide the `-n/--ncpu` option followed by the desired number of CPUs, for example, `-n 8` to use 8 CPUs. In this case, the code will parallelize the calculation by employing the specified number of CPUs. The purpose of parallelization is to accelerate the computation process by dividing the workload among multiple processors. By utilizing multiple CPUs, you can potentially reduce the overall processing time for executing _block-MPI.py_ script. Note that The actual number of CPUs available for parallelization may depend on the hardware specifications of your system or the constraints set by your cluster environment. 
                                         
 In **Appendix**  we focus on each argument discussed breafly before.
 
 <br />
 
-## 4.3 - choice2)
+## 4.3 - choice2
 
 ### 4.3.1 - Requirements)
-<p align="justify"> <b><code>choice2</code></b> task requires two mandatory files, i.e. the coordinates of all-atom structure of the biomolecule (<i><code>protein.gro</code></i>) and the list of <b>all</b> residues that require an atomistic description (<i><code>list_all_AT_res.dat</code></i>). On the other hand, the diameter value of medium-grained region of CANVAS model (<i><code>diameter_MG_region</code></i>) is an optional argument, that can also be changed (the default value is 1.0 nm). Furthermore, the MPI-version (<i></i>block-MPI.py</i>) gives the user the possibility to define the number of cores for parallelizing this code (<i><code>number_of_cores</code></i>): the default value is maxiumum number of available cores present in your laptop/cluster. For more detailed information on these arguments, please refer to <b>Section 4.3.3</b>. </p> 
+<p align="justify"> <b><code>choice2</code></b> task requires two mandatory files, i.e. the coordinates of all-atom structure of the biomolecule (<i><code>protein.gro</code></i>) and the list of <b>all</b> residues that necessitate an atomistic description (<i><code>list_all_AT_res.dat</code></i>). On the other hand, the diameter value of medium-grained region of CANVAS model (<i><code>diameter_MG_region</code></i>) is an optional argument, that can also be changed (the default value is 1.0 nm). Furthermore, the MPI-version (<i></i>block-MPI.py</i>) gives the user the possibility to define the number of cores for parallelizing this code (<i><code>number_of_cores</code></i>): the default value is maxiumum number of available cores present in your laptop/cluster. For more detailed information on these arguments, please refer to <b>Section 4.3.3</b>. </p> 
 
 ### (NEW ###4.3.2 - Usage)
 <p align="justify"> To run the <b>block.py</b> (or <b>block-MPI.py</b>) script with <b>choice1</b> task, the command-line is the following: </p>
@@ -270,12 +273,12 @@ The output of the program is the list of survived atoms. For further information
 <br />
 
 
-### 4.3.3 - Arguments)
+### 4.3.3 - Arguments
 In the "choice2" task, there are several arguments that can be used. These arguments (two mandatories and two optional) are as follows:
 
-* **`protein.gro`**: This is a mandatory file (-g/--gro) containing the coordinates of all-atom structure of the biomolecule in .gro format. 
+* **`protein.gro`**: This is a mandatory file (`-g/--gro`) containing the coordinates of all-atom structure of the biomolecule in .gro format. 
 
-* **`list_all_AT_res.dat`**: File containing the list of _all_ residues that require an atomistic description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ corresponds at the first column of such file.[^3]
+* **`list_all_AT_res.dat`**: This is a mandatory file (`-l/--list`) that contains the list of _all_ residues that require an atomistic description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ corresponds at the first column of such file.[^3]
 
 ```
 |----------------|  
@@ -286,21 +289,21 @@ In the "choice2" task, there are several arguments that can be used. These argum
 |----------------| 
 ```                        
 
-* **`Diameter_MG_region`** **(default: 1.0 nm)**: This is an optional argument (-D/--diameter) that specifies the diameter value (in nm) of the medium-grained region. 
+* **`Diameter_MG_region`** **(default: 1.0 nm)**: This is an optional argument (`-D/--diameter`) that specifies the diameter value (in nm) of the medium-grained region. 
 
-* **`Number of Cores (MPI-version ONLY)`** **(default: maximum number possible)**: Integer number corresponding at the number of cores for parallelizing _block-MPI.py_ script. It goes between 1 and the maximum number of available cores present in the laptop/cluster, otherwise an error is returned. Default value: maxiumum number of available cores present in the laptop/cluster. 
+* **`Number of Cores (MPI-version ONLY)`** **(default: maximum number possible)**: This is a mandatory argument (`-n/--ncpu`) that determines the number of CPUs used for parallelizing _block-MPI.py_ script. By default, the code will automatically utilize the maximum number of available cores in a single node of your laptop or cluster for parallelization. This means that if the `-n/--ncpu` option is not set the code will distribute the computational workload across all the available cores for efficient processing. However, if you want to manually specify the number of CPUs to be used, you can provide the `-n/--ncpu` option followed by the desired number of CPUs, for example, `-n 8` to use 8 CPUs. In this case, the code will parallelize the calculation by employing the specified number of CPUs. The purpose of parallelization is to accelerate the computation process by dividing the workload among multiple processors. By utilizing multiple CPUs, you can potentially reduce the overall processing time for executing _block-MPI.py_ script. Note that The actual number of CPUs available for parallelization may depend on the hardware specifications of your system or the constraints set by your cluster environment. 
                                         
 In **Appendix**  we focus on each argument discussed breafly before.
 
 <br />
 
 
-## 4.4 - choice3)
+## 4.4 - choice3
 
-### (NEW ###4.4.1 - Requirements)
+### 4.4.1 - Requirements
 <p align="justify"> <b><code>choice3</code></b> task requires two mandatory files, i.e. the coordinates of all-atom structure of the biomolecule (<i><code>protein.gro</code></i>) and the list of central residues that require an atomistic description (<i><code>list_AT_res.dat</code></i>). Furthermore, the MPI-version (<i></i>block-MPI.py</i>) gives the user the possibility to define the number of cores for parallelizing this code (<i><code>number_of_cores</code></i>): the default value is maxiumum number of available cores present in your laptop/cluster. At difference with the choice1 and choice2, if <b>choice3</b> is set then the diameter of medium-grained region cannot be set, as the user knows in advance all residues that require an a medium-grained resolution. For more detailed information on these arguments, please refer to <b>Section 4.4.3</b>. </p> 
 
-### 4.4.2 - Usage)
+### 4.4.2 - Usage
 <p align="justify"> To run the <b>block.py</b> (or <b>block-MPI.py</b>) script with <b>choice3</b> task, the command-line is the following: </p>
 
 ```bash
@@ -325,9 +328,9 @@ The output of the program is the list of survived atoms. For further information
 ### 4.4.3 - Arguments)
 In the "choice3" task, there are several arguments that can be used. These arguments (two mandatories and one optional) are as follows:
 
-* **`protein.gro`**: This is a mandatory file (-g/--gro) containing the coordinates of all-atom structure of the biomolecule in .gro format. 
+* **`protein.gro`**: This is a mandatory file (`-g/--gro`) containing the coordinates of all-atom structure of the biomolecule in .gro format. 
 
-* **`list_all_AT_res.dat`**: File containing the list of _all_ residues that require an atomistic (first column) and medium-grained (second column) description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of such file.[^3] Note that if the file is leaved empty, the biomocule will be entirely described in Coarse-Grained, and only only CA atoms will survive. 
+* **`list_all_AT_res.dat`**: This is a mandatory file (`-l/--list`) that contains the list of _all_ residues that require an atomistic (first column) and medium-grained (second column) description. In particular, given the coordinates file of all-atom structure of the biomolecule, protein.gro, the _residue number_ is the first column of such file.[^3] Note that if the file is leaved empty, the biomocule will be entirely described in Coarse-Grained, and only only CA atoms will survive. 
 
 ```
 |-------------------|---------------------|  
@@ -340,7 +343,7 @@ In the "choice3" task, there are several arguments that can be used. These argum
 |-------------------|---------------------|  
 ```
 
-* **`Number of Cores (MPI-version ONLY)`** **(default: maximum number possible)**: Integer number corresponding at the number of cores for parallelizing _block-MPI.py_ script. It goes between 1 and the maximum number of available cores present in the laptop/cluster, otherwise an error is returned. Default value: maxiumum number of available cores present in the laptop/cluster. 
+* **`Number of Cores (MPI-version ONLY)`** **(default: maximum number possible)**: This is a mandatory argument (`-n/--ncpu`) that determines the number of CPUs used for parallelizing _block-MPI.py_ script. By default, the code will automatically utilize the maximum number of available cores in a single node of your laptop or cluster for parallelization. This means that if the `-n/--ncpu` option is not set the code will distribute the computational workload across all the available cores for efficient processing. However, if you want to manually specify the number of CPUs to be used, you can provide the `-n/--ncpu` option followed by the desired number of CPUs, for example, `-n 8` to use 8 CPUs. In this case, the code will parallelize the calculation by employing the specified number of CPUs. The purpose of parallelization is to accelerate the computation process by dividing the workload among multiple processors. By utilizing multiple CPUs, you can potentially reduce the overall processing time for executing _block-MPI.py_ script. Note that The actual number of CPUs available for parallelization may depend on the hardware specifications of your system or the constraints set by your cluster environment. 
                                         
 In **Appendix**  we focus on each argument discussed breafly before.
 
@@ -355,13 +358,13 @@ _CANVAS.py_ does not have _tasks_ in the sense explained in **Section 4.1**. Ind
 
 * the choice regarding the production of the input-files for simulating the biomocule in multiple-resolution in LAMMPS, rather than GROMACS (default simulating package) [_`-c/--code lammps `_]
 
-* the option of also introducing rescaled non-bonded 1-4 interactions also on the interface AT-CG (by default, rescaled non-bonded 1-4 interactions are introduced only in the AT region) [_`-r/--resc14 Y`_] 
+* an option that introduces rescaled non-bonded 1-4 interactions also on the interface AT-CG (by default, rescaled non-bonded 1-4 interactions are introduced only in the AT region) [_`-r/--resc14 Y`_] 
 
 * the decision of not solvating the system (by default the system will be solvated and neutralized with sodium and chlorine ions) [_`-s/--solvate N`_]
 
 Furthermore, the MPI-version (_block-MPI.py_) gives the user the possibility to define the number of cores for parallelizing this code [_`number_of_cores`_]: by default the script will exploit the maximum number of available cores present on laptop/cluster.
 
-The arguments are described in **Sec. 5.1**. In order to launch the **CANVAS.py/CANVAS-MPI4.py** scripts, the command-line is the following:
+The arguments are described in **Section. 5.1**. In order to launch the **CANVAS.py/CANVAS-MPI4.py** scripts, the command-line is the following:
 
 ```bash 
 ### SERIAL VERSION 
