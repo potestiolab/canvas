@@ -5,6 +5,16 @@
 
 # 0 - Introduction 
 
+<p>The output of the program is the list of survived atoms. To obtain further information and execute the "block.py" script with the "choice1" option, please type on terminal <code>python3 block.py choice1</code>.</p>
+<p><sup><a href="#fn1" id="ref1">[1]</a></sup>: For simplicity, this command is referred to <code>block.py</code>, but nothing changes for <code>block-MPI.py</code></p>
+<div id="footnotes">
+  <hr />
+  <ol>
+    <li id="fn1">For simplicity, this command is referred to <code>block.py</code>, but nothing changes for <code>block-MPI.py</code>. <a href="#ref1">↩</a></li>
+  </ol>
+</div>
+
+
 <p align="justify"> The <b>CANVAS</b> model is a novel Multiple-Resolution approach which allows one to model at an atomistic resolution only the precise subset of degrees really necesssary for the study of a given phenomenon, even when this leads to a boundary between resolutions which falls within a bio-molecule. </p>
 
 <p align="justify"> CANVAS is the acronym of <b>C</b>oarse-grained <b>A</b>nisotropic <b>N</b>etwork model for <b>VA</b>riable resolution <b>S</b>imulation. </p>
@@ -187,8 +197,6 @@ flowchart LR
 
 ### 4.2.1 - Requirements
 
-"To perform choice1 task, two mandatory files are required: the coordinates of the all-atom structure of the biomolecule (protein.gro) and the list of central residues that necessitate an atomistic description (list_AT_res.dat). Additionally, users have the option to specify the diameter value of the medium-grained region in the CANVAS model (diameter_MG_region), with the default value set to 1.0 nm. Moreover, for parallelization of the code, the MPI-version (block-MPI.py) allows users to define the number of cores (number_of_cores) to utilize, with the default value being the maximum number of available cores on their laptop or cluster. For more comprehensive information on these arguments, please refer to Section 4.2.3."
-
 <p align="justify"> <b><code>choice1</code></b> task requires two mandatory files: the coordinates of all-atom structure of the biomolecule (<i><code>protein.gro</code></i>) and the list of central residues that necessitate an atomistic description (<i><code>list_AT_res.dat</code></i>). Additionally, users have the option to specify the diameter value of the medium-grained region in the CANVAS model (<i><code>diameter_MG_region</code></i>), with the default value set to 1.0 nm. Moreover, for parallelization of the code, the MPI-version (block-MPI.py) allows users to define the number of cores (<i><code>number_of_cores</code></i>) to utilize, with the default value being the maximum number of available cores on their laptop or cluster. For more comprehensive information on these arguments, please refer to <b>Section 4.2.3</b>.</p> 
 
 ### 4.2.2 - Usage
@@ -244,10 +252,11 @@ In **Appendix**  we focus on each argument discussed breafly before.
 
 ## 4.3 - choice2
 
-### 4.3.1 - Requirements)
+### 4.3.1 - Requirements
 <p align="justify"> <b><code>choice2</code></b> task requires two mandatory files, i.e. the coordinates of all-atom structure of the biomolecule (<i><code>protein.gro</code></i>) and the list of <b>all</b> residues that necessitate an atomistic description (<i><code>list_all_AT_res.dat</code></i>). On the other hand, the diameter value of medium-grained region of CANVAS model (<i><code>diameter_MG_region</code></i>) is an optional argument, that can also be changed (the default value is 1.0 nm). Furthermore, the MPI-version (<i></i>block-MPI.py</i>) gives the user the possibility to define the number of cores for parallelizing this code (<i><code>number_of_cores</code></i>): the default value is maxiumum number of available cores present in your laptop/cluster. For more detailed information on these arguments, please refer to <b>Section 4.3.3</b>. </p> 
 
-### (NEW ###4.3.2 - Usage)
+
+### 4.3.2 - Usage
 <p align="justify"> To run the <b>block.py</b> (or <b>block-MPI.py</b>) script with <b>choice1</b> task, the command-line is the following: </p>
 
 ```bash
@@ -269,8 +278,6 @@ python3 block-MPI.py choice2 --gro  <protein.gro> --list <list_all_AT_res.dat> [
 ```
 
 The output of the program is the list of survived atoms. For further information, please type on terminal `python3 choice2`.[^1]
-
-<br />
 
 
 ### 4.3.3 - Arguments
@@ -325,7 +332,7 @@ python3 block-MPI.py choice3 --gro  <protein.gro> --list <list_all_AT_MG_res.dat
 
 The output of the program is the list of survived atoms. For further information, please type on terminal `python3 choice3`.[^1]
 
-### 4.4.3 - Arguments)
+### 4.4.3 - Arguments
 In the "choice3" task, there are several arguments that can be used. These arguments (two mandatories and one optional) are as follows:
 
 * **`protein.gro`**: This is a mandatory file (`-g/--gro`) containing the coordinates of all-atom structure of the biomolecule in .gro format. 
