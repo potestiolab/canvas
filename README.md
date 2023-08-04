@@ -209,17 +209,15 @@ or
 python3 block-MPI.py choice1 --gro  <protein.gro> --list <list_AT_res.dat> [--diameter <diameter_MG_region>] [--ncpu <number_of_cores>]
 ```
 
-<p align="justify"> The output of the program is the list of survived atoms. To obtain further information and execute the "block.py" script with the "choice1" option, please type on terminal <code>python3 block.py choice1</code>.</p>
-
-<p><sup><a href="#fn1" id="ref1">[1]</a></sup>: For simplicity, this command is referred to <code>block.py</code>, but nothing changes for <code>block-MPI.py</code></p>
-<div id="footnotes">
+<p align="justify">The output of the program is the list of survived atoms. To obtain further information and execute the "block.py" script with the "choice1" option, please type on terminal <code>python3 block.py choice1</code><sup><a href="#fn1" id="ref1">[1]</a></sup></p>
+<div class="footnotes">
   <hr />
   <ol>
     <li id="fn1">For simplicity, this command is referred to <code>block.py</code>, but nothing changes for <code>block-MPI.py</code>. <a href="#ref1">↩</a></li>
   </ol>
 </div>
 
-The output of the program is the list of survived atoms. To obtain further information and execute the "block.py" script with the "choice1" option, please type on terminal  `python3 block.py choice1`.[^1]
+The output of the program is the list of survived atoms. To obtain further information and execute the "block.py" script with the "choice1" option, please type on terminal  `python3 block.py choice1`. [^1]
 
 [^1]: For simplicity, this command is referred to `block.py`, but nothing changes for `block-MPI.py`
 
