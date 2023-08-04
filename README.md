@@ -5,16 +5,6 @@
 
 # 0 - Introduction 
 
-<p>The output of the program is the list of survived atoms. To obtain further information and execute the "block.py" script with the "choice1" option, please type on terminal <code>python3 block.py choice1</code>.</p>
-<p><sup><a href="#fn1" id="ref1">[1]</a></sup>: For simplicity, this command is referred to <code>block.py</code>, but nothing changes for <code>block-MPI.py</code></p>
-<div id="footnotes">
-  <hr />
-  <ol>
-    <li id="fn1">For simplicity, this command is referred to <code>block.py</code>, but nothing changes for <code>block-MPI.py</code>. <a href="#ref1">↩</a></li>
-  </ol>
-</div>
-
-
 <p align="justify"> The <b>CANVAS</b> model is a novel Multiple-Resolution approach which allows one to model at an atomistic resolution only the precise subset of degrees really necesssary for the study of a given phenomenon, even when this leads to a boundary between resolutions which falls within a bio-molecule. </p>
 
 <p align="justify"> CANVAS is the acronym of <b>C</b>oarse-grained <b>A</b>nisotropic <b>N</b>etwork model for <b>VA</b>riable resolution <b>S</b>imulation. </p>
@@ -218,6 +208,16 @@ or
 
 python3 block-MPI.py choice1 --gro  <protein.gro> --list <list_AT_res.dat> [--diameter <diameter_MG_region>] [--ncpu <number_of_cores>]
 ```
+
+<p align="justify"> The output of the program is the list of survived atoms. To obtain further information and execute the "block.py" script with the "choice1" option, please type on terminal <code>python3 block.py choice1</code>.</p>
+
+<p><sup><a href="#fn1" id="ref1">[1]</a></sup>: For simplicity, this command is referred to <code>block.py</code>, but nothing changes for <code>block-MPI.py</code></p>
+<div id="footnotes">
+  <hr />
+  <ol>
+    <li id="fn1">For simplicity, this command is referred to <code>block.py</code>, but nothing changes for <code>block-MPI.py</code>. <a href="#ref1">↩</a></li>
+  </ol>
+</div>
 
 The output of the program is the list of survived atoms. To obtain further information and execute the "block.py" script with the "choice1" option, please type on terminal  `python3 block.py choice1`.[^1]
 
